@@ -4,10 +4,6 @@ export default function MainPage() {
   return (
     <>
       <div>MainPage</div>
-      <div>123</div>
-      <div>Page Not Found</div>
-      <div>sdjflksdafkl</div>
-      <div>1</div>
     </>
   );
 }
