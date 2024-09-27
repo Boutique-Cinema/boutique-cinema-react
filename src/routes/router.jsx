@@ -2,7 +2,7 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import greetingRouter from "../router/greetingRouter";
 import JoinPage from "../pages/member/JoinPage";
-// import reservationRouter from "./reservationRouter";
+import reservationRouter from "./reservationRouter";
 
 const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
@@ -27,7 +27,7 @@ const root = createBrowserRouter([
       { path: "/support/privacy", element: <PrivacyPage /> },
       { path: "/mypage/reserve", element: <MyReservationPage /> },
       ...greetingRouter, // greetingRouter의 경로들을 병합
-      // ...reservationRouter,
+      ...reservationRouter,
     ],
   },
   {
