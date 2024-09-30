@@ -12,10 +12,10 @@ export default function Footer() {
           </Link>
           <ul>
             <li className="mb-2">
-              <Link to={"#"}>공지사항</Link>
+              <Link to={"/support/notice"}>공지사항</Link>
             </li>
             <li>
-              <Link to={"#"}>1:1 문의</Link>
+              <Link to={"/support/qna"}>1:1 문의</Link>
             </li>
           </ul>
         </div>
