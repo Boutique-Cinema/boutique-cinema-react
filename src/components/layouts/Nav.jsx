@@ -6,7 +6,7 @@ export default function Nav() {
     <nav className="w-[300px]">
       <menu className="flex justify-around text-xl font-medium">
         <li className="hover:text-red-300">
-          <Link to={"/move"}>
+          <Link to={"/movie"}>
             <h2>영화</h2>
           </Link>
         </li>

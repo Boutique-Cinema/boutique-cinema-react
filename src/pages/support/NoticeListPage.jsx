@@ -146,7 +146,7 @@ const NoticeListPage = () => {
               </button>
             </div>
           </div>
-          <div className="mt-4 h-[542px] overflow-auto border border-gray-500">
+          <div className="mt-4 h-[541px] overflow-auto border border-gray-500">
             <table className="w-full border-collapse border border-gray-500">
               <thead>
                 <tr className="bg-gray-700 text-white">

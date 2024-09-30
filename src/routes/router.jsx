@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
 import JoinPage from "../pages/member/JoinPage";
 // import reservationRouter from "./reservationRouter";
 import supportRouter from "./supportRouter";
@@ -16,7 +16,13 @@ const MyReservationPage = lazy(
 const root = createBrowserRouter([
   {
     path: "/",
-    element: <BasicLayout />,
+    element: (
+      <>
+        <BasicLayout />
+        <ScrollRestoration />{" "}
+        {/* ScrollRestoration 추가(페이지 이동시 맨위 스크롤로 이동) */}
+      </>
+    ),
     children: [
       { index: true, element: <MainPage /> },
       { path: "info", element: <InfoPage /> },
