@@ -26,9 +26,9 @@ const root = createBrowserRouter([
     ],
   },
   {
-    path: "/member/JoinPage",
-    element : <JoinPage />
-  }
+    path: "api/member/joinpage",
+    element: <JoinPage />,
+  },
 ]);
 
 export default root;
