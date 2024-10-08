@@ -4,6 +4,7 @@ import JoinPage from "../pages/member/JoinPage";
 // import reservationRouter from "./reservationRouter";
 import supportRouter from "./supportRouter";
 import greetingRouter from "./greetingRouter";
+import adminMovieRouter from "./adminMovieRouter";
 
 const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
@@ -38,6 +39,7 @@ const root = createBrowserRouter([
   {
     path: "/admin",
     element: <AdminLayout />,
+    children: [...adminMovieRouter],
   },
 ]);
 
