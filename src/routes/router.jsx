@@ -1,9 +1,9 @@
 import { lazy } from "react";
 import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
 import JoinPage from "../pages/member/JoinPage";
-// import reservationRouter from "./reservationRouter";
 import supportRouter from "./supportRouter";
 import greetingRouter from "./greetingRouter";
+import movieRouter from "./movieRouter";
 
 const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
@@ -19,8 +19,7 @@ const root = createBrowserRouter([
     element: (
       <>
         <BasicLayout />
-        <ScrollRestoration />{" "}
-        {/* ScrollRestoration 추가(페이지 이동시 맨위 스크롤로 이동) */}
+        <ScrollRestoration />
       </>
     ),
     children: [
@@ -28,7 +27,8 @@ const root = createBrowserRouter([
       { path: "info", element: <InfoPage /> },
       { path: "/mypage/reserve", element: <MyReservationPage /> },
       ...supportRouter,
-      ...greetingRouter, // greetingRouter의 경로들을 병합
+      ...movieRouter,
+      ...greetingRouter,
     ],
   },
   {
