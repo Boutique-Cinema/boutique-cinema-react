@@ -1,6 +1,7 @@
 // 회원가입 페이지
-import React, { useState } from "react";
+import { useState } from "react";
 import Logo from "../common/Logo";
+import { postAdd } from "../../api/membersApi";
 
 function JoinPage() {
   const [form, setForm] = useState({
@@ -9,51 +10,261 @@ function JoinPage() {
     passwordConfirm: "",
     email: "",
     name: "",
+    birth: "",
     phone: "",
-    ageConsent: false,
-    termsAgree: false,
-    dataConsent: false,
+    years_14_more: false,
+    use_terms_agree: false,
+    personal_info_agree: false,
   });
 
-  const [errors, setErrors] = useState({});
+  const [id, setId] = useState("");
+  const [idError, setIdError] = useState("");
+  const [isIdAvailable, setIsIdAvailable] = useState(false); // 아이디 사용가능한지 아닌지
+
+  const [password, setPassword] = useState("");
+  const [pwError, setPwError] = useState("");
+  const [isPwAvailable, setIsPwAvailable] = useState(false);
+
+  const [passwordConfirm, setpasswordConfirm] = useState("");
+  const [pwConfirmError, setPwConfirmError] = useState("");
+  const [isPwConfirmPassword, setIsPwConfirmPassword] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isEmailAvailable, setIsEmailAvailable] = useState(false);
+
+  const [isNameFocused, setIsNameFocused] = useState(false); // 이름 입력창에 focus가 있는지 확인
+  // const [name, setName] = useState("");
+  // const [nameError, setNameError] = useState("");
+  // const [isNameAvailable, setIsNameAvailable] = useState(false);
+
+  const [birth, setBirth] = useState("");
+  const [birthError, setBirthError] = useState("");
+  const [isBirthAvailable, setIsBirthAvailable] = useState(false);
+
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [isPhoneAvailable, setIsPhoneAvailable] = useState(false);
+
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // 아이디 입력 시 idCheckHandler 호출
+    if (name === "id") {
+      idCheckHandler(value); // 아이디 체크 함수 호출
+    }
+    // 비밀번호 입력 시 pwCheckHandler 호출
+    if (name === "password") {
+      pwCheckHandler(value); // 비밀번호 체크 함수 호출
+    }
+    // 비밀번호 확인이 비밀번호랑 같은지 확인하는 함수 호출
+    if (name === "passwordConfirm") {
+      pwConfirmHandler(value);
+    }
+    if (name === "email") {
+      emailCheckHandler(value); // 이메일 체크 함수 호출
+    }
+    if (name === "birth") {
+      birthCheckHandler(value); // 생년월일 체크 함수 호출
+    }
+    if (name === "phone") {
+      phoneCheckHandler(value); // 휴대폰번호 체크 함수 호출
+    }
+  };
+
+  // 아이디 체크 핸들러
+  const idCheckHandler = async (id) => {
+    const idRegex = /^[a-z\d]{8,20}$/;
+    if (id === "") {
+      setIdError("아이디를 입력하세요.");
+      setIsIdAvailable(false);
+      return false;
+    } else if (!idRegex.test(id)) {
+      setIdError("8~20자의 영문/숫자만 입력 가능합니다.");
+      setIsIdAvailable(false);
+      return false;
+    } else {
+      setIdError("사용 가능한 아이디입니다.");
+      setIsIdAvailable(true);
+      return true;
+    }
+  };
+
+  // 비밀번호 체크 핸들러
+  const pwCheckHandler = async (password) => {
+    const pwRegex = /^[a-z\d]{8,20}$/;
+    if (password === "") {
+      setPwError("비밀번호를 입력하세요.");
+      setIsPwAvailable(false);
+    } else if (!pwRegex.test(password)) {
+      setPwError("8~20자의 영문/숫자만 입력 가능합니다.");
+      setIsPwAvailable(false);
+    } else {
+      setPwError("");
+      setIsPwAvailable(true);
+    }
+  };
+
+  // 비밀번호 확인 체크 핸들러
+  const pwConfirmHandler = async (passwordConfirm) => {
+    if (passwordConfirm !== form.password) {
+      setPwConfirmError("비밀번호가 다릅니다.");
+      setIsPwConfirmPassword(false);
+    } else {
+      setPwConfirmError("");
+      setIsPwConfirmPassword(true);
+    }
+  };
+
+  // 이메일 체크 핸들러
+  const emailCheckHandler = async (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (email === "") {
+      setEmailError("이메일을 입력하세요.");
+      setIsEmailAvailable(false);
+    } else if (!emailRegex.test(email)) {
+      setEmailError("정확한 메일주소를 입력해주세요.");
+      setIsEmailAvailable(false);
+    } else {
+      setEmailError("");
+      setIsEmailAvailable(true);
+    }
+  };
+
+  // 생년월일 체크 핸들러
+  const birthCheckHandler = async (birth) => {
+    const birthRegex = /^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/;
+    if (birth === "") {
+      setBirthError("생년월일을 입력하세요.");
+      setIsBirthAvailable(false);
+    } else if (!birthRegex.test(birth)) {
+      setBirthError("올바른 생년월일을 입력하세요.");
+      setIsBirthAvailable(false);
+    } else {
+      setBirthError("");
+      setIsBirthAvailable(true);
+    }
+  };
+
+  // 휴대폰번호 체크 핸들러
+  const phoneCheckHandler = async (phone) => {
+    const phoneRegex = /^\d{10,11}$/;
+    if (phone === "") {
+      setPhoneError("휴대폰 번호를 입력하세요.");
+      setIsPhoneAvailable(false);
+    } else if (!phoneRegex.test(phone)) {
+      setPhoneError('" - "없이 입력해주세요.');
+      setIsPhoneAvailable(false);
+    } else {
+      setPhoneError("");
+      setIsPhoneAvailable(true);
+    }
+  };
+
+  // 숫자만 입력
+  const onKeyUpHandler = (e) => {
+    const { name } = e.target;
+
+    if (name === "birth") {
+      const numericValue = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 남김
+      setForm((prev) => ({
+        ...prev,
+        birth: numericValue,
+      }));
+    }
+    if (name === "phone") {
+      const numericValue = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 남김
+      setForm((prev) => ({
+        ...prev,
+        phone: numericValue,
+      }));
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    if (name === "allCheck") {
+      // 전체동의 체크박스 클릭시 전체 체크박스 선택
+      setForm((prev) => ({
+        ...prev,
+        years_14_more: checked ? 1 : 0,
+        use_terms_agree: checked ? 1 : 0,
+        personal_info_agree: checked ? 1 : 0,
+        allCheck: checked,
+      }));
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
+      }));
+    }
   };
-
+  // case문
   const validate = () => {
-    const newErrors = {};
-    if (!form.id) newErrors.id = "ID is required";
-    if (!form.password) newErrors.password = "Password is required";
-    if (form.password !== form.passwordConfirm)
-      newErrors.passwordConfirm = "Passwords do not match";
-    if (!form.email) newErrors.email = "Email is required";
-    if (!form.name) newErrors.name = "Name is required";
-    if (!form.phone) newErrors.phone = "Phone number is required";
-    if (!form.ageConsent)
-      newErrors.ageConsent = "You must be at least 14 years old";
-    if (!form.termsAgree) newErrors.termsAgree = "You must agree to the terms";
-    if (!form.dataConsent)
-      newErrors.dataConsent = "You must agree to data processing";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    switch (true) {
+      case isIdAvailable === false:
+        alert("아이디를 확인해주세요.");
+        break;
+      case isPwAvailable === false:
+        alert("비밀번호를 형식에 맞게 입력해주세요.");
+        break;
+      case isPwConfirmPassword === false:
+        alert("비밀번호 확인이 비밀번호랑 다릅니다.");
+        break;
+      case isEmailAvailable === false:
+        alert("이메일을 형식에 맞게 입력해주세요.");
+        break;
+      case form.name === "":
+        alert("이름을 입력해주세요.");
+        break;
+      case isBirthAvailable === false:
+        alert("생년월일을 형식에 맞게 입력해주세요.");
+        break;
+      case isPhoneAvailable === false:
+        alert("휴대폰 번호를 형식에 맞게 입력해주세요.");
+        break;
+      case form.years_14_more === false:
+        alert("만 14세 이상만 회원가입이 가능합니다.");
+        break;
+      case form.use_terms_agree === false:
+        alert("이용약관 동의는 필수입니다.");
+        break;
+      case form.personal_info_agree === false:
+        alert("개인정보 수집·동의는 필수입니다.");
+        break;
+      default:
+        return true;
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validate()) {
-      // Submit form data
+    if (validate() === true) {
+      // 오늘 날짜를 YYYY-MM-DD 형식으로 생성
+      const today = new Date();
+      const joinDate = today.toISOString().split("T")[0]; // YYYY-MM-DD 형식
+
+      // 폼 데이터에 날짜 추가
+      const formDataWithDate = {
+        ...form,
+        joinDate,
+      };
+
+      postAdd(form); // JSON 형식으로 서버에 보냄
+
       console.log("Form submitted:", form);
+      alert("회원가입이 완료됐습니다.");
+      window.location.href = "/";
     }
   };
 
   return (
-    <div className="mb-16 mt-5 flex h-screen items-center justify-center">
-      <div className="">
+    <div className="mb-16 mt-10 flex h-screen items-center justify-center">
+      <div>
         <a href="/">
           <Logo />
         </a>
@@ -62,92 +273,142 @@ function JoinPage() {
           className="w-[330px] rounded-lg bg-white p-5 shadow-md"
         >
           <h2 className="mb-2 text-lg font-medium text-black">회원가입</h2>
-          <div className="mb-4 h-10 overflow-hidden rounded border border-gray-300">
+          <div className="overflow-hidden rounded border border-gray-300">
             <input
               type="text"
               name="id"
               value={form.id}
-              onChange={handleChange}
+              onChange={onChangeHandler}
               placeholder="아이디"
+              maxLength={20}
               className="box-border h-full w-full p-2 text-sm text-black"
             />
-            {errors.id && <p className="error-text">{errors.id}</p>}
           </div>
+          {idError && (
+            <small
+              className={`${isIdAvailable ? "text-blue-600" : "text-red-600"} p-2 text-[10px]`}
+            >
+              {idError}
+            </small>
+          )}
 
-          <div className="mb-4 h-10 overflow-hidden rounded border border-gray-300">
+          <div className="mt-4 overflow-hidden rounded border border-gray-300">
             <input
               type="password"
               name="password"
               value={form.password}
-              onChange={handleChange}
+              onChange={onChangeHandler}
               placeholder="비밀번호"
+              maxLength={20}
               className="box-border h-full w-full p-2 text-sm text-black"
             />
-            {errors.password && <p className="error-text">{errors.password}</p>}
           </div>
+          {pwError && (
+            <small
+              className={`${isPwAvailable ? "" : "text-red-600"} p-2 text-[10px]`}
+            >
+              {pwError}
+            </small>
+          )}
 
-          <div className="mb-4 h-10 overflow-hidden rounded border border-gray-300">
+          <div className="mt-4 overflow-hidden rounded border border-gray-300">
             <input
               type="password"
               name="passwordConfirm"
               value={form.passwordConfirm}
-              onChange={handleChange}
+              onChange={onChangeHandler}
               placeholder="비밀번호 확인"
+              maxLength={20}
               className="box-border h-full w-full p-2 text-sm text-black"
             />
-            {errors.passwordConfirm && (
-              <p className="error-text">{errors.passwordConfirm}</p>
-            )}
           </div>
+          {pwConfirmError && (
+            <small
+              className={`${isPwConfirmPassword ? "" : "text-red-600"} p-2 text-[10px]`}
+            >
+              {pwConfirmError}
+            </small>
+          )}
 
-          <div className="mb-4 h-10 overflow-hidden rounded border border-gray-300">
+          <div className="mt-4 overflow-hidden rounded border border-gray-300">
             <input
               type="email"
               name="email"
               value={form.email}
-              onChange={handleChange}
+              onChange={onChangeHandler}
               placeholder="이메일"
               className="box-border h-full w-full p-2 text-sm text-black"
             />
-            {errors.email && <p className="error-text">{errors.email}</p>}
           </div>
+          {emailError && (
+            <small
+              className={`${isEmailAvailable ? "text-blue-600" : "text-red-600"} p-2 text-[10px]`}
+            >
+              {emailError}
+            </small>
+          )}
 
-          <div className="mb-4 h-10 overflow-hidden rounded border border-gray-300">
+          <div className="mt-4 overflow-hidden rounded border border-gray-300">
             <input
               type="text"
               name="name"
               value={form.name}
               onChange={handleChange}
+              onFocus={() => setIsNameFocused(true)} // 포커스 시 true로 설정
+              onBlur={() => setIsNameFocused(false)} // 포커스 아웃 시 false로 설정
               placeholder="이름"
+              maxLength={20}
               className="box-border h-full w-full p-2 text-sm text-black"
             />
-            {errors.name && <p className="error-text">{errors.name}</p>}
           </div>
+          <small
+            className={`${isNameFocused ? "text-red-600" : ""} p-2 text-[10px]`}
+          >
+            {isNameFocused && "이름은 반드시 실명만 입력해주세요."}{" "}
+            {/* 포커스가 있을 때만 메시지 출력 */}
+          </small>
 
-          <div className="mb-4 h-10 overflow-hidden rounded border border-gray-300">
+          <div className="overflow-hidden rounded border border-gray-300">
             <input
               type="text"
               name="birth"
               value={form.birth}
-              onChange={handleChange}
-              placeholder="생년월일"
+              onChange={onChangeHandler}
+              onKeyUp={onKeyUpHandler} // onKeyUp 추가
+              placeholder="생년월일(예:20010203)"
+              maxLength={8}
               className="box-border h-full w-full p-2 text-sm text-black"
             />
-            {errors.name && <p className="error-text">{errors.name}</p>}
           </div>
+          {birthError && (
+            <small
+              className={`${isBirthAvailable ? "text-blue-600" : "text-red-600"} p-2 text-[10px]`}
+            >
+              {birthError}
+            </small>
+          )}
 
-          <div className="mb-4 h-10 overflow-hidden rounded border border-gray-300">
+          <div className="mt-4 overflow-hidden rounded border border-gray-300">
             <input
               type="text"
               name="phone"
               value={form.phone}
-              onChange={handleChange}
-              placeholder="휴대폰 번호"
+              onChange={onChangeHandler}
+              onKeyUp={onKeyUpHandler} // onKeyUp 추가
+              maxLength={11}
+              placeholder="휴대폰 번호(예:01012345678)"
               className="box-border h-full w-full p-2 text-sm text-black"
             />
-            {errors.phone && <p className="error-text">{errors.phone}</p>}
           </div>
-          <h2 className="mb-2 font-medium text-black">이용약관 동의</h2>
+          {phoneError && (
+            <small
+              className={`${isPhoneAvailable ? "text-blue-600" : "text-red-600"} p-2 text-[10px]`}
+            >
+              {phoneError}
+            </small>
+          )}
+
+          <h2 className="mb-2 mt-4 font-medium text-black">이용약관 동의</h2>
 
           <div className="h-200 mb-4 justify-center overflow-hidden rounded border border-gray-300 bg-gray-100 p-2">
             <div className="flex h-5 w-full items-center justify-end text-black">
@@ -169,7 +430,7 @@ function JoinPage() {
                 type="checkbox"
                 name="years_14_more"
                 id="years_14_more"
-                checked={form.allCheck}
+                checked={form.years_14_more}
                 onChange={handleChange}
                 className="h-4 w-4"
               />
@@ -184,16 +445,18 @@ function JoinPage() {
                 type="checkbox"
                 name="use_terms_agree"
                 id="use_terms_agree"
-                checked={form.allCheck}
+                checked={form.use_terms_agree}
                 onChange={handleChange}
                 className="h-5 w-5"
               />
               <label htmlFor="use_terms_agree" className="w-full p-2 text-xs">
-                만 14세 이상입니다
+                이용약관 동의
                 <label className="text-xs text-red-500"> (필수)</label>
               </label>
               <a
-                href="/"
+                href="/support/terms"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="ml-auto whitespace-nowrap text-xs text-gray-500 underline"
               >
                 내용보기
@@ -205,7 +468,7 @@ function JoinPage() {
                 type="checkbox"
                 name="personal_info_agree"
                 id="personal_info_agree"
-                checked={form.allCheck}
+                checked={form.personal_info_agree}
                 onChange={handleChange}
                 className="h-5 w-5"
               />
@@ -217,7 +480,9 @@ function JoinPage() {
                 <label className="text-xs text-red-500"> (필수)</label>
               </label>
               <a
-                href="/"
+                href="/support/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="ml-auto whitespace-nowrap text-xs text-gray-500 underline"
               >
                 내용보기
@@ -227,6 +492,7 @@ function JoinPage() {
 
           <button
             type="submit"
+            onClick={handleSubmit}
             className="w-full cursor-pointer rounded border-none bg-gray-700 p-2 text-white"
           >
             가입완료

@@ -1,16 +1,14 @@
 import { lazy } from "react";
-import { createBrowserRouter } from "react-router-dom";
-import greetingRouter from "../router/greetingRouter";
+import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
 import JoinPage from "../pages/member/JoinPage";
 import reservationRouter from "./reservationRouter";
+import supportRouter from "./supportRouter";
+import greetingRouter from "./greetingRouter";
 
 const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
 const MainPage = lazy(() => import("../pages/MainPage"));
 const InfoPage = lazy(() => import("../pages/info/InfoPage"));
-const TermsPage = lazy(() => import("../pages/support/TermsPage"));
-const ScreenrulePage = lazy(() => import("../pages/support/ScreenrulePage"));
-const PrivacyPage = lazy(() => import("../pages/support/PrivacyPage"));
 const MyReservationPage = lazy(
   () => import("../pages/mypage/MyReservationPage"),
 );
@@ -18,14 +16,18 @@ const MyReservationPage = lazy(
 const root = createBrowserRouter([
   {
     path: "/",
-    element: <BasicLayout />,
+    element: (
+      <>
+        <BasicLayout />
+        <ScrollRestoration />{" "}
+        {/* ScrollRestoration 추가(페이지 이동시 맨위 스크롤로 이동) */}
+      </>
+    ),
     children: [
       { index: true, element: <MainPage /> },
       { path: "info", element: <InfoPage /> },
-      { path: "/support/terms", element: <TermsPage /> },
-      { path: "/support/screenrule", element: <ScreenrulePage /> },
-      { path: "/support/privacy", element: <PrivacyPage /> },
       { path: "/mypage/reserve", element: <MyReservationPage /> },
+      ...supportRouter,
       ...greetingRouter, // greetingRouter의 경로들을 병합
       ...reservationRouter,
     ],
