@@ -36,11 +36,9 @@ function JoinPage() {
   // const [nameError, setNameError] = useState("");
   // const [isNameAvailable, setIsNameAvailable] = useState(false);
 
-  const [birth, setBirth] = useState("");
   const [birthError, setBirthError] = useState("");
   const [isBirthAvailable, setIsBirthAvailable] = useState(false);
 
-  const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [isPhoneAvailable, setIsPhoneAvailable] = useState(false);
 

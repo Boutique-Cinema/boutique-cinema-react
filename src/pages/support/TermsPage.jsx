@@ -68,23 +68,23 @@ function TermsPage() {
 
   return (
     <div className="mx-auto flex min-h-screen items-center justify-center">
-      <div className="px-8 py-6">
+      <div className="mb-10 px-8 py-6">
         {/* 제목 부분 */}
-        <div className="mb-6 border-b border-gray-300 pb-4 text-2xl font-semibold">
+        <div className="mb-6 ml-6 border-b border-gray-300 pb-4 text-2xl font-semibold">
           이용 약관
           <ul className="mt-1 text-xs">
             항목을 선택하시면 해당 내용으로 이동합니다.
           </ul>
         </div>
 
-        <nav className="mb-6 flex gap-4">
-          <div className="flex w-1/2 flex-col gap-2">
+        <nav className="mb-10 flex gap-4">
+          <div className="ml-6 flex w-1/2 flex-col gap-2">
             {/* 제 1조부터 제 14조까지 */}
             {Array.from({ length: 14 }, (_, index) => (
               <button
                 key={`article${index + 1}`}
                 onClick={() => scrollToSection(`article${index + 1}`)}
-                className="w-full text-left text-xs hover:text-teal-200 focus:text-teal-200 focus:underline"
+                className="w-full text-left text-sm hover:text-teal-200 focus:text-teal-200 focus:underline"
               >
                 <span className="font-bold">제 {index + 1}조.</span>{" "}
                 {getArticleTitle(index + 1)}
@@ -98,7 +98,7 @@ function TermsPage() {
               <button
                 key={`article${index + 15}`}
                 onClick={() => scrollToSection(`article${index + 15}`)}
-                className="w-full text-left text-xs hover:text-teal-200 focus:text-teal-200 focus:underline"
+                className="w-full text-left text-sm hover:text-teal-200 focus:text-teal-200 focus:underline"
               >
                 <span className="font-bold">제 {index + 15}조.</span>{" "}
                 {getArticleTitle(index + 15)}
@@ -114,7 +114,7 @@ function TermsPage() {
           </div>
         </nav>
 
-        <section className="max-h-screen overflow-auto rounded-lg border border-gray-300 bg-gray-50 p-6 shadow-sm">
+        <section className="m-5 max-h-screen overflow-auto border border-gray-300 bg-gray-200 p-6 shadow-sm">
           <div id="article1" className="mb-6">
             <h2 className="mb-4 text-sm font-semibold text-gray-800">
               제 1조. 목적

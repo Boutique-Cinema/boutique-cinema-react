@@ -1,5 +1,5 @@
 import React from "react";
-// import { IoMdSearch } from "react-icons/io";
+import { IoMdSearch } from "react-icons/io";
 
 export default function Search() {
   return (
@@ -10,7 +10,7 @@ export default function Search() {
         placeholder="영화 검색"
       />
       <button className="absolute bottom-1.5 right-3" type="submit">
-        {/* <IoMdSearch className="h-6 w-6 text-[#393e46]" /> */}
+        <IoMdSearch className="h-6 w-6 text-[#393e46]" />
       </button>
     </div>
   );

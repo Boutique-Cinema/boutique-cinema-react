@@ -5,8 +5,8 @@ import Logo from "../common/Logo";
 import { Link } from "react-router-dom";
 
 const HEADER_MENU = [
-  { title: "로그인", url: "/login" },
-  { title: "회원가입", url: "/join" },
+  { title: "로그인", url: "/member/login" },
+  { title: "회원가입", url: "/member/join" },
   { title: "고객센터", url: "/support" },
 ];
 
@@ -15,8 +15,8 @@ export default function MemberHeader() {
     <header className="relative w-full pt-3">
       <h1 className="sr-only">Boutique Cinema</h1>
       <ul className="mb-8 flex justify-end gap-4 text-sm">
-        {HEADER_MENU.map((item) => (
-          <li className="hover:text-secondary">
+        {HEADER_MENU.map((item, i) => (
+          <li className="hover:text-red-300" key={i}>
             <Link to={item.url}>
               <h2>{item.title}</h2>
             </Link>
@@ -24,9 +24,9 @@ export default function MemberHeader() {
         ))}
       </ul>
       <div className="flex items-end justify-between">
-        <Link to={"/"} className="absolute -bottom-3 left-1/2 -translate-x-1/2">
+        <a href="/" className="absolute -bottom-3 left-1/2 -translate-x-1/2">
           <Logo />
-        </Link>
+        </a>
         <Nav />
         <Search />
       </div>

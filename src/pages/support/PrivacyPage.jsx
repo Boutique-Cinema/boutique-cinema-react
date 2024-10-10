@@ -27,7 +27,7 @@ function PrivacyPage() {
       {
         title: "개인정보의 처리목적",
         content: `
-        <p className="text-xs">회사는 다음 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는 개인정보 보호법 제 18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.</p>
+        <p className="text-sm">회사는 다음 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는 개인정보 보호법 제 18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.</p>
         <table class="min-w-full border-collapse border border-gray-300">
           <thead>
             <tr>
@@ -151,24 +151,25 @@ function PrivacyPage() {
   return (
     <>
       <div className="mx-auto px-8 py-6">
-        <div className="mb-6 border-b border-gray-300 pb-4">
+        <div className="mb-6 ml-6 border-b border-gray-300 pb-4">
           <h1 className="mb-6 text-2xl font-semibold">개인정보처리방침</h1>
-          <p className="mb-3 mt-1 text-xs font-light">
+          <p className="size- mb-3 mt-1 text-sm font-light">
             부띠끄시네마(주)(이하 '회사')는 개인정보보호법에 따라 이용자의
             개인정보 보호 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을
-            원활하게 처리할 수 있도록 다음과 같은 개인정보 처리방침을 두고
-            있습니다. 회사는 개인정보 처리방침을 개정하는 경우 웹사이트
-            공지사항(또는 개별공지)을 통하여 공지할 것입니다.
+            원활하게 처리할 수 있도록 <br />
+            다음과 같은 개인정보 처리방침을 두고 있습니다. 회사는 개인정보
+            처리방침을 개정하는 경우 웹사이트 공지사항(또는 개별공지)을 통하여
+            공지할 것입니다.
           </p>
-          <p className="mb-6 mt-1 text-xs font-bold text-teal-200">
+          <p className="mb-6 mt-1 text-sm font-bold text-teal-200">
             본 방침은 2024년 07월 22일부터 시행됩니다.
           </p>
-          <p className="mt-1 text-xs">
+          <p className="mt-1 text-sm">
             항목을 선택하시면 해당 내용으로 이동합니다.
           </p>
         </div>
 
-        <nav className="relative mb-6 flex gap-4">
+        <nav className="relative mb-6 ml-6 flex gap-4">
           <div className="flex w-1/2 flex-col gap-2">
             {/* 제 1조부터 제 10조까지 */}
             {Array.from({ length: 10 }, (_, index) => (
@@ -179,7 +180,7 @@ function PrivacyPage() {
                     .getElementById(`article${index + 1}`)
                     .scrollIntoView({ behavior: "smooth" })
                 }
-                className="w-full text-left text-xs hover:text-teal-200 focus:text-teal-200 focus:underline"
+                className="w-full text-left text-sm hover:text-teal-200 focus:text-teal-200 focus:underline"
               >
                 <span className="font-bold">제 {index + 1}조.</span>{" "}
                 {getArticle(index + 1).title}
@@ -197,7 +198,7 @@ function PrivacyPage() {
                     .getElementById(`article${index + 11}`)
                     .scrollIntoView({ behavior: "smooth" })
                 }
-                className="w-full text-left text-xs hover:text-teal-200 focus:text-teal-200 focus:underline"
+                className="w-full text-left text-sm hover:text-teal-200 focus:text-teal-200 focus:underline"
               >
                 <span className="font-bold">제 {index + 11}조.</span>{" "}
                 {getArticle(index + 11).title}
@@ -206,7 +207,7 @@ function PrivacyPage() {
           </div>
         </nav>
 
-        <section className="max-h-screen overflow-auto rounded-lg border border-gray-300 bg-gray-50 p-4 shadow-sm">
+        <section className="m-5 mb-12 max-h-screen overflow-auto border border-gray-300 bg-gray-200 p-6 shadow-sm">
           {Array.from({ length: 15 }, (_, index) => {
             // 배열의 길이에 맞게 수정
             const article = getArticle(index + 1);
@@ -216,11 +217,11 @@ function PrivacyPage() {
                 id={`article${index + 1}`}
                 className="mb-4"
               >
-                <h2 className="mb-2 text-xl font-semibold text-gray-800">
+                <h2 className="mb-2 text-sm font-semibold text-gray-800">
                   {article.title}
                 </h2>
                 <div
-                  className="leading-relaxed text-gray-700"
+                  className="text-xs leading-relaxed text-gray-700"
                   dangerouslySetInnerHTML={{ __html: article.content }}
                 />
               </div>
