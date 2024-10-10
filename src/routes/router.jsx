@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
 import JoinPage from "../pages/member/JoinPage";
+import LoginPage from "../components/member/LoginComponent";
 // import reservationRouter from "./reservationRouter";
 import supportRouter from "./supportRouter";
 import greetingRouter from "./greetingRouter";
@@ -32,8 +33,12 @@ const root = createBrowserRouter([
     ],
   },
   {
-    path: "/member/join",
+    path: "/member/join", // 회원가입 페이지
     element: <JoinPage />,
+  },
+  {
+    path: "/login", // 로그인 페이지
+    element: <LoginPage />,
   },
   {
     path: "/admin",
