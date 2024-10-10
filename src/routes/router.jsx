@@ -28,7 +28,7 @@ const root = createBrowserRouter([
       { path: "/mypage/reserve", element: <MyReservationPage /> },
       ...supportRouter,
       ...movieRouter,
-      ...greetingRouter, // greetingRouter의 경로들을 병합
+      ...greetingRouter,
     ],
   },
   {
