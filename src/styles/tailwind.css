@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "roca-two";
+  src: url("/public/roca-two-bold.ttf");
+}
+
+* {
+  font-family: "Spoqa Han Sans Neo", "sans-serif";
+}
+
+body {
+  background-color: #393e46;
+  color: #fff;
+}
+
+.logo {
+  font-family: "roca-two", serif;
+  font-size: 2rem;
+}
