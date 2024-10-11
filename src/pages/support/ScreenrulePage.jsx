@@ -10,9 +10,9 @@ function ScreenrulePage() {
           </h1>
         </div>
 
-        <nav>
-          <div className="mb-4 font-bold">
-            <span className="text-2xl font-normal italic text-teal-500">
+        <nav className="mt-14">
+          <div className="mb-4 text-xl font-bold">
+            <span className="mr-2 text-2xl font-normal italic text-teal-500">
               01.
             </span>
             영화정보
@@ -53,8 +53,8 @@ function ScreenrulePage() {
 
           <div className="mb-4 flex justify-between border-b-2">
             <div className="w-1/2 pr-4">
-              <div className="mb-4 font-bold">
-                <span className="text-2xl font-normal italic text-teal-500">
+              <div className="mb-4 text-xl font-bold">
+                <span className="mr-2 text-2xl font-normal italic text-teal-500">
                   02.
                 </span>
                 경쟁상황 및 사전 고객 반응 확인
@@ -68,8 +68,8 @@ function ScreenrulePage() {
             </div>
 
             <div className="w-1/2 pl-4">
-              <div className="mb-4 font-bold">
-                <span className="text-2xl font-normal italic text-teal-500">
+              <div className="mb-4 text-xl font-bold">
+                <span className="mr-2 text-2xl font-normal italic text-teal-500">
                   03.
                 </span>
                 프로그램 배정 (각 극장)
@@ -86,8 +86,8 @@ function ScreenrulePage() {
 
           <div className="flex justify-between">
             <div className="w-1/2 pr-4">
-              <div className="mb-4 font-bold">
-                <span className="text-2xl font-normal italic text-teal-500">
+              <div className="mb-4 text-xl font-bold">
+                <span className="mr-2 text-2xl font-normal italic text-teal-500">
                   04.
                 </span>
                 배정 미팅
@@ -102,9 +102,9 @@ function ScreenrulePage() {
               </ul>
             </div>
 
-            <div className="w-1/2 pl-4">
-              <div className="mb-4 font-bold">
-                <span className="text-2xl font-normal italic text-teal-500">
+            <div className="mb-64 w-1/2 pl-4">
+              <div className="mb-4 text-xl font-bold">
+                <span className="mr-2 text-2xl font-normal italic text-teal-500">
                   05.
                 </span>
                 프로그램 개봉 후
