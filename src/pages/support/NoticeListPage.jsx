@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
+import NoticeManager from "../../api/support/noticeManager";
 
 const NoticeListPage = () => {
   const [notices, setNotices] = useState([]);
@@ -17,15 +18,11 @@ const NoticeListPage = () => {
   };
 
   useEffect(() => {
-    const fetchNotices = () => {
+    const fetchNotices = async () => {
       try {
-        // 테스트용 공지사항 데이터 생성
-        const fakeNotices = Array.from({ length: 1000 }, (_, index) => ({
-          id: index + 1,
-          title: `공지사항 제목 ${index + 1}`,
-          date: new Date(2024, 8, index + 1).toISOString(), // 2024년 9월의 날짜
-        }));
-        setNotices(fakeNotices);
+        // 데이터 불러오기
+        const data = await NoticeManager.fetchNotices(); // NoticeManager를 통해 공지사항 가져오기
+        setNotices(data);
       } catch (err) {
         setError(err.message);
       } finally {
