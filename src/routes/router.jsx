@@ -2,10 +2,10 @@ import { lazy } from "react";
 import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
 import JoinPage from "../pages/member/JoinPage";
 import LoginPage from "../components/member/LoginComponent";
-// import reservationRouter from "./reservationRouter";
 import supportRouter from "./supportRouter";
 import greetingRouter from "./greetingRouter";
 import movieRouter from "./movieRouter";
+import adminSupport from "./adminSupportRouter";
 
 const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
@@ -34,16 +34,20 @@ const root = createBrowserRouter([
     ],
   },
   {
-    path: "/member/join", // 회원가입 페이지
+    path: "/member/join",
     element: <JoinPage />,
   },
   {
-    path: "/login", //  로그인 페이지
+    path: "/login",
     element: <LoginPage />,
   },
   {
     path: "/admin",
+
     element: <AdminLayout />,
+    children: [
+      ...adminSupport, // 이 부분을 추가해야 경로가 인식됩니다.
+    ],
   },
 ]);
 
