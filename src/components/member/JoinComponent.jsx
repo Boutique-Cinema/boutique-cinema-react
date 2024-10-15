@@ -1,7 +1,7 @@
 // 회원가입 페이지
 import { useState } from "react";
 import Logo from "../common/Logo";
-import { postAdd } from "../../api/membersApi";
+import { postAdd, checkId } from "../../api/membersApi";
 
 function JoinPage() {
   const [form, setForm] = useState({
@@ -15,21 +15,19 @@ function JoinPage() {
     years_14_more: false,
     use_terms_agree: false,
     personal_info_agree: false,
+    joinDate: new Date().toISOString().split("T")[0], // YYYY-MM-DD 형식으로 초기화
   });
 
-  const [id, setId] = useState("");
   const [idError, setIdError] = useState("");
+  const [isIdCheck, setIsIdCheck] = useState(false); // 중복 검사를 했는지 안했는지
   const [isIdAvailable, setIsIdAvailable] = useState(false); // 아이디 사용가능한지 아닌지
 
-  const [password, setPassword] = useState("");
   const [pwError, setPwError] = useState("");
   const [isPwAvailable, setIsPwAvailable] = useState(false);
 
-  const [passwordConfirm, setpasswordConfirm] = useState("");
   const [pwConfirmError, setPwConfirmError] = useState("");
   const [isPwConfirmPassword, setIsPwConfirmPassword] = useState(false);
 
-  const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isEmailAvailable, setIsEmailAvailable] = useState(false);
 
@@ -38,11 +36,9 @@ function JoinPage() {
   // const [nameError, setNameError] = useState("");
   // const [isNameAvailable, setIsNameAvailable] = useState(false);
 
-  const [birth, setBirth] = useState("");
   const [birthError, setBirthError] = useState("");
   const [isBirthAvailable, setIsBirthAvailable] = useState(false);
 
-  const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [isPhoneAvailable, setIsPhoneAvailable] = useState(false);
 
@@ -87,13 +83,32 @@ function JoinPage() {
       setIdError("8~20자의 영문/숫자만 입력 가능합니다.");
       setIsIdAvailable(false);
       return false;
-    } else {
-      setIdError("사용 가능한 아이디입니다.");
-      setIsIdAvailable(true);
-      return true;
     }
-  };
 
+    // 사용자 입력 후 500ms 대기
+    const checkIdTimeout = setTimeout(async () => {
+      try {
+        const responseData = await checkId(id);
+        if (responseData) {
+          setIdError("사용 가능한 아이디입니다.");
+          setIsIdCheck(true);
+          setIsIdAvailable(true);
+          return true;
+        } else {
+          setIdError("이미 사용중인 아이디입니다.");
+          setIsIdAvailable(false);
+          return false;
+        }
+      } catch (error) {
+        setIdError("서버오류입니다. 관리자에게 문의해주세요.");
+        console.error(error);
+        return false;
+      }
+    }, 100);
+
+    // 이전의 타이머를 클리어
+    return () => clearTimeout(checkIdTimeout);
+  };
   // 비밀번호 체크 핸들러
   const pwCheckHandler = async (password) => {
     const pwRegex = /^[a-z\d]{8,20}$/;
@@ -244,21 +259,12 @@ function JoinPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate() === true) {
-      // 오늘 날짜를 YYYY-MM-DD 형식으로 생성
-      const today = new Date();
-      const joinDate = today.toISOString().split("T")[0]; // YYYY-MM-DD 형식
-
-      // 폼 데이터에 날짜 추가
-      const formDataWithDate = {
-        ...form,
-        joinDate,
-      };
-
-      postAdd(form); // JSON 형식으로 서버에 보냄
+      const { passwordConfirm, allCheck, ...dataToSubmit } = form; // passwordConfirm과 allCheck 제외
+      postAdd(dataToSubmit); // JSON 형식으로 서버에 보냄
 
       console.log("Form submitted:", form);
       alert("회원가입이 완료됐습니다.");
-      window.location.href = "/";
+      // window.location.href = "/";
     }
   };
 

@@ -8,28 +8,28 @@ export default function MainPage() {
       title: "조커",
       image: "/joker.jpg",
       rating: "15세 이상 관람가",
-      releaseDate: "2019-10-04",
+      releaseDate: "2019.10.04",
     },
     {
       id: 2,
       title: "대도시의 사랑법",
       image: "/love.jpg",
       rating: "12세 이상 관람가",
-      releaseDate: "2021-09-22",
+      releaseDate: "2021.09.22",
     },
     {
       id: 3,
       title: "베테랑",
       image: "/veterang.jpg",
       rating: "15세 이상 관람가",
-      releaseDate: "2015-12-24",
+      releaseDate: "2015.12.24",
     },
     {
       id: 4,
       title: "Hello, Asterum!",
       image: "/hello.jpg",
       rating: "전체 관람가",
-      releaseDate: "2022-01-01",
+      releaseDate: "2022.01.01",
     },
   ];
 
@@ -54,7 +54,7 @@ export default function MainPage() {
                     className="h-96 w-auto rounded-md"
                   />
                 </Link>
-                {/* 각 꼭짓점 부분만 어두워지도록 설정 */}
+                {/* 각 꼭짓점 부분 어둡게 */}
                 <div className="absolute inset-0 rounded-md bg-gradient-to-br from-black via-transparent to-transparent opacity-30" />
                 <div className="absolute inset-0 rounded-md bg-gradient-to-bl from-black via-transparent to-transparent opacity-30" />
                 <div className="absolute inset-0 rounded-md bg-gradient-to-tr from-black via-transparent to-transparent opacity-30" />
@@ -66,12 +66,13 @@ export default function MainPage() {
               <span className="mt-4 text-center text-2xl text-white">
                 {movie.title}
               </span>
-              <div className="mt-6 flex w-full flex-col items-start text-left">
-                <span className="text-sm text-gray-300">{movie.rating}</span>
+
+              <div className="mt-6 flex w-full items-center justify-between">
                 <span className="text-sm text-gray-300">
-                  <span>개봉일: </span>
-                  {movie.releaseDate}
+                  개봉일: {movie.releaseDate}
                 </span>
+                <div className="mx-2 h-4 border-l border-gray-300"></div>
+                <span className="text-sm text-gray-300">{movie.rating}</span>
               </div>
             </div>
           ))}
@@ -109,12 +110,12 @@ export default function MainPage() {
               <span className="mt-4 text-center text-2xl text-white">
                 {movie.title}
               </span>
-              <div className="mt-6 flex w-full flex-col items-start text-left">
-                <span className="text-sm text-gray-300">{movie.rating}</span>
+              <div className="mt-6 flex w-full items-center justify-between">
                 <span className="text-sm text-gray-300">
-                  <span>개봉일: </span>
-                  {movie.releaseDate}
+                  개봉일: {movie.releaseDate}
                 </span>
+                <div className="mx-2 h-4 border-l border-gray-300"></div>
+                <span className="text-sm text-gray-300">{movie.rating}</span>
               </div>
             </div>
           ))}
@@ -154,12 +155,12 @@ export default function MainPage() {
               <span className="mt-4 text-center text-2xl text-white">
                 {movie.title}
               </span>
-              <div className="mt-6 flex w-full flex-col items-start text-left">
-                <span className="text-sm text-gray-300">{movie.rating}</span>
+              <div className="mt-6 flex w-full items-center justify-between">
                 <span className="text-sm text-gray-300">
-                  <span>개봉일: </span>
-                  {movie.releaseDate}
+                  개봉일: {movie.releaseDate}
                 </span>
+                <div className="mx-2 h-4 border-l border-gray-300"></div>
+                <span className="text-sm text-gray-300">{movie.rating}</span>
               </div>
             </div>
           ))}
