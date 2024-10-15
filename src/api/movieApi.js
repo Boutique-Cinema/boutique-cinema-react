@@ -11,14 +11,21 @@ export const getMovie = async (movieNum) => {
   return res.data;
 };
 
-export const getMovieList = async (pageParam) => {
-  // 영화 리스트 페이지 처리
-  const { page, size } = pageParam;
-  const res = await axios.get(`${MOVIE_API_PREFIX}/list`, {
-    params: { page: page, size: size },
-  });
+export const getMovieList = async (page, size, searchCondition) => {
+  try {
+    let url = `${MOVIE_API_PREFIX}/list`;
 
-  return res.data;
+    //조건에 따라 URL 수정
+    if (searchCondition) {
+      url = `${MOVIE_API_PREFIX}/list?page=${page}&size=${size}&searchCondition=${searchCondition}`;
+    }
+    const response = await axios.get(url); // API 호출
+
+    return response.data; // 응답 데이터 반환
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    throw error; // 에러 처리
+  }
 };
 
 // 영화 등록
@@ -45,4 +52,24 @@ export const modifyMovie = async (movieNum, movieData) => {
 export const removeMovie = async (movieNum) => {
   await axios.delete(`${MOVIE_API_PREFIX}/${movieNum}`);
   return; // 삭제 후 특별한 반환값이 필요 없는 경우
+};
+
+// 영화 정렬 기능
+export const fetchSortedMovies = async (page, size, sortOrder) => {
+  try {
+    let url = `${MOVIE_API_PREFIX}/list?page=${page}&size=${size}`;
+
+    // 정렬 조건에 따라 URL 수정
+    if (sortOrder === "최신 순") {
+      url = `${MOVIE_API_PREFIX}/list/latest?page=${page}&size=${size}`;
+    } else if (sortOrder === "오래된 순") {
+      url = `${MOVIE_API_PREFIX}/list/earliest?page=${page}&size=${size}`;
+    }
+    const response = await axios.get(url); // API 호출
+
+    return response.data; // API로부터 받은 데이터 반환
+  } catch (error) {
+    console.error("Error fetching sorted movies:", error);
+    throw error; // 에러 처리
+  }
 };
