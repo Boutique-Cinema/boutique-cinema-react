@@ -5,7 +5,7 @@ export default function AdminHeader() {
   return (
     <header className="flex h-[11vh] items-end">
       <div className="w-1/3">
-        <a href="/admin/movie">
+        <a href="/admin/movie/list">
           <Logo />
         </a>
       </div>
