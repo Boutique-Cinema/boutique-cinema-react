@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const NAV_MENU = [
-  { title: "공지사항", url: "support/notice" },
+  { title: "공지사항", url: "support" },
   { title: "1:1문의", url: "support/qna" },
   <li>고객센터 운영시간 09:00~18:00</li>,
 ];
