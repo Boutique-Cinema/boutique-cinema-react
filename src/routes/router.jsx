@@ -1,13 +1,9 @@
 import { lazy } from "react";
 import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
 import JoinPage from "../pages/member/JoinPage";
-<<<<<<< HEAD
 import LoginPage from "../pages/member/LoginPage";
 import FindInfoPage from "../pages/member/FindInfoPage";
 // import reservationRouter from "./reservationRouter";
-=======
-import LoginPage from "../components/member/LoginComponent";
->>>>>>> develop
 import supportRouter from "./supportRouter";
 import greetingRouter from "./greetingRouter";
 import adminMovieRouter from "./adminMovieRouter";
