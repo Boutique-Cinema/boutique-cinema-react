@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { lazy } from "react";
 
 const NoticeListPage = lazy(() => import("../pages/support/NoticeListPage"));
@@ -18,7 +18,10 @@ const supportRouter = [
     children: [
       { path: "", element: <NoticeListPage /> }, // 기본 경로로 고객센터 페이지를 설정하고, notice페이지로 바로 리다이렉트합니다.
       { path: "notice", element: <NoticeListPage /> },
-      { path: "notice/detail/:id", element: <NoticeDetailPage /> },
+      {
+        path: "notice/:nnum",
+        element: <NoticeDetailPage />,
+      },
       { path: "qna", element: <QnaPage /> },
       { path: "qna/detail", element: <QnaDetailPage /> },
       { path: "qna/register", element: <QnaRegisterPage /> },

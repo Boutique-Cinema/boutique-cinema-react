@@ -1,12 +1,18 @@
 import { lazy } from "react";
 import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
 import JoinPage from "../pages/member/JoinPage";
+<<<<<<< HEAD
 import LoginPage from "../pages/member/LoginPage";
 import FindInfoPage from "../pages/member/FindInfoPage";
 // import reservationRouter from "./reservationRouter";
+=======
+import LoginPage from "../components/member/LoginComponent";
+>>>>>>> develop
 import supportRouter from "./supportRouter";
 import greetingRouter from "./greetingRouter";
+import adminMovieRouter from "./adminMovieRouter";
 import movieRouter from "./movieRouter";
+import adminSupport from "./adminSupportRouter";
 
 const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
@@ -36,7 +42,7 @@ const root = createBrowserRouter([
     ],
   },
   {
-    path: "/member/join", // 회원가입 페이지
+    path: "/member/join",
     element: <JoinPage />,
   },
   {
@@ -45,7 +51,9 @@ const root = createBrowserRouter([
   },
   {
     path: "/admin",
+
     element: <AdminLayout />,
+    children: [...adminMovieRouter, ...adminSupport],
   },
 ]);
 

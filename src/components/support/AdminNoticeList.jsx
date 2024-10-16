@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import noticeApi from "../../api/support/noticeApi";
 
-const NoticeListPage = () => {
+const AdminNoticeListPage = () => {
   const [notices, setNotices] = useState([]); // 공지사항 데이터를 저장하는 상태
   const [loading, setLoading] = useState(true); // 로딩 상태 (데이터를 불러오는 동안 표시)
   const [error, setError] = useState(null); // 에러 상태 (데이터 로드 중 에러 발생 시 표시)
@@ -174,7 +174,7 @@ const NoticeListPage = () => {
                     </td>
                     <td className="border border-gray-500 px-4 py-3 text-left text-base">
                       <Link
-                        to={`notice/${notice.nnum}`}
+                        to={`${notice.nnum}`}
                         className="overflow-hidden text-ellipsis whitespace-nowrap text-gray-200 hover:underline"
                       >
                         {notice.ntitle.length > 30
@@ -232,4 +232,4 @@ const NoticeListPage = () => {
   );
 };
 
-export default NoticeListPage;
+export default AdminNoticeListPage;
