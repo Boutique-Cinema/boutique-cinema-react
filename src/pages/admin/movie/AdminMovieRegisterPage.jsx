@@ -8,6 +8,7 @@ const AdminMovieRegisterPage = () => {
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const day = String(today.getDate()).padStart(2, "0");
   const formattedDate = `${year}-${month}-${day}`;
+  const [posterUrl, setPosterUrl] = useState(""); //포스터 Url 상태추가
 
   // 영화 등록에 필요한 상태 초기화
   const [movie, setMovie] = useState({
@@ -51,7 +52,18 @@ const AdminMovieRegisterPage = () => {
   // 파일 입력 처리 함수
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    setMovie({ ...movie, [name]: files[0] }); // 파일 상태 업데이트
+    const file = files[0];
+
+    if (file) {
+      // FileReader를 사용하여 파일 읽기
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPosterUrl(reader.result); // 포스터 URL을 임시로 저장
+      };
+      reader.readAsDataURL(file); // 파일을 URL로 읽기
+    }
+
+    setMovie({ ...movie, [name]: file }); // 파일 상태 업데이트
   };
 
   //체크박스 등록 제출 처리 함수
@@ -163,6 +175,15 @@ const AdminMovieRegisterPage = () => {
               name="file"
               onChange={handleFileChange}
             />
+            {posterUrl && (
+              <div className="mt-2">
+                <img
+                  src={posterUrl} // 여기에서 임시 URL 대신 백엔드 URL을 사용할 수 있습니다
+                  alt="포스터 미리보기"
+                  className="h-[200px] w-[160px] rounded object-cover"
+                />
+              </div>
+            )}
           </div>
           <div>
             <div className="mb-1 font-medium text-gray-200">예고편 URL</div>
@@ -305,6 +326,7 @@ const AdminMovieRegisterPage = () => {
           <button
             className="mt-4 w-full rounded-md bg-blue-500 p-2 text-white transition hover:bg-blue-700"
             type="submit"
+            onClick={handleSubmit}
           >
             등록
           </button>
