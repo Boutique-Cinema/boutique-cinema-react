@@ -30,7 +30,7 @@ const NoticeListPage = () => {
         ...notice,
         nDate: formatDate(notice.nDate), // 날짜 포맷 적용
       }));
-      setNotices(data); // 가져온 데이터를 상태에 저장
+      setNotices(formattedNotices); // 가져온 데이터를 상태에 저장
     } catch (err) {
       setError(err.message); // 에러가 발생하면 에러 상태 업데이트
     } finally {
@@ -174,7 +174,7 @@ const NoticeListPage = () => {
                     </td>
                     <td className="border border-gray-500 px-4 py-3 text-left text-base">
                       <Link
-                        to={`notice/${notice.nnum}`}
+                        to={`support/notice/${notice.nnum}`}
                         className="overflow-hidden text-ellipsis whitespace-nowrap text-gray-200 hover:underline"
                       >
                         {notice.ntitle.length > 30
@@ -200,24 +200,28 @@ const NoticeListPage = () => {
             </button>
             <button
               onClick={handlePrevious}
-              className="mx-1 whitespace-nowrap rounded border border-gray-500 bg-gray-700 px-2 py-1 text-white hover:bg-gray-600"
+              className="mx-1 rounded border border-gray-500 bg-gray-700 px-2 py-1 text-white hover:bg-gray-600"
             >
-              이전
+              &lt;
             </button>
-            {pageSequence.map((pageIndex) => (
+            {pageSequence.map((page) => (
               <button
-                key={pageIndex}
-                onClick={() => handlePageChange(pageIndex)}
-                className={`mx-1 rounded border border-gray-500 px-2 py-1 text-white ${currentPage === pageIndex ? "bg-blue-500" : "bg-gray-700 hover:bg-gray-600"}`}
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`mx-1 rounded border px-2 py-1 ${
+                  page === currentPage
+                    ? "bg-gray-600 text-white"
+                    : "border-gray-500 text-white hover:bg-gray-600"
+                }`}
               >
-                {pageIndex}
+                {page}
               </button>
             ))}
             <button
               onClick={handleNext}
-              className="mx-1 whitespace-nowrap rounded border border-gray-500 bg-gray-700 px-2 py-1 text-white hover:bg-gray-600"
+              className="mx-1 rounded border border-gray-500 bg-gray-700 px-2 py-1 text-white hover:bg-gray-600"
             >
-              다음
+              &gt;
             </button>
             <button
               onClick={handleLastGroup}
