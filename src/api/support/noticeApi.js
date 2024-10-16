@@ -41,7 +41,7 @@ const NoticeManager = {
   },
 
   // 공지사항 수정
-  updateNotice: async (nnum,noticeData) => {
+  updateNotice: async (nnum, noticeData) => {
     try {
       console.log(`공지사항 수정 중... ID: ${nnum}`, noticeData); // 요청 전 로그
       const response = await axios.put(`${Api_Url}/${nnum}`, noticeData);
@@ -74,7 +74,6 @@ const NoticeManager = {
       );
     }
   },
-
 
   // 공지사항 삭제
   deleteNotice: async (nnum) => {
