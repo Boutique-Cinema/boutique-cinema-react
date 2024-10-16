@@ -4,6 +4,7 @@ import JoinPage from "../pages/member/JoinPage";
 import LoginPage from "../components/member/LoginComponent";
 import supportRouter from "./supportRouter";
 import greetingRouter from "./greetingRouter";
+import adminMovieRouter from "./adminMovieRouter";
 import movieRouter from "./movieRouter";
 import adminSupport from "./adminSupportRouter";
 
@@ -45,9 +46,7 @@ const root = createBrowserRouter([
     path: "/admin",
 
     element: <AdminLayout />,
-    children: [
-      ...adminSupport, // 이 부분을 추가해야 경로가 인식됩니다.
-    ],
+    children: [...adminMovieRouter, ...adminSupport],
   },
 ]);
 
