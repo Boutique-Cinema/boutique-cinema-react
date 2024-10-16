@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import noticeApi from "../../api/support/noticeApi";
 
 const NoticeDetailPage = () => {
@@ -48,23 +48,38 @@ const NoticeDetailPage = () => {
   }
 
   return (
-    <div>
+    <>
       {notice ? (
-        <div>
-          <h1 className="mb-4 text-2xl font-bold">{notice.ntitle}</h1>
-          <p className="mb-2 text-gray-500">{formatDate(notice.ndate)}</p>
-          <div className="text-lg leading-relaxed">{notice.ncontent}</div>
-          <button
-            onClick={() => navigate("/support")} // 목록 페이지로 이동
-            className="mt-4 inline-block text-blue-500"
-          >
-            목록으로 돌아가기
-          </button>
-        </div>
+        <>
+          {/* 제목 부분 */}
+          <h1 className="mb-8 border-b-2 border-gray-300 text-left text-3xl font-bold text-gray-200">
+            {notice.ntitle}
+          </h1>
+
+          {/* 내용 부분 */}
+          <div className="mx-auto mt-8 w-4/5 max-w-full rounded-lg border-2 px-10 shadow-lg">
+            <div className="h-[600px] max-w-full overflow-y-auto px-8 py-6 text-lg leading-relaxed text-gray-200">
+              {/* 내용이 길어지면 스크롤 발생 */}
+              {notice.ncontent}
+            </div>
+
+            {/* 목록으로 돌아가기 버튼 (양끝에 선이 닿도록) */}
+            <div className="flex w-full justify-center border-t-2 border-gray-300 pt-4">
+              <div className="w-full">
+                <button
+                  onClick={() => navigate("/support")} // 목록 페이지로 이동
+                  className="rounded-lg bg-cyan-700 px-6 py-2 text-white transition hover:bg-cyan-800"
+                >
+                  목록으로 돌아가기
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
       ) : (
         <p>공지사항을 불러올 수 없습니다.</p>
       )}
-    </div>
+    </>
   );
 };
 
