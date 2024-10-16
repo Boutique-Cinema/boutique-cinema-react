@@ -7,6 +7,9 @@ const AdminNoticeList = lazy(
 const AdminNoticeDetail = lazy(
   () => import("../components/support/AdminNoticeDetail"),
 );
+const AdminNoticeModify = lazy(
+  () => import("../components/support/AdminNoticeModify"), // 추가된 부분
+);
 
 const adminSupport = [
   {
@@ -17,8 +20,12 @@ const adminSupport = [
         element: <AdminNoticeList />, // 공지사항 목록 페이지
       },
       {
-        path: "detail/:id",
+        path: ":nnum",
         element: <AdminNoticeDetail />, // 공지사항 상세 페이지
+      },
+      {
+        path: ":nnum/modify", // 수정 페이지 경로 추가
+        element: <AdminNoticeModify />, // 공지사항 수정 페이지
       },
     ],
   },

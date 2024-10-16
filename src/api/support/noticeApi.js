@@ -40,8 +40,25 @@ const NoticeManager = {
     }
   },
 
+  // 공지사항 수정
+  updateNotice: async (nnum,noticeData) => {
+    try {
+      console.log(`공지사항 수정 중... ID: ${nnum}`, noticeData); // 요청 전 로그
+      const response = await axios.put(`${Api_Url}/${nnum}`, noticeData);
+      console.log("공지사항 수정 성공:", response.data); // 응답 후 로그
+      return response.data; // 수정된 공지사항 데이터 반환
+    } catch (error) {
+      console.error(
+        `공지사항 수정 실패 (ID: ${nnum}):`,
+        error.response ? error.response.data : error.message,
+      ); // 에러 로그
+      throw new Error(
+        error.response ? error.response.data : "공지사항 수정 실패",
+      );
+    }
+  },
   // 공지사항 조회
-  updateNotice: async (nnum) => {
+  readNotice: async (nnum) => {
     try {
       console.log(`공지사항 조회 중... ID: ${nnum}`); // 요청 전 로그
       const response = await axios.get(`${Api_Url}/${nnum}`);
@@ -57,6 +74,7 @@ const NoticeManager = {
       );
     }
   },
+
 
   // 공지사항 삭제
   deleteNotice: async (nnum) => {
