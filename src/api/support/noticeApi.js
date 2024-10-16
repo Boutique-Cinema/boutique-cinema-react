@@ -43,7 +43,7 @@ const NoticeManager = {
   // 공지사항 수정
   updateNotice: async (nnum, noticeData) => {
     try {
-      console.log(`공지사항 수정 중... ID: ${nnum}`, noticeData); // 요청 전 로그
+      console.log(`공지사항 수정 중... ID: ${nnum}, noticeData`); // 요청 전 로그
       const response = await axios.put(`${Api_Url}/${nnum}`, noticeData);
       console.log("공지사항 수정 성공:", response.data); // 응답 후 로그
       return response.data; // 수정된 공지사항 데이터 반환
@@ -57,16 +57,17 @@ const NoticeManager = {
       );
     }
   },
+
   // 공지사항 조회
-  updateNotice: async (nNum) => {
+  readNotice: async (nnum) => {
     try {
-      console.log(`공지사항 조회 중... ID: ${nNum}`); // 요청 전 로그
-      const response = await axios.get(`${Api_Url}/${nNum}`);
+      console.log(`공지사항 조회 중... ID: ${nnum}`); // 요청 전 로그
+      const response = await axios.get(`${Api_Url}/${nnum}`);
       console.log("공지사항 조회 성공:", response.data); // 응답 후 로그
       return response.data; // API 응답의 데이터를 반환
     } catch (error) {
       console.error(
-        `공지사항 조회 실패 (ID: ${nNum}):`,
+        `공지사항 조회 실패 (ID: ${nnum}):`,
         error.response ? error.response.data : error.message,
       ); // 에러 로그
       throw new Error(
@@ -76,14 +77,14 @@ const NoticeManager = {
   },
 
   // 공지사항 삭제
-  deleteNotice: async (nNum) => {
+  deleteNotice: async (nnum) => {
     try {
-      console.log(`공지사항 삭제 중... ID: ${nNum}`); // 요청 전 로그
-      await axios.delete(`${Api_Url}/${nNum}`);
-      console.log(`공지사항 삭제 성공: ID ${nNum}`); // 응답 후 로그
+      console.log(`공지사항 삭제 중... ID: ${nnum}`); // 요청 전 로그
+      await axios.delete(`${Api_Url}/${nnum}`);
+      console.log(`공지사항 삭제 성공: ID ${nnum}`); // 응답 후 로그
     } catch (error) {
       console.error(
-        `공지사항 삭제 실패 (ID: ${nNum}):`,
+        `공지사항 삭제 실패 (ID: ${nnum}):`,
         error.response ? error.response.data : error.message,
       ); // 에러 로그
       throw new Error(
