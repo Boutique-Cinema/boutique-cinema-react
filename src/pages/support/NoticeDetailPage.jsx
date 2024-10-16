@@ -25,7 +25,7 @@ const NoticeDetailPage = () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await noticeApi.updateNotice(nnum); // 서버에서 공지사항 불러옴
+      const data = await noticeApi.readNotice(nnum); // 서버에서 공지사항 불러옴
       setNotice(data);
     } catch (err) {
       setError(err.message);
