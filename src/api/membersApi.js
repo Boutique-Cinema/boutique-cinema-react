@@ -10,6 +10,27 @@ export const postAdd = async (form) => {
   return res.data;
 };
 
+export const postLogin = async (form) => {
+  try {
+    console.log("로그인 요청 데이터:", form); // 서버로 보내는 데이터 로그
+
+    // FormData 객체 생성
+    const formData = new FormData();
+    for (const key in form) {
+      formData.append(key, form[key]);
+    }
+
+    const response = await axios.post(`${prefix}/login`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const checkId = async (id) => {
   try {
     const response = await axios.get(`${prefix}/check-id`, {
