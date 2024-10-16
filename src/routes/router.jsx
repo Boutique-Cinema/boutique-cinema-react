@@ -1,8 +1,5 @@
 import { lazy } from "react";
 import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
-import JoinPage from "../pages/member/JoinPage";
-import LoginPage from "../pages/member/LoginPage";
-import FindInfoPage from "../pages/member/FindInfoPage";
 // import reservationRouter from "./reservationRouter";
 import supportRouter from "./supportRouter";
 import greetingRouter from "./greetingRouter";
@@ -14,6 +11,9 @@ const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
 const MainPage = lazy(() => import("../pages/MainPage"));
 const InfoPage = lazy(() => import("../pages/info/InfoPage"));
+const JoinPage = lazy(() => import("../pages/member/JoinPage"));
+const LoginPage = lazy(() => import("../pages/member/LoginPage"));
+const FindInfoPage = lazy(() => import("../pages/member/FindInfoPage"));
 const MyReservationPage = lazy(
   () => import("../pages/mypage/MyReservationPage"),
 );
