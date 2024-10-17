@@ -1,65 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { IoMdSearch } from "react-icons/io";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; // 페이지 이동을 위한 훅
+import { fetchSortedMovies, getMovieList } from "../../api/movieApi";
+import { useNavigate } from "react-router-dom";
 
 export default function Search() {
-  const [keyword, setKeyword] = useState(""); // 검색어 상태 관리
   const [movies, setMovies] = useState([]); // 영화 목록 상태 관리
-  const navigate = useNavigate(); // 페이지 이동을 위한 네비게이션
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const navigate = useNavigate();
+  const [sortOrder, setSortOrder] = useState("최신 순");
+  const [searchCondition, setSearchCondition] = useState("");
 
   useEffect(() => {
-    // 검색어가 입력될 때마다 API 요청
-    if (keyword.length > 0) {
-      const fetchMovies = async () => {
-        try {
-          const response = await axios.get("/api/admin/movie/list", {
-            params: { searchCondition: keyword },
-          });
-          setMovies(response.data.content); // Page 객체의 content 사용
-        } catch (error) {
-          console.error("Error fetching movies:", error);
-        }
-      };
+    const fetchMovies = async () => {
+      const data = await fetchSortedMovies(page, 10, sortOrder);
+      setMovies(data.content);
+      setTotalPages(data.totalPages);
+    };
 
-      fetchMovies();
-    } else {
-      setMovies([]); // 검색어가 없으면 목록 초기화
+    fetchMovies();
+  }, [page, sortOrder]);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (searchCondition) {
+      // 검색어가 있으면 movie 페이지로 이동
+      navigate(`/movie?search=${searchCondition}`);
     }
-  }, [keyword]);
-
-  const handleMovieClick = (korTitle) => {
-    // 영화 제목 클릭 시, 영화 목록 페이지로 이동하며 검색어 전달
-    navigate(`/movies?search=${korTitle}`);
   };
 
   return (
     <div className="relative">
-      <input
-        type="text"
-        value={keyword} // input에 입력된 값을 상태와 연동
-        onChange={(e) => setKeyword(e.target.value)}
-        className="h-9 w-[250px] rounded-full border pl-3 text-black"
-        placeholder="영화 검색"
-      />
-      <button className="absolute bottom-1.5 right-3" type="submit">
-        <IoMdSearch className="h-6 w-6 text-[#393e46]" />
-      </button>
-
-      {/* 검색 결과를 보여주는 부분 */}
-      {movies.length > 0 && (
-        <ul className="absolute mt-2 w-[250px] rounded-lg border bg-white p-2">
-          {movies.map((movie) => (
-            <li
-              key={movie.movieNum}
-              className="cursor-pointer px-2 py-1 text-sm hover:bg-gray-200"
-              onClick={() => handleMovieClick(movie.korTitle)} // 클릭 시 함수 실행
-            >
-              {movie.korTitle}
-            </li>
-          ))}
-        </ul>
-      )}
+      <form className="relative" onSubmit={handleSearch}>
+        <input
+          type="text"
+          className="h-10 w-48 rounded-full border px-3 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="검색어를 입력하세요."
+          value={searchCondition}
+          onChange={(e) => setSearchCondition(e.target.value)}
+        />
+        <button type="submit" className="absolute right-3 top-1">
+          <IoMdSearch className="h-6 w-6 text-gray-600" />
+        </button>
+      </form>
     </div>
   );
 }
