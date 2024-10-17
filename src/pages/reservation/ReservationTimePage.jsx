@@ -3,7 +3,7 @@ import ReservationCalendar from "../../components/reservation/ReservationCalenda
 import ReservationMovieList from "./../../components/reservation/ReservationMovieList";
 import TimeTable from "../../components/reservation/TimeTable";
 import { getDateFormatted } from "../../util/dateFormatUtil";
-import { fetchMoviesByDate } from "../../api/movie/movieApi";
+import { fetchMoviesByDate } from "../../api/movieApi";
 
 export default function ReservationTimePage() {
   const today = getDateFormatted(new Date());
