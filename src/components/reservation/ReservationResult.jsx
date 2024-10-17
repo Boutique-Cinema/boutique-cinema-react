@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchMovieById } from "../../api/movie/movieApi";
 import {
   adultPrice,
   calculateTotalPrice,
@@ -9,6 +8,7 @@ import {
   teenPrice,
 } from "../../util/reservationUtil";
 import { createReservation } from "../../api/reservationApi";
+import { getMovie } from "../../api/movieApi";
 
 export default function ReservationResult({
   adultCount,
@@ -28,7 +28,7 @@ export default function ReservationResult({
     if (!movieNum) return;
 
     const loadMovie = async () => {
-      const data = await fetchMovieById(movieNum);
+      const data = await getMovie(movieNum);
       setMovie(data);
     };
 

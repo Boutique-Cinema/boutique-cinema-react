@@ -73,3 +73,17 @@ export const fetchSortedMovies = async (page, size, sortOrder) => {
     throw error; // 에러 처리
   }
 };
+
+// 날짜별 영화 목록 조회
+export const fetchMoviesByDate = async (date) => {
+  try {
+    // 서버에서 영화 리스트를 받아오는 axios 요청
+    const response = await axios.get(
+      `${MOVIE_API_PREFIX}/list/date?date=${date}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("영화 목록을 가져오는 데 오류가 발생했습니다:", error);
+    throw error;
+  }
+};
