@@ -1,31 +1,40 @@
-import moment from "moment";
-import React from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import React, { useState } from "react";
+import TimeTableItem from "./TimeTableItem";
 
-export default function TimeTable() {
-  const maxSelectableDate = new Date();
-  maxSelectableDate.setDate(maxSelectableDate.getDate() + 7); // 현재 날짜로부터 1주 이내
+// 탭 버튼에 해당하는 콘텐츠
+const tabs = [{ title: "일반관" }, { title: "커플관" }];
+
+export default function TimeTable({ date, movies, selectedMovie }) {
+  const [activeTab, setActiveTab] = useState(0);
+
+  // 선택한 영화(상영관만 다른 같은 영화 배열) 필터링
+  const selectedMovies = movies.filter(
+    (movie) => movie.korTitle === selectedMovie,
+  );
 
   return (
-    <div className="flex h-full w-full">
-      <Calendar
-        // value={date}
-        // onChange={handleDateChange}
-        calendarType={"gregory"}
-        minDate={new Date()}
-        maxDate={maxSelectableDate}
-        prevLabel="<"
-        nextLabel=">"
-        formatDay={(locale, date) => moment(date).format("D")} // 일 제거 숫자만 보이게
-        formatYear={(locale, date) => moment(date).format("YYYY")} // 네비게이션 눌렀을때 숫자 년도만 보이게
-        formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")} // 네비게이션에서 2023. 12 이렇게 보이도록 설정
-        next2Label={null} // +1년 & +10년 이동 버튼 숨기기
-        prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
-        minDetail="year" // 10년단위 년도 숨기기
-        showNeighboringMonth={false} // 전달, 다음달 날짜 숨기기
-        className="rounded p-4 text-primary"
-      />
+    <div className="h-full">
+      {/* 상영관(일반관, 커플관) 탭 */}
+      <div className="flex w-full">
+        {tabs.map((tab, index) => (
+          <button
+            key={index}
+            className={`w-1/2 rounded-t py-4 text-lg ${activeTab === index ? "border-2 border-b-0 bg-gray-500" : "border-b-2 bg-gray-400 text-gray-100"}`}
+            onClick={() => setActiveTab(index)}
+          >
+            {tab.title}
+          </button>
+        ))}
+      </div>
+
+      <div className="h-[600px] rounded-b border-t-0 bg-gray-500">
+        {/* 상영시간표 목록 컴포넌트 */}
+        <TimeTableItem
+          date={date}
+          selectedMovies={selectedMovies}
+          activeTab={activeTab}
+        />
+      </div>
     </div>
   );
 }

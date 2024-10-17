@@ -34,3 +34,14 @@ export const fetchMovies = async (page = 1, size = 10) => {
     throw error; // 오류를 다시 던져서 처리할 수 있게 합니다.
   }
 };
+
+export const fetchMoviesByDate = async (date) => {
+  try {
+    // 서버에서 영화 리스트를 받아오는 axios 요청
+    const response = await axios.get(`${API_URL}/list/date?date=${date}`);
+    return response.data;
+  } catch (error) {
+    console.error("영화 목록을 가져오는 데 오류가 발생했습니다:", error);
+    throw error;
+  }
+};

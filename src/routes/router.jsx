@@ -22,6 +22,7 @@ const root = createBrowserRouter([
       <>
         <BasicLayout />
         <ScrollRestoration />
+        {/* ScrollRestoration 추가(페이지 이동시 맨위 스크롤로 이동) */}
       </>
     ),
     children: [

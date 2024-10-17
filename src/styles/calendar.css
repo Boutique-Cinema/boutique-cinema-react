@@ -1,0 +1,45 @@
+/* 네비게이션 폰트 설정 */
+.react-calendar__navigation button {
+  font-weight: bold;
+}
+
+/* 요일 밑줄 제거 */
+.react-calendar__month-view__weekdays abbr {
+  text-decoration: none;
+  font-weight: 800;
+}
+
+/* 일요일에만 빨간 폰트 */
+.react-calendar__month-view__weekdays__weekday--weekend abbr[title="일요일"] {
+  color: #ef5350;
+}
+
+/* 네비게이션 월 스타일 적용 */
+.react-calendar__year-view__months__month {
+  padding: 20px !important;
+}
+
+.react-calendar__tile:disabled abbr {
+  color: gray;
+}
+
+.react-calendar__tile abbr {
+  color: #393e46;
+}
+
+.react-calendar__tile--now {
+  background: #45566d;
+  abbr {
+    color: #fff;
+  }
+}
+
+/* 선택한 날짜 스타일 적용 */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus,
+.react-calendar__tile--active {
+  background: #ed6a5e;
+  abbr {
+    color: #fff;
+  }
+}
