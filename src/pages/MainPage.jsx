@@ -1,131 +1,81 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import { getMovieList } from "../api/movieApi";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 export default function MainPage() {
-  const movies = [
-    {
-      id: 1,
-      title: "조커",
-      image: "/joker.jpg",
-      rating: "15세 이상 관람가",
-      releaseDate: "2019.10.04",
-    },
-    {
-      id: 2,
-      title: "대도시의 사랑법",
-      image: "/love.jpg",
-      rating: "12세 이상 관람가",
-      releaseDate: "2021.09.22",
-    },
-    {
-      id: 3,
-      title: "베테랑",
-      image: "/veterang.jpg",
-      rating: "15세 이상 관람가",
-      releaseDate: "2015.12.24",
-    },
-    {
-      id: 4,
-      title: "Hello, Asterum!",
-      image: "/hello.jpg",
-      rating: "전체 관람가",
-      releaseDate: "2022.01.01",
-    },
-  ];
+  const [page, setPage] = useState(1);
+  const size = 10;
+  const [hasMore, setHasMore] = useState(true);
+  const [movies, setMovies] = useState([]); // 초기값을 빈 배열로 설정
+
+  useEffect(() => {
+    const loadMovies = async () => {
+      try {
+        const data = await getMovieList(page, size);
+        setMovies((prevMovies) => [...prevMovies, ...data.content]); // 배열 업데이트
+        setHasMore(data.content.length === size);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    loadMovies();
+  }, [page, size]);
 
   return (
     <>
       {/* Movie Posters Grid */}
       <div className="py-4 pt-10">
-        <ul className="pl-4 text-left text-2xl text-white">메인 영화</ul>
+        <ul className="text-left text-2xl text-white">메인 영화</ul>
         <Link to={"/movie"}>
           <ul className="py-4 pb-4 pr-2 text-right text-lg text-white">
             더 많은 영화보기+
           </ul>
         </Link>
         <div className="container mx-auto grid grid-cols-2 gap-12 md:grid-cols-4">
-          {movies.map((movie, idx) => (
-            <div key={movie.id} className="flex flex-col items-center">
+          {movies.slice(0, 4).map((movie, idx) => (
+            <div
+              key={`${movie.movieNum}-${idx}`}
+              className="flex flex-col items-center"
+            >
               <div className="relative">
-                <Link to="#">
+                <Link to={`/movie/detail/${movie.movieNum}`}>
                   <img
-                    src={movie.image}
-                    alt={`${movie.title} 포스터`}
-                    className="h-96 w-auto rounded-md"
+                    src={`http://localhost:8080/api/admin/movie/view/${movie.posterUrl}`}
+                    alt="Poster"
+                    className="z-10 h-96 w-auto rounded-md"
                   />
                 </Link>
-                {/* 각 꼭짓점 부분 어둡게 */}
-                <div className="absolute inset-0 rounded-md bg-gradient-to-br from-black via-transparent to-transparent opacity-30" />
-                <div className="absolute inset-0 rounded-md bg-gradient-to-bl from-black via-transparent to-transparent opacity-30" />
-                <div className="absolute inset-0 rounded-md bg-gradient-to-tr from-black via-transparent to-transparent opacity-30" />
-                <div className="absolute inset-0 rounded-md bg-gradient-to-tl from-black via-transparent to-transparent opacity-30" />
-                <span className="absolute left-4 top-2 rotate-3 transform text-2xl text-white">
+                {/* 각 꼭짓점 부분 어둡게 처리 */}
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-br from-black via-transparent to-transparent opacity-30" />
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-bl from-black via-transparent to-transparent opacity-30" />
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-tr from-black via-transparent to-transparent opacity-30" />
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-tl from-black via-transparent to-transparent opacity-30" />
+                <span className="absolute left-4 top-2 z-20 rotate-3 transform text-2xl text-white">
                   {idx + 1}
                 </span>
               </div>
-              <span className="mt-4 text-center text-2xl text-white">
-                {movie.title}
-              </span>
 
-              <div className="mt-6 flex w-full items-center justify-between">
-                <span className="text-sm text-gray-300">
-                  개봉일: {movie.releaseDate}
-                </span>
-                <div className="mx-2 h-4 border-l border-gray-300"></div>
+              {/* rating을 왼쪽 끝에, korTitle을 가운데 위치시키기 */}
+              <div className="mt-4 flex w-full items-center justify-between">
                 <span className="text-sm text-gray-300">{movie.rating}</span>
+                <span className="flex-1 text-center text-2xl text-white">
+                  {movie.korTitle}
+                </span>
               </div>
+
+              <span className="mt-2 text-sm text-gray-300">
+                개봉일: {movie.movieStartDate}
+              </span>
             </div>
           ))}
         </div>
       </div>
 
       {/* More Movies Section */}
-      <div className="py-4 pt-20">
-        <ul className="pl-4 text-left text-2xl">현재 상영중인 영화</ul>
-        <Link to={"/movie"}>
-          <ul className="py-4 pb-4 pr-2 text-right text-lg text-white">
-            더 많은 영화보기+
-          </ul>
-        </Link>
-        <div className="container mx-auto grid grid-cols-2 gap-12 md:grid-cols-4">
-          {movies.map((movie, idx) => (
-            <div key={movie.id} className="flex flex-col items-center">
-              <div className="relative">
-                <Link to="#">
-                  <img
-                    src={movie.image}
-                    alt={`${movie.title} 포스터`}
-                    className="h-96 w-auto rounded-md"
-                  />
-                </Link>
-                {/* 각 꼭짓점 부분만 어두워지도록 설정 */}
-                <div className="absolute inset-0 rounded-md bg-gradient-to-br from-black via-transparent to-transparent opacity-30" />
-                <div className="absolute inset-0 rounded-md bg-gradient-to-bl from-black via-transparent to-transparent opacity-30" />
-                <div className="absolute inset-0 rounded-md bg-gradient-to-tr from-black via-transparent to-transparent opacity-30" />
-                <div className="absolute inset-0 rounded-md bg-gradient-to-tl from-black via-transparent to-transparent opacity-30" />
-                <span className="absolute left-4 top-2 rotate-3 transform text-2xl text-white">
-                  {idx + 1}
-                </span>
-              </div>
-              <span className="mt-4 text-center text-2xl text-white">
-                {movie.title}
-              </span>
-              <div className="mt-6 flex w-full items-center justify-between">
-                <span className="text-sm text-gray-300">
-                  개봉일: {movie.releaseDate}
-                </span>
-                <div className="mx-2 h-4 border-l border-gray-300"></div>
-                <span className="text-sm text-gray-300">{movie.rating}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Popular Movies Section */}
-      <div className="py-4 pt-20">
-        <ul className="pl-4 text-left text-2xl text-gray-100">
-          인기 순위 Best4 영화
+      <div className="py-4 pt-10">
+        <ul className="mt-20 text-left text-2xl text-white">
+          현재상영중인 영화
         </ul>
         <Link to={"/movie"}>
           <ul className="py-4 pb-4 pr-2 text-right text-lg text-white">
@@ -133,35 +83,88 @@ export default function MainPage() {
           </ul>
         </Link>
         <div className="container mx-auto grid grid-cols-2 gap-12 md:grid-cols-4">
-          {movies.map((movie, idx) => (
-            <div key={movie.id} className="flex flex-col items-center">
+          {movies.slice(0, 4).map((movie, idx) => (
+            <div
+              key={`${movie.movieNum}-${idx}`}
+              className="flex flex-col items-center"
+            >
               <div className="relative">
-                <Link to="#">
+                <Link to={`/movie/detail/${movie.movieNum}`}>
                   <img
-                    src={movie.image}
-                    alt={`${movie.title} 포스터`}
-                    className="h-96 w-auto rounded-md"
+                    src={`http://localhost:8080/api/admin/movie/view/${movie.posterUrl}`}
+                    alt="Poster"
+                    className="z-10 h-96 w-auto rounded-md"
                   />
                 </Link>
-                {/* 각 꼭짓점 부분만 어두워지도록 설정 */}
-                <div className="absolute inset-0 rounded-md bg-gradient-to-br from-black via-transparent to-transparent opacity-30" />
-                <div className="absolute inset-0 rounded-md bg-gradient-to-bl from-black via-transparent to-transparent opacity-30" />
-                <div className="absolute inset-0 rounded-md bg-gradient-to-tr from-black via-transparent to-transparent opacity-30" />
-                <div className="absolute inset-0 rounded-md bg-gradient-to-tl from-black via-transparent to-transparent opacity-30" />
-                <span className="absolute left-4 top-2 rotate-3 transform text-2xl text-white">
+                {/* 각 꼭짓점 부분 어둡게 처리 */}
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-br from-black via-transparent to-transparent opacity-30" />
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-bl from-black via-transparent to-transparent opacity-30" />
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-tr from-black via-transparent to-transparent opacity-30" />
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-tl from-black via-transparent to-transparent opacity-30" />
+                <span className="absolute left-4 top-2 z-20 rotate-3 transform text-2xl text-white">
                   {idx + 1}
                 </span>
               </div>
-              <span className="mt-4 text-center text-2xl text-white">
-                {movie.title}
-              </span>
-              <div className="mt-6 flex w-full items-center justify-between">
-                <span className="text-sm text-gray-300">
-                  개봉일: {movie.releaseDate}
-                </span>
-                <div className="mx-2 h-4 border-l border-gray-300"></div>
+
+              {/* rating을 왼쪽 끝에, korTitle을 가운데 위치시키기 */}
+              <div className="mt-4 flex w-full items-center justify-between">
                 <span className="text-sm text-gray-300">{movie.rating}</span>
+                <span className="flex-1 text-center text-2xl text-white">
+                  {movie.korTitle}
+                </span>
               </div>
+
+              <span className="mt-2 text-sm text-gray-300">
+                개봉일: {movie.movieStartDate}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Popular Movies Section */}
+      <div className="py-4 pt-10">
+        <ul className="mt-20 text-left text-2xl text-white">인기순 영화</ul>
+        <Link to={"/movie"}>
+          <ul className="py-4 pb-4 pr-2 text-right text-lg text-white">
+            더 많은 영화보기+
+          </ul>
+        </Link>
+        <div className="container mx-auto grid grid-cols-2 gap-12 md:grid-cols-4">
+          {movies.slice(0, 4).map((movie, idx) => (
+            <div
+              key={`${movie.movieNum}-${idx}`}
+              className="flex flex-col items-center"
+            >
+              <div className="relative">
+                <Link to={`/movie/detail/${movie.movieNum}`}>
+                  <img
+                    src={`http://localhost:8080/api/admin/movie/view/${movie.posterUrl}`}
+                    alt="Poster"
+                    className="z-10 h-96 w-auto rounded-md"
+                  />
+                </Link>
+                {/* 각 꼭짓점 부분 어둡게 처리 */}
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-br from-black via-transparent to-transparent opacity-30" />
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-bl from-black via-transparent to-transparent opacity-30" />
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-tr from-black via-transparent to-transparent opacity-30" />
+                <div className="pointer-events-none absolute inset-0 rounded-md bg-gradient-to-tl from-black via-transparent to-transparent opacity-30" />
+                <span className="absolute left-4 top-2 z-20 rotate-3 transform text-2xl text-white">
+                  {idx + 1}
+                </span>
+              </div>
+
+              {/* rating을 왼쪽 끝에, korTitle을 가운데 위치시키기 */}
+              <div className="mt-4 flex w-full items-center justify-between">
+                <span className="text-sm text-gray-300">{movie.rating}</span>
+                <span className="flex-1 text-center text-2xl text-white">
+                  {movie.korTitle}
+                </span>
+              </div>
+
+              <span className="mt-2 text-sm text-gray-300">
+                개봉일: {movie.movieStartDate}
+              </span>
             </div>
           ))}
         </div>
