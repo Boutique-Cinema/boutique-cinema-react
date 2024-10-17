@@ -35,11 +35,11 @@ export default function Search() {
         <input
           type="text"
           className="h-10 w-48 rounded-full border px-3 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="검색어를 입력하세요."
+          placeholder="영화제목 검색"
           value={searchCondition}
           onChange={(e) => setSearchCondition(e.target.value)}
         />
-        <button type="submit" className="absolute right-3 top-1">
+        <button type="submit" className="absolute right-3 top-2">
           <IoMdSearch className="h-6 w-6 text-gray-600" />
         </button>
       </form>

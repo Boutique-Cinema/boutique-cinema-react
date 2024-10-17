@@ -14,15 +14,16 @@ export default function MemberHeader() {
   return (
     <header className="relative w-full pt-3">
       <h1 className="sr-only">Boutique Cinema</h1>
-      <ul className="mb-8 flex justify-end gap-4 text-sm">
-        {HEADER_MENU.map((item, i) => (
-          <li className="hover:text-red-300" key={i}>
-            <Link to={item.url}>
-              <h2>{item.title}</h2>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <h2 className="sr-only">고객 서비스</h2>
+        <ul className="mb-8 flex justify-end gap-4 text-sm">
+          {HEADER_MENU.map((item, i) => (
+            <li className="hover:text-red-300" key={i}>
+              <Link to={item.url}>{item.title}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
       <div className="flex items-end justify-between">
         <a href="/" className="absolute -bottom-3 left-1/2 -translate-x-1/2">
           <Logo />
