@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getMovieList } from "../../api/movieApi";
 import { useEffect, useState, useRef, useCallback } from "react";
 
@@ -8,6 +8,9 @@ const MovieListPage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [movie, setMovie] = useState([]); // 초기값을 빈 배열로 설정
   const observer = useRef();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const searchCondition = queryParams.get("search");
 
   const lastMovieElementRef = useCallback(
     (node) => {
@@ -25,7 +28,14 @@ const MovieListPage = () => {
   useEffect(() => {
     const loadMovies = async () => {
       try {
-        const data = await getMovieList(page, size);
+        let data;
+        if (searchCondition) {
+          // 검색어가 있을 경우 검색된 영화 목록을 가져옵니다
+          data = await getMovieList(page, size, searchCondition);
+        } else {
+          // 검색어가 없으면 모든 영화를 가져옵니다
+          data = await getMovieList(page, size);
+        }
         setMovie((prevMovies) => [...prevMovies, ...data.content]); // 배열 업데이트
         setHasMore(data.content.length === size);
       } catch (error) {
@@ -34,7 +44,7 @@ const MovieListPage = () => {
     };
 
     loadMovies();
-  }, [page, size]);
+  }, [page, size, searchCondition]);
 
   return (
     <div className="py-4 pb-36 pt-10">
