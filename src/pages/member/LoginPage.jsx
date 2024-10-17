@@ -44,7 +44,7 @@ export default function LoginPage() {
     const { name } = e.target;
 
     if (name === "id") {
-      const englishValue = e.target.value.replace(/[^a-z,1-9]/g, ""); // 한글만 작성가능
+      const englishValue = e.target.value.replace(/[^a-z,0-9]/g, ""); // 한글만 작성가능
       setForm((prev) => ({
         ...prev,
         id: englishValue,
