@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react"; // react에서 useEffect와 useState를 가져옴
 
-const ScrollTopButton = () => {
+const ScrollTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleScroll = () => {
     const scrollY = window.scrollY;
     setIsVisible(scrollY > 300);
-    console.log(`Scroll Y: ${scrollY}`);
   };
 
   const ScrollToTop = () => {
@@ -14,7 +13,6 @@ const ScrollTopButton = () => {
       top: 0,
       behavior: "smooth",
     });
-    console.log("Scrolling to top...");
   };
 
   // useEffect로 스크롤 이벤트를 설정합니다.
@@ -31,14 +29,15 @@ const ScrollTopButton = () => {
       {isVisible && (
         <button
           onClick={ScrollToTop}
-          className="fixed bottom-12 right-80 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-gray-700 text-white shadow-lg transition"
+          className="fixed bottom-10 right-[320px] z-50 flex h-12 w-12 flex-col items-center justify-center rounded-full bg-secondary text-white transition"
           style={{ fontSize: "12px" }}
         >
-          <span>top↑</span>
+          <div>↑</div>
+          <div>TOP</div>
         </button>
       )}
     </>
   );
 };
 
-export default ScrollTopButton;
+export default ScrollTop;

@@ -40,7 +40,7 @@ export default function SeatCount({
   };
 
   return (
-    <div className="mb-4 rounded bg-gray-100 p-4 text-center text-primary">
+    <div className="mb-4 rounded bg-gray-100 px-4 py-6 text-center text-primary">
       <div className="flex items-center gap-6">
         {/* 성인 카운터 */}
         <div className="flex items-center">

@@ -2,14 +2,17 @@ import React, { useCallback, useState } from "react";
 import SeatCount from "../../components/reservation/SeatCount";
 import SeatTable from "../../components/reservation/SeatTable";
 import ReservationResult from "../../components/reservation/ReservationResult";
+import { useLocation } from "react-router-dom";
 
 export default function ReservationSeatPage() {
+  const location = useLocation();
   const [totalTickets, setTotalTickets] = useState(0);
   const [resetSeats, setResetSeats] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [adultCount, setAdultCount] = useState(0);
   const [teenCount, setTeenCount] = useState(0);
   const [specialCount, setSpecialCount] = useState(0);
+  const selectedMovie = location.state || {};
 
   // 인원수를 변경할 때 좌석을 초기화
   const handlePeopleChange = useCallback((newPeople) => {
@@ -39,6 +42,7 @@ export default function ReservationSeatPage() {
           maxSeats={totalTickets}
           resetSeats={resetSeats}
           selectedSeats={selectedSeats}
+          selectedMovie={selectedMovie}
           onSeatSelect={handleSeatSelect}
         />
       </div>
@@ -49,6 +53,7 @@ export default function ReservationSeatPage() {
           teenCount={teenCount}
           specialCount={specialCount}
           selectedSeats={selectedSeats}
+          selectedMovie={selectedMovie}
         />
       </div>
     </div>

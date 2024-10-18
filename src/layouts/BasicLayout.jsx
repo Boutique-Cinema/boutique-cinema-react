@@ -4,6 +4,7 @@ import Footer from "../components/layouts/Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import MemberSidebar from "./../components/layouts/MemberSidebar";
 import SupportSidebar from "./../components/layouts/SupportSidebar";
+import ScrollTop from "../components/common/ScrollTop";
 
 export default function BasicLayout() {
   const { pathname } = useLocation();
@@ -21,6 +22,7 @@ export default function BasicLayout() {
           <Outlet />
         </main>
       </div>
+      <ScrollTop />
       <Footer />
     </div>
   );

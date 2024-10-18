@@ -16,3 +16,14 @@ export const createReservation = async (reservationData) => {
     throw error;
   }
 };
+
+export const getAllReservations = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/list`);
+
+    return response.data; // 응답 데이터 반환
+  } catch (error) {
+    console.error("예매 목록을 불러오는데 오류가 발생했습니다.", error);
+    throw error;
+  }
+};

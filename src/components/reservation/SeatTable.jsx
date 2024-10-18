@@ -1,15 +1,49 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { RxExit, RxEnter } from "react-icons/rx";
+import { getAllReservations } from "../../api/reservationApi";
 
 export default function SeatTable({
   maxSeats,
   resetSeats,
   selectedSeats,
   onSeatSelect,
+  selectedMovie,
 }) {
   const ROWS = 6; // 행 수
   const COLUMNS = 10; // 열 수
   const [hoveredSeat, setHoveredSeat] = useState(null);
+  const [reservations, setReservations] = useState([]);
+  const { movieNum, date, theaterNum, roundNum } = selectedMovie || {};
+
+  const reservedSeats = reservations
+    .filter(
+      (reservation) =>
+        reservation.reserveDate === date &&
+        reservation.movieNum === movieNum &&
+        reservation.theaterNum === theaterNum &&
+        reservation.roundNum === roundNum,
+    )
+    .flatMap((reservation) => {
+      const { seatNum1, seatNum2, seatNum3, seatNum4, seatNum5, seatNum6 } =
+        reservation;
+      return [
+        seatNum1,
+        seatNum2,
+        seatNum3,
+        seatNum4,
+        seatNum5,
+        seatNum6,
+      ].filter(Boolean);
+    });
+
+  useEffect(() => {
+    const loadReservations = async () => {
+      const data = await getAllReservations();
+      setReservations(data);
+    };
+
+    loadReservations();
+  }, []);
 
   // 인원수가 바뀌면 좌석 선택을 초기화
   useEffect(() => {
@@ -22,6 +56,12 @@ export default function SeatTable({
     (seat) => {
       if (maxSeats === 0) {
         alert("인원 선택을 먼저 해주세요.");
+        return;
+      }
+
+      // 현재 좌석이 예약된 좌석인지 확인
+      if (reservedSeats.includes(seat)) {
+        alert("이미 예약된 좌석입니다.");
         return;
       }
 
@@ -42,7 +82,7 @@ export default function SeatTable({
         }
       }
     },
-    [maxSeats, selectedSeats, onSeatSelect],
+    [maxSeats, reservedSeats, selectedSeats, onSeatSelect],
   );
 
   // hover 상태 설정
@@ -70,12 +110,15 @@ export default function SeatTable({
             onClick={() => handleSeatClick(seatNumber)}
             onMouseEnter={() => handleMouseEnter(seatNumber)} // Hover 시작
             onMouseLeave={handleMouseLeave} // Hover 종료
+            disabled={reservedSeats.includes(seatNumber)} // 예약된 좌석이면 버튼 비활성화
             className={`m-1 h-10 w-10 rounded ${
-              selectedSeats.includes(seatNumber)
-                ? "bg-secondary text-white" // 선택된 좌석 스타일
-                : hoveredSeat === seatNumber
-                  ? "bg-secondary" // Hover 상태일 때 스타일
-                  : "bg-gray-300" // 기본 좌석 스타일
+              reservedSeats.includes(seatNumber)
+                ? "cursor-not-allowed bg-tertiary text-white" // 예약된 좌석 스타일
+                : selectedSeats.includes(seatNumber)
+                  ? "bg-secondary text-white" // 선택된 좌석 스타일
+                  : hoveredSeat === seatNumber
+                    ? "bg-secondary" // Hover 상태일 때 스타일
+                    : "bg-gray-300" // 기본 좌석 스타일
             }`}
           >
             {col + 1}
@@ -97,7 +140,7 @@ export default function SeatTable({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center rounded bg-gray-100 p-[26px]">
+    <div className="flex flex-col items-center justify-center rounded bg-gray-100 p-[32px] px-5">
       <div className="text-xl font-semibold text-primary">SCREEN</div>
       <div className="flex w-full items-end justify-between p-4">
         {/* 입구 아이콘 */}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   adultPrice,
   calculateTotalPrice,
@@ -15,12 +15,12 @@ export default function ReservationResult({
   teenCount,
   specialCount,
   selectedSeats,
+  selectedMovie,
 }) {
   const navigate = useNavigate();
-  const location = useLocation();
   const [movie, setMovie] = useState({});
   const [roundTime, setRoundTime] = useState("");
-  const { movieNum, date, theaterNum, roundNum } = location.state || {};
+  const { movieNum, date, theaterNum, roundNum } = selectedMovie || {};
 
   const totalCount = adultCount + teenCount + specialCount;
 
@@ -70,6 +70,13 @@ export default function ReservationResult({
   const handlePayment = async (e) => {
     e.preventDefault();
 
+    // 결제 확인 창 띄우기
+    const isConfirmed = window.confirm("결제하시겠습니까?");
+
+    if (!isConfirmed) {
+      return;
+    }
+
     const rPersonTypes = [
       ...Array(adultCount).fill("성인"),
       ...Array(teenCount).fill("청소년"),
@@ -116,7 +123,18 @@ export default function ReservationResult({
       seatNum6: selectedSeats[5] || null,
     };
 
-    const result = await createReservation(reservationData);
+    try {
+      const result = await createReservation(reservationData);
+
+      alert("결제가 완료되었습니다.");
+
+      navigate("/reserve/success", {
+        state: result,
+        replace: true,
+      });
+    } catch (error) {
+      alert("결제 처리 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    }
   };
 
   return (
@@ -149,11 +167,23 @@ export default function ReservationResult({
       </div>
 
       {/* 예매 정보 안내 */}
-      <div className="mt-3 border-y border-gray-300 py-3">
-        <div>{theaterNum === 0 ? "일반관" : "커플관"}</div>
-        <div>{date}</div>
-        <div>{`${roundTime} (${roundNum}회차)`}</div>
+      <div className="mt-3 flex justify-between border-y border-gray-300 py-3">
+        <div>
+          <div>{theaterNum === 0 ? "일반관" : "커플관"}</div>
+          <div>{date}</div>
+          <div>{`${roundTime} (${roundNum}회차)`}</div>
+        </div>
+        <div className="h-full w-[70px]">
+          {movie.posterUrl && (
+            <img
+              src={`http://localhost:8080/api/admin/movie/view/${movie.posterUrl}`}
+              alt={`${movie.korTitle} 포스터 이미지`}
+              className="h-full w-full"
+            />
+          )}
+        </div>
       </div>
+
       <div className="flex justify-between border-b border-gray-300 py-3">
         <div className="flex flex-col justify-between">
           {/* 좌석 표시 안내 */}
