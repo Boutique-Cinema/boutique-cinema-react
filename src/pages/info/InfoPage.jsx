@@ -85,17 +85,23 @@ const InfoPage = () => {
           className="section section-hidden left p-4"
         >
           <div className="mb-20 flex flex-col">
-            <h2 className="mb-6 text-2xl font-bold">개성 있는 브랜드 이미지</h2>
-            <p className="max-w-5xl">
-              <ol>
-                <span className="text-violet-600">"Boutique"</span>라는 용어는
-                독특하고 맞춤형 서비스를 제공하는 상점을 의미하며,
-              </ol>
-              <ol>
-                이는 영화관이 제공하는 특별한 관람 경험, 즉 대형 체인과는 다른,
-                개인화된 서비스와 고유한 분위기를 강조합니다.
-              </ol>
-            </p>
+            <div className="mb-6 text-2xl font-bold">
+              개성 있는 브랜드 이미지
+            </div>
+            <div className="max-w-5xl">
+              <div className="max-w-5xl">
+                <div>
+                  <div>
+                    <span className="text-violet-600">"Boutique"</span>라는
+                    용어는 독특하고 맞춤형 서비스를 제공하는 상점을 의미하며,
+                  </div>
+                  <div>
+                    이는 영화관이 제공하는 특별한 관람 경험, 즉 대형 체인과는
+                    다른, 개인화된 서비스와 고유한 분위기를 강조합니다.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -105,7 +111,7 @@ const InfoPage = () => {
         >
           <div className="mb-20 flex flex-col">
             <h2 className="mb-6 text-2xl font-bold">개인화된 경험</h2>
-            <p className="max-w-5xl">
+            <div className="max-w-5xl">
               <ol>
                 <span className="text-violet-600">"Boutique Cinema"</span>는
                 관람객들에게 개인의 취향에 맞춘 섬세한 서비스와 독특한 영화 관람
@@ -119,7 +125,7 @@ const InfoPage = () => {
                 또한, 맞춤형 간식과 음료 서비스로 관람의 즐거움을 더욱
                 배가시킵니다.
               </ol>
-            </p>
+            </div>
           </div>
         </section>
       </div>
@@ -133,13 +139,13 @@ const InfoPage = () => {
             <h2 className="mb-4 text-3xl font-bold text-gray-100">
               유행에 민감한 Company
             </h2>
-            <p className="max-w-5xl text-gray-100">
+            <div className="max-w-5xl text-gray-100">
               <ol>
                 <span className="font-semibold text-violet-600">"Trandy"</span>
                 함을 추구하며, 최신 트렌드와 스타일을 반영하는 영화와 서비스를
                 제공합니다.
               </ol>
-            </p>
+            </div>
           </div>
         </section>
 
@@ -151,7 +157,7 @@ const InfoPage = () => {
             <h2 className="mb-4 text-3xl font-bold text-gray-100">
               차별화된 가치
             </h2>
-            <p className="max-w-5xl text-gray-100">
+            <div className="max-w-5xl text-gray-100">
               <ol>
                 <span className="font-semibold text-violet-600">
                   "uniqueness"
@@ -162,7 +168,7 @@ const InfoPage = () => {
               맞춤형 좌석 배치와 개인화된 상영 리스트는 물론, 아늑한 분위기와
               함께 제공되는 특별한 간식과 음료는 관람의 즐거움을 더욱 풍부하게
               만듭니다.
-            </p>
+            </div>
           </div>
         </section>
       </div>

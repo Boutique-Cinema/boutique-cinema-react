@@ -18,14 +18,6 @@ function TermsPage() {
     console.log(`Scroll Y: ${scrollY}`);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    console.log("Scrolling to top...");
-  };
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -1208,15 +1200,6 @@ function TermsPage() {
             </ol>
           </div>
         </section>
-        {isVisible && (
-          <button
-            onClick={scrollToTop}
-            className="fixed bottom-12 right-80 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-gray-700 text-white shadow-lg transition"
-            style={{ fontSize: "12px" }}
-          >
-            <span>top↑</span>
-          </button>
-        )}
       </div>
     </div>
   );
