@@ -8,13 +8,6 @@ function PrivacyPage() {
     setIsVisible(scrollY > 300); // 스크롤이 300px 이상이면 버튼 보이기
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // 부드럽게 스크롤 업
-    });
-  };
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll); // 스크롤 이벤트 리스너 추가
     return () => {
@@ -228,16 +221,6 @@ function PrivacyPage() {
             );
           })}
         </section>
-
-        {isVisible && (
-          <button
-            onClick={scrollToTop}
-            className="fixed bottom-12 right-40 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-gray-700 text-white shadow-lg transition"
-            style={{ fontSize: "12px" }}
-          >
-            <span>top↑</span>
-          </button>
-        )}
       </div>
     </>
   );

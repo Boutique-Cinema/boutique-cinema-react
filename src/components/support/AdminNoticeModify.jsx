@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import noticeApi from "../../api/support/noticeApi";
+import { updateNotice, readNotice } from "../../api/support/noticeApi";
 
 const AdminNoticeModify = () => {
   const { nnum } = useParams();
@@ -16,7 +16,7 @@ const AdminNoticeModify = () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await noticeApi.readNotice(nnum); // 공지사항 조회
+      const data = await readNotice(nnum); // 공지사항 조회
       setFormData({ ntitle: data.ntitle, ncontent: data.ncontent });
     } catch (err) {
       setError(err.message);
@@ -41,7 +41,7 @@ const AdminNoticeModify = () => {
     e.preventDefault();
     console.log("수정할 데이터:", formData); // 수정 데이터 확인
     try {
-      const response = await noticeApi.updateNotice(nnum, formData); // 수정 API 호출
+      const response = await updateNotice(nnum, formData); // 수정 API 호출
       console.log(formData, "무슨값");
       // console.log("수정 성공:", response); // 성공 시 로그
       navigate(`/admin/support/notice/${nnum}`); // 수정 후 상세 페이지로 이동
@@ -88,16 +88,18 @@ const AdminNoticeModify = () => {
         </div>
         <button
           type="submit"
-          className="mr-4 inline-block text-blue-500"
+          className="mr-4 rounded-md bg-zinc-700 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600"
           onClick={handleSubmit}
         >
           수정하기
         </button>
         <Link
           to={`/admin/support/notice/${nnum}`}
-          className="inline-block text-blue-500"
+          className="inline-block text-white"
         >
-          취소
+          <button className="mr-4 rounded-md bg-red-900 px-4 py-2 text-white transition-colors duration-200 hover:bg-red-600">
+            취소
+          </button>
         </Link>
       </form>
     </div>
