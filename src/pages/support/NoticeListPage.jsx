@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getNoticeList } from "../../api/support/noticeApi";
+import { getNoticeList } from "../../api/noticeApi";
 
 const NoticeListPage = () => {
   const [notices, setNotices] = useState([]); // 공지사항 데이터를 저장하는 상태

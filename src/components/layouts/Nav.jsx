@@ -7,7 +7,7 @@ export default function Nav() {
       <h2 className="sr-only">주요 서비스</h2>
       <menu className="flex justify-around text-xl font-medium">
         <li className="hover:text-red-300">
-          <Link to={"/movie"}>
+          <Link to={"/movie/list"}>
             <h2>영화</h2>
           </Link>
         </li>
