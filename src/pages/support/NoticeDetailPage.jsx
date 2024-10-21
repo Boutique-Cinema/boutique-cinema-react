@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getNotice } from "../../api/support/noticeApi";
+import { getNotice } from "../../api/noticeApi";
 
 const NoticeDetailPage = () => {
   // navigate 훅 사용

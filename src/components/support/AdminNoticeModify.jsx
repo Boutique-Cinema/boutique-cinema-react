@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { updateNotice, readNotice } from "../../api/support/noticeApi";
+import { updateNotice, readNotice } from "../../api/noticeApi";
 
 const AdminNoticeModify = () => {
   const { nnum } = useParams();

@@ -25,7 +25,7 @@ export default function Search() {
     e.preventDefault();
     if (searchCondition) {
       // 검색어가 있으면 movie 페이지로 이동
-      navigate(`/movie?search=${searchCondition}`);
+      navigate(`/movie/list?search=${searchCondition}`);
     }
   };
 
