@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { Suspense, lazy } from "react";
 import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
 import reservationRouter from "./reservationRouter";
 import supportRouter from "./supportRouter";
@@ -14,6 +14,7 @@ const InfoPage = lazy(() => import("../pages/info/InfoPage"));
 const JoinPage = lazy(() => import("../pages/member/JoinPage"));
 const LoginPage = lazy(() => import("../pages/member/LoginPage"));
 const FindInfoPage = lazy(() => import("../pages/member/FindInfoPage"));
+const Loading = <div>Loading....</div>;
 const MyReservationPage = lazy(
   () => import("../pages/mypage/MyReservationPage"),
 );
@@ -45,7 +46,11 @@ const root = createBrowserRouter([
   },
   {
     path: "/member/login", //  로그인 페이지
-    element: <LoginPage />,
+    element: (
+      <Suspense fallback={Loading}>
+        <LoginPage />
+      </Suspense>
+    ),
   },
   {
     path: "/admin",
