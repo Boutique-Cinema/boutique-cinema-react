@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { lazy } from "react";
 
 const NoticeListPage = lazy(() => import("../pages/support/NoticeListPage"));
+
 const NoticeDetailPage = lazy(
   () => import("../pages/support/NoticeDetailPage"),
 );
@@ -11,7 +12,6 @@ const QnaRegisterPage = lazy(() => import("../pages/support/QnaRegister"));
 const TermsPage = lazy(() => import("../pages/support/TermsPage"));
 const ScreenrulePage = lazy(() => import("../pages/support/ScreenrulePage"));
 const PrivacyPage = lazy(() => import("../pages/support/PrivacyPage"));
-
 const supportRouter = [
   {
     path: "support",
