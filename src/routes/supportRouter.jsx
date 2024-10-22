@@ -6,8 +6,8 @@ const NoticeDetailPage = lazy(
   () => import("../pages/support/NoticeDetailPage"),
 );
 const QnaPage = lazy(() => import("../pages/support/QnaPage"));
-const QnaDetailPage = lazy(() => import("../pages/support/QnaDetail"));
-const QnaRegisterPage = lazy(() => import("../pages/support/QnaRegister"));
+const QnaDetailPage = lazy(() => import("../pages/support/QnaDetailPage"));
+const QnaRegisterPage = lazy(() => import("../pages/support/QnaRegisterPage"));
 const TermsPage = lazy(() => import("../pages/support/TermsPage"));
 const ScreenrulePage = lazy(() => import("../pages/support/ScreenrulePage"));
 const PrivacyPage = lazy(() => import("../pages/support/PrivacyPage"));
@@ -23,7 +23,7 @@ const supportRouter = [
         element: <NoticeDetailPage />,
       },
       { path: "qna", element: <QnaPage /> },
-      { path: "qna/detail", element: <QnaDetailPage /> },
+      { path: "qna/detail/:qNum", element: <QnaDetailPage /> },
       { path: "qna/register", element: <QnaRegisterPage /> },
       { path: "terms", element: <TermsPage /> },
       { path: "screenrule", element: <ScreenrulePage /> },

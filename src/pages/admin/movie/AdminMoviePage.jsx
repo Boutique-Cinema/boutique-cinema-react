@@ -69,7 +69,7 @@ const AdminMovieListPage = () => {
                 onChange={(e) => setSearchCondition(e.target.value)}
               />
               <button type="submit" className="absolute right-3 top-1">
-                <IoMdSearch className="h-6 w-6 text-gray-600" />
+                <IoMdSearch className="mt-1 h-6 w-6 text-gray-600" />
               </button>
             </form>
           </div>

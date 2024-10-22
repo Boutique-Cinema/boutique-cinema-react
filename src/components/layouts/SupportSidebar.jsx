@@ -9,10 +9,7 @@ const NAV_MENU = [
 
 export default function MemberSidebar() {
   return (
-    <nav
-      style={{ marginTop: "8.8rem" }}
-      className="h-[590px] w-2/12 rounded-lg border-none bg-tertiary"
-    >
+    <nav className="h-[680px] w-2/12 rounded-lg border-none bg-tertiary">
       <menu className="m-10 flex flex-col gap-7 text-lg">
         {NAV_MENU.map((item) => (
           <li key={crypto.randomUUID()}>

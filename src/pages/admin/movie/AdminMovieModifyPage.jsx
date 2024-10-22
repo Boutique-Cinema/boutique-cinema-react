@@ -58,7 +58,7 @@ const AdminMovieModifyPage = () => {
     };
 
     fetchMovie(); // 영화 데이터 호출
-  }, [movieNum, movie]); // movieNum이 변경될 때마다 호출
+  }, [movieNum]); // movieNum이 변경될 때마다 호출
 
   // 입력값 변경 처리 함수
   const handleChange = (e) => {
