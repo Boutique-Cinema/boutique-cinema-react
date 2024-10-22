@@ -27,3 +27,24 @@ export const getAllReservations = async () => {
     throw error;
   }
 };
+
+export const getReservationsById = async (mid) => {
+  try {
+    const response = await axios.get(`${API_URL}/member/${mid}`);
+
+    return response.data; // 응답 데이터 반환
+  } catch (error) {
+    console.error("예매 목록을 불러오는데 오류가 발생했습니다.", error);
+    throw error;
+  }
+};
+
+export const cancelReservation = async (rnum) => {
+  try {
+    const response = await axios.put(`${API_URL}/cancel/${rnum}`);
+
+    return response.data;
+  } catch (error) {
+    console.error("예매 취소에 실패했습니다.", error);
+  }
+};

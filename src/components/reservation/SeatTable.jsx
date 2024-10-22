@@ -21,7 +21,8 @@ export default function SeatTable({
         reservation.reserveDate === date &&
         reservation.movieNum === movieNum &&
         reservation.theaterNum === theaterNum &&
-        reservation.roundNum === roundNum,
+        reservation.roundNum === roundNum &&
+        !reservation.isCanceled,
     )
     .flatMap((reservation) => {
       const { seatNum1, seatNum2, seatNum3, seatNum4, seatNum5, seatNum6 } =

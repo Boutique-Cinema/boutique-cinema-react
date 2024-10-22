@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  cancelReservation,
-  getReservationsById,
-} from "../../api/reservationApi";
+import { getReservationsById } from "../../api/reservationApi";
 import { getMovie } from "../../api/movieApi";
-import { useNavigate } from "react-router-dom";
-import RefundModal from "../../components/mypage/RefundModal";
 import { convertRoundNumToRoundTime } from "../../util/reservationUtil";
 
 const MEMBER_ID = "ttt123123";
 
-export default function MyReservationPage() {
-  const navigate = useNavigate();
-  const [showRefundModal, setShowRefundModal] = useState(false);
-  const [selectedRnum, setSelectedRnum] = useState(null);
+export default function MyCancelPage() {
   const [visibleReservations, setVisibleReservations] = useState(5);
   const [reservationsWithMovies, setReservationsWithMovies] = useState([]);
 
@@ -25,7 +17,7 @@ export default function MyReservationPage() {
 
         // 2. isCanceled가 1인 예매만 필터링
         const filteredReservations = reservationData.filter(
-          (reservation) => !reservation.isCanceled,
+          (reservation) => reservation.isCanceled === 1,
         );
 
         // 3. movieNum으로 각 영화를 가져와 예매 정보에 추가
@@ -40,9 +32,9 @@ export default function MyReservationPage() {
         const reservationsWithMoviesData =
           await Promise.all(movieDetailsPromises);
 
-        // 5. 예약 데이터를 최신순으로 정렬 (regDate 기준)
+        // 5. 데이터를 최신순으로 정렬 (cancelDate 기준)
         reservationsWithMoviesData.sort(
-          (a, b) => new Date(b.regDate) - new Date(a.regDate),
+          (a, b) => new Date(b.cancelDate) - new Date(a.cancelDate),
         );
 
         setReservationsWithMovies(reservationsWithMoviesData);
@@ -59,55 +51,20 @@ export default function MyReservationPage() {
     setVisibleReservations((prev) => prev + 5); // 5개씩 추가로 보여줌
   };
 
-  // 예매 취소시 모달창 띄우는 핸들러
-  const handleCancelClick = (rnum) => {
-    setSelectedRnum(rnum); // 선택한 예매 번호 저장
-    setShowRefundModal(true); // 모달 열기
-  };
-
-  // 예매 취소 핸들러
-  const handleCancel = async () => {
-    const isConfirmed = window.confirm("정말 예매를 취소하시겠습니까?");
-
-    if (!isConfirmed) {
-      return;
-    }
-
-    try {
-      await cancelReservation(selectedRnum);
-      setShowRefundModal(false); // 모달 닫기
-
-      // 예매 취소 성공 시, "/mypage/cancel" 경로로 이동
-      navigate("/mypage/cancel");
-    } catch (error) {
-      alert("예매 취소에 실패했습니다. 다시 시도해 주세요.");
-    }
-  };
-
-  console.log(reservationsWithMovies);
-
-  // 영화가 이미 시작했는지 확인하는 함수
-  const isMovieStarted = (reserveDate, roundNum, movie) => {
-    const reserveTime = convertRoundNumToRoundTime(roundNum, movie);
-
-    const movieStartTime = new Date(reserveDate + " " + reserveTime).getTime(); // 영화 시작 시간    console.log(movieStartTime);
-    const currentTime = new Date().getTime(); // 현재 시간
-
-    return currentTime >= movieStartTime; // 영화가 이미 시작했는지 여부
-  };
-
   if (!reservationsWithMovies[0]) {
     return (
       <div className="ml-10">
-        <h2 className="mb-5 text-2xl">예매내역</h2>
-        <div className="mt-20 text-center text-lg">예매내역이 없습니다.</div>
+        <h2 className="mb-5 text-2xl">취소/환불 내역</h2>
+        <div className="mt-20 text-center text-lg">
+          취소/환불 내역이 없습니다.
+        </div>
       </div>
     );
   }
 
   return (
     <div className="ml-10">
-      <h2 className="mb-5 text-2xl">예매내역</h2>
+      <h2 className="mb-5 text-2xl">취소/환불 내역</h2>
       <ul className="flex flex-col gap-4">
         {reservationsWithMovies
           .slice(0, visibleReservations)
@@ -171,6 +128,7 @@ export default function MyReservationPage() {
                 <div>좌석 번호</div>
                 <div>결제 금액</div>
                 <div>결제일</div>
+                <div>취소일</div>
               </div>
 
               <div>
@@ -211,54 +169,7 @@ export default function MyReservationPage() {
                 </div>
                 <div>{reservation.paymentAmount.toLocaleString()}원</div>
                 <div>{new Date(reservation.regDate).toLocaleString()}</div>
-              </div>
-
-              <div className="absolute right-2 flex flex-col gap-3">
-                <button
-                  className={`rounded border p-3 text-white ${
-                    !isMovieStarted(
-                      reservation.reserveDate,
-                      reservation.roundNum,
-                      reservation.movie,
-                    )
-                      ? "bg-gray-400"
-                      : "bg-secondary hover:bg-secondary-hover"
-                  }`}
-                  disabled={
-                    !isMovieStarted(
-                      reservation.reserveDate,
-                      reservation.roundNum,
-                      reservation.movie,
-                    )
-                  }
-                >
-                  관람평 작성
-                </button>
-                <button
-                  className={`rounded border p-3 text-white ${
-                    isMovieStarted(
-                      reservation.reserveDate,
-                      reservation.roundNum,
-                      reservation.movie,
-                    )
-                      ? "bg-primary"
-                      : "hover:bg-tertiary-hover bg-tertiary"
-                  }`}
-                  disabled={isMovieStarted(
-                    reservation.reserveDate,
-                    reservation.roundNum,
-                    reservation.movie,
-                  )}
-                  onClick={() => handleCancelClick(reservation.rnum)}
-                >
-                  {isMovieStarted(
-                    reservation.reserveDate,
-                    reservation.roundNum,
-                    reservation.movie,
-                  )
-                    ? "상영완료"
-                    : "예매취소"}
-                </button>
+                <div>{new Date(reservation.cancelDate).toLocaleString()}</div>
               </div>
             </li>
           ))}
@@ -275,14 +186,6 @@ export default function MyReservationPage() {
           </button>
         )}
       </div>
-
-      {/* 환불 규정 모달 */}
-      {showRefundModal && (
-        <RefundModal
-          onClose={() => setShowRefundModal(false)}
-          onConfirm={handleCancel}
-        />
-      )}
     </div>
   );
 }

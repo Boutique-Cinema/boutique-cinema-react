@@ -118,7 +118,7 @@ export default function ReservationSuccessPage() {
             <div className="mr-12 flex flex-col gap-2 font-semibold">
               <div>예매 번호</div>
               <div>영화 제목</div>
-              <div>상영관 번호</div>
+              <div>상영관</div>
               <div>관람일시</div>
               <div>인원</div>
               <div>좌석 번호</div>

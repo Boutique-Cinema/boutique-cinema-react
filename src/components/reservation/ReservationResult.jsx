@@ -102,7 +102,7 @@ export default function ReservationResult({
         ),
         10,
       ),
-      mId: "qqq123123",
+      mId: "ttt123123",
       rPersonType1: rPersonTypes[0],
       rPersonType2: rPersonTypes[1] || null,
       rPersonType3: rPersonTypes[2] || null,
