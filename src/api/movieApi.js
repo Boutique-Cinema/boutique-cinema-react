@@ -30,7 +30,7 @@ export const getMovieList = async (page, size, searchCondition) => {
 
 // 영화 등록
 export const registerMovie = async (movieData) => {
-  const res = await axios.post(`${MOVIE_API_PREFIX}/`, movieData, {
+  const res = await axios.post(`${MOVIE_API_PREFIX}`, movieData, {
     headers: {
       "Content-Type": "multipart/form-data", // 파일 업로드를 위한 헤더 설정
     },
