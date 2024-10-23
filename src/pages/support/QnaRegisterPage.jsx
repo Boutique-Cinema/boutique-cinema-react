@@ -53,7 +53,7 @@ const QnaRegisterPage = () => {
 
   return (
     <>
-      <div className="mb-4 ml-10 text-3xl font-extrabold">1:1 문의</div>
+      <h2 className="ml-10 text-2xl font-medium">1:1 문의 등록</h2>
       <div className="ml-7 w-full p-4 text-lg text-white">
         · 환불은 마이페이지 예매내역의 환불신청 버튼을 이용해주세요.
         <br />· 영화 티켓은 환불규정에 의거하여 관람시간이 지나면 취소/환불이
