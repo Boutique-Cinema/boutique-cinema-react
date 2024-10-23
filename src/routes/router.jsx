@@ -17,6 +17,9 @@ const InfoPage = lazy(() => import("../pages/info/InfoPage"));
 const JoinPage = lazy(() => import("../pages/member/JoinPage"));
 const LoginPage = lazy(() => import("../pages/member/LoginPage"));
 const FindInfoPage = lazy(() => import("../pages/member/FindInfoPage"));
+const TermsPage = lazy(() => import("../pages/support/TermsPage"));
+const ScreenrulePage = lazy(() => import("../pages/support/ScreenrulePage"));
+const PrivacyPage = lazy(() => import("../pages/support/PrivacyPage"));
 
 const root = createBrowserRouter([
   {
@@ -31,6 +34,9 @@ const root = createBrowserRouter([
     children: [
       { index: true, element: <MainPage /> },
       { path: "info", element: <InfoPage /> },
+      { path: "/terms", element: <TermsPage /> },
+      { path: "/screenrule", element: <ScreenrulePage /> },
+      { path: "/privacy", element: <PrivacyPage /> },
 
       { path: "/member/find_info", element: <FindInfoPage /> },
       ...supportRouter,
