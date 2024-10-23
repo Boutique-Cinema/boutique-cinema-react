@@ -6,11 +6,12 @@ const MovieDetailPage = lazy(() => import("../pages/movie/MovieDetailPage"));
 
 const movieRouter = [
   {
-    path: "movie",
-    children: [
-      { path: "", element: <MovieListPage /> },
-      { path: "detail/:id", element: <MovieDetailPage /> },
-    ],
+    path: "movie/list",
+    children: [{ path: "", element: <MovieListPage /> }],
+  },
+  {
+    path: "movie/:movieNum",
+    children: [{ path: "", element: <MovieDetailPage /> }],
   },
 ];
 

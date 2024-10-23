@@ -7,6 +7,8 @@ import adminMovieRouter from "./adminMovieRouter";
 import movieRouter from "./movieRouter";
 import mypageRouter from "./mypageRouter";
 import adminSupport from "./adminSupportRouter";
+import adminMemberRouter from "./adminMemberRouter";
+import AdminReservationRouter from "./adminReservationRouter";
 
 const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
@@ -50,7 +52,12 @@ const root = createBrowserRouter([
     path: "/admin", // 관리자 페이지
 
     element: <AdminLayout />,
-    children: [...adminMovieRouter, ...adminSupport],
+    children: [
+      ...adminMovieRouter,
+      ...adminSupport,
+      ...adminMemberRouter,
+      ...AdminReservationRouter,
+    ],
   },
 ]);
 

@@ -1,34 +1,45 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Logo from "../../components/common/Logo";
 import { postLogin } from "../../api/membersApi";
+import { loginPostAsync } from "../../slice/loginSlice";
+import useCustomLogin from "../../hook/useCustomLogin";
 
 export default function LoginPage() {
-  const [form, setForm] = useState({
+  const dispatch = useDispatch();
+
+  const initState = {
     id: "",
     password: "",
-  });
+  };
 
+  const [loginParam, setLoginParam] = useState(initState);
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태 추가
 
-  // 입력값이 변경될 때마다 form 상태 업데이트
+  // 입력값이 변경될 때마다 loginParam 상태 업데이트
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({
-      ...form,
+    setLoginParam((prev) => ({
+      ...prev,
       [name]: value, // name 속성에 따라 id 또는 password 업데이트
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const dataToSubmit = { ...form };
     try {
-      const response = await postLogin(dataToSubmit); // 비동기 요청으로 수정
+      const response = await postLogin(loginParam); // 비동기 요청으로 수정
       console.log("서버 응답:", response); // 응답 로그 추가
 
       if (response && response.id) {
         alert("로그인에 성공했습니다!");
+
+        // 로그인 요청을 비동기적으로 처리
+        const data = await dispatch(loginPostAsync(loginParam)).unwrap();
+        console.log("after unwrap...");
+        console.log(data);
+
         window.location.href = "/";
       } else {
         alert("아이디 비밀번호를 확인해주세요!");
@@ -39,13 +50,15 @@ export default function LoginPage() {
     }
   };
 
+  //
+
   // 숫자만 입력
   const onKeyUpHandler = (e) => {
     const { name } = e.target;
 
     if (name === "id") {
-      const englishValue = e.target.value.replace(/[^a-z,0-9]/g, ""); // 한글만 작성가능
-      setForm((prev) => ({
+      const englishValue = e.target.value.replace(/[^a-z,0-9]/g, ""); // 영어 및 숫자만 입력
+      setLoginParam((prev) => ({
         ...prev,
         id: englishValue,
       }));
@@ -62,13 +75,12 @@ export default function LoginPage() {
           onSubmit={handleSubmit}
           className="w-[330px] rounded-lg bg-white p-5 shadow-md"
         >
-          <div className="overflow-hidden border-gray-300"></div>
           <h2 className="mb-2 text-lg font-medium text-black">로그인</h2>
           <div className="overflow-hidden rounded border border-gray-300">
             <input
               type="text"
               name="id"
-              value={form.id}
+              value={loginParam.id}
               onChange={handleChange}
               onKeyUp={onKeyUpHandler}
               placeholder="아이디"
@@ -80,7 +92,7 @@ export default function LoginPage() {
             <input
               type="password" // 비밀번호 필드는 password 타입으로
               name="password"
-              value={form.password}
+              value={loginParam.password}
               onChange={handleChange}
               placeholder="비밀번호"
               maxLength={20}
@@ -99,7 +111,7 @@ export default function LoginPage() {
           </button>
 
           <div className="mt-4 text-center text-sm text-gray-500">
-            <a href="/">아이디 찾기</a> |<a href="/"> 비밀번호 찾기</a> |
+            <a href="/">아이디 찾기</a> | <a href="/"> 비밀번호 찾기</a> |
             <a href="/member/join"> 회원가입</a>
           </div>
         </form>

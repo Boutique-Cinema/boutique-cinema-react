@@ -25,25 +25,25 @@ export default function MainPage() {
   return (
     <>
       {/* Movie Posters Grid */}
-      <div className="py-4 pt-10">
-        <ul className="text-left text-2xl text-white">메인 영화</ul>
-        <Link to={"/movie"}>
-          <ul className="py-4 pb-4 pr-2 text-right text-lg text-white">
+      <div>
+        <div className="mt-10 text-left text-2xl text-white">메인 영화</div>
+        <Link to={"/movie/list"}>
+          <div className="py-4 pb-4 pr-2 text-right text-lg text-white">
             더 많은 영화보기+
-          </ul>
+          </div>
         </Link>
-        <div className="container mx-auto grid grid-cols-2 gap-12 md:grid-cols-4">
+        <div className="container mx-auto grid grid-cols-2 gap-4 md:grid-cols-4">
           {movies.slice(0, 4).map((movie, idx) => (
             <div
               key={`${movie.movieNum}-${idx}`}
-              className="flex flex-col items-center"
+              className="relative cursor-pointer rounded-lg border border-gray-300 bg-gray-800 p-4 shadow-lg hover:bg-gray-700"
             >
               <div className="relative">
-                <Link to={`/movie/detail/${movie.movieNum}`}>
+                <Link to={`/movie/${movie.movieNum}`}>
                   <img
                     src={`http://localhost:8080/api/admin/movie/view/${movie.posterUrl}`}
                     alt="Poster"
-                    className="z-10 h-96 w-auto rounded-md"
+                    className="h-80 w-full rounded-md object-cover"
                   />
                 </Link>
                 {/* 각 꼭짓점 부분 어둡게 처리 */}
@@ -58,15 +58,30 @@ export default function MainPage() {
 
               {/* rating을 왼쪽 끝에, korTitle을 가운데 위치시키기 */}
               <div className="mt-4 flex w-full items-center justify-between">
-                <span className="text-sm text-gray-300">{movie.rating}</span>
-                <span className="flex-1 text-center text-2xl text-white">
+                <div className="flex gap-3">
+                  {/* 관람등급 표시 */}
+                  {movie.rating === "전체" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-green-600 font-medium">
+                      All
+                    </div>
+                  ) : movie.rating === "12" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-yellow-500 font-medium">
+                      12
+                    </div>
+                  ) : movie.rating === "15" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-orange-600 font-medium">
+                      15
+                    </div>
+                  ) : (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-red-600 font-medium">
+                      19
+                    </div>
+                  )}
+                </div>
+                <span className="flex-1 text-center text-lg text-white">
                   {movie.korTitle}
                 </span>
               </div>
-
-              <span className="mt-2 text-sm text-gray-300">
-                개봉일: {movie.movieStartDate}
-              </span>
             </div>
           ))}
         </div>
@@ -74,26 +89,26 @@ export default function MainPage() {
 
       {/* More Movies Section */}
       <div className="py-4 pt-10">
-        <ul className="mt-20 text-left text-2xl text-white">
+        <div className="mt-20 text-left text-2xl text-white">
           현재상영중인 영화
-        </ul>
-        <Link to={"/movie"}>
-          <ul className="py-4 pb-4 pr-2 text-right text-lg text-white">
+        </div>
+        <Link to={"/movie/list"}>
+          <div className="py-4 pb-4 pr-2 text-right text-lg text-white">
             더 많은 영화보기+
-          </ul>
+          </div>
         </Link>
-        <div className="container mx-auto grid grid-cols-2 gap-12 md:grid-cols-4">
+        <div className="container mx-auto grid grid-cols-2 gap-4 md:grid-cols-4">
           {movies.slice(0, 4).map((movie, idx) => (
             <div
               key={`${movie.movieNum}-${idx}`}
-              className="flex flex-col items-center"
+              className="relative cursor-pointer rounded-lg border border-gray-300 bg-gray-800 p-4 shadow-lg hover:bg-gray-700"
             >
               <div className="relative">
-                <Link to={`/movie/detail/${movie.movieNum}`}>
+                <Link to={`/movie/${movie.movieNum}`}>
                   <img
                     src={`http://localhost:8080/api/admin/movie/view/${movie.posterUrl}`}
                     alt="Poster"
-                    className="z-10 h-96 w-auto rounded-md"
+                    className="h-80 w-full rounded-md object-cover"
                   />
                 </Link>
                 {/* 각 꼭짓점 부분 어둡게 처리 */}
@@ -108,15 +123,30 @@ export default function MainPage() {
 
               {/* rating을 왼쪽 끝에, korTitle을 가운데 위치시키기 */}
               <div className="mt-4 flex w-full items-center justify-between">
-                <span className="text-sm text-gray-300">{movie.rating}</span>
-                <span className="flex-1 text-center text-2xl text-white">
+                <div className="flex gap-3">
+                  {/* 관람등급 표시 */}
+                  {movie.rating === "전체" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-green-600 font-medium">
+                      All
+                    </div>
+                  ) : movie.rating === "12" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-yellow-500 font-medium">
+                      12
+                    </div>
+                  ) : movie.rating === "15" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-orange-600 font-medium">
+                      15
+                    </div>
+                  ) : (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-red-600 font-medium">
+                      19
+                    </div>
+                  )}
+                </div>
+                <span className="flex-1 text-center text-lg text-white">
                   {movie.korTitle}
                 </span>
               </div>
-
-              <span className="mt-2 text-sm text-gray-300">
-                개봉일: {movie.movieStartDate}
-              </span>
             </div>
           ))}
         </div>
@@ -124,24 +154,24 @@ export default function MainPage() {
 
       {/* Popular Movies Section */}
       <div className="py-4 pt-10">
-        <ul className="mt-20 text-left text-2xl text-white">인기순 영화</ul>
-        <Link to={"/movie"}>
-          <ul className="py-4 pb-4 pr-2 text-right text-lg text-white">
+        <div className="mt-20 text-left text-2xl text-white">인기순 영화</div>
+        <Link to={"/movie/list"}>
+          <div className="py-4 pb-4 pr-2 text-right text-lg text-white">
             더 많은 영화보기+
-          </ul>
+          </div>
         </Link>
-        <div className="container mx-auto grid grid-cols-2 gap-12 md:grid-cols-4">
+        <div className="container mx-auto grid grid-cols-2 gap-4 md:grid-cols-4">
           {movies.slice(0, 4).map((movie, idx) => (
             <div
               key={`${movie.movieNum}-${idx}`}
-              className="flex flex-col items-center"
+              className="relative cursor-pointer rounded-lg border border-gray-300 bg-gray-800 p-4 shadow-lg hover:bg-gray-700"
             >
               <div className="relative">
-                <Link to={`/movie/detail/${movie.movieNum}`}>
+                <Link to={`/movie/${movie.movieNum}`}>
                   <img
                     src={`http://localhost:8080/api/admin/movie/view/${movie.posterUrl}`}
                     alt="Poster"
-                    className="z-10 h-96 w-auto rounded-md"
+                    className="h-80 w-full rounded-md object-cover"
                   />
                 </Link>
                 {/* 각 꼭짓점 부분 어둡게 처리 */}
@@ -156,15 +186,30 @@ export default function MainPage() {
 
               {/* rating을 왼쪽 끝에, korTitle을 가운데 위치시키기 */}
               <div className="mt-4 flex w-full items-center justify-between">
-                <span className="text-sm text-gray-300">{movie.rating}</span>
-                <span className="flex-1 text-center text-2xl text-white">
+                <div className="flex gap-3">
+                  {/* 관람등급 표시 */}
+                  {movie.rating === "전체" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-green-600 font-medium">
+                      All
+                    </div>
+                  ) : movie.rating === "12" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-yellow-500 font-medium">
+                      12
+                    </div>
+                  ) : movie.rating === "15" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-orange-600 font-medium">
+                      15
+                    </div>
+                  ) : (
+                    <div className="flex h-7 w-7 items-center justify-center rounded bg-red-600 font-medium">
+                      19
+                    </div>
+                  )}
+                </div>
+                <span className="flex-1 text-center text-lg text-white">
                   {movie.korTitle}
                 </span>
               </div>
-
-              <span className="mt-2 text-sm text-gray-300">
-                개봉일: {movie.movieStartDate}
-              </span>
             </div>
           ))}
         </div>
@@ -172,9 +217,9 @@ export default function MainPage() {
 
       {/* Theater Introduction Section */}
       <nav className="pb-28 text-white">
-        <ul className="mb-4 pb-10 pt-20 text-center text-2xl font-bold">
+        <div className="mb-4 pb-10 pt-20 text-center text-2xl font-bold">
           상영관 소개
-        </ul>
+        </div>
         <div className="flex justify-center gap-6">
           <div className="flex-1 text-center">
             <Link to={"/greeting/theater"}>
