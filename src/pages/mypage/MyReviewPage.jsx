@@ -58,8 +58,6 @@ export default function MyReviewPage() {
     navigate(`/mypage/review/write`, { state: { reservation } }); // 영화번호와 예매번호를 전달
   };
 
-  console.log(reviewWithMovies);
-
   if (!reviewWithMovies[0]) {
     return (
       <div className="ml-10">

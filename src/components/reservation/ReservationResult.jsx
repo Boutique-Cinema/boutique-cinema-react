@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   adultPrice,
   calculateTotalPrice,
@@ -8,7 +8,6 @@ import {
   teenPrice,
 } from "../../util/reservationUtil";
 import { createReservation } from "../../api/reservationApi";
-import { getMovie } from "../../api/movieApi";
 
 export default function ReservationResult({
   adultCount,
@@ -17,41 +16,30 @@ export default function ReservationResult({
   selectedSeats,
   selectedMovie,
 }) {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [movie, setMovie] = useState({});
   const [roundTime, setRoundTime] = useState("");
-  const { movieNum, date, theaterNum, roundNum } = selectedMovie || {};
+  const { movieNum, theaterNum, roundNum, date } = location.state || {};
 
   const totalCount = adultCount + teenCount + specialCount;
-
-  useEffect(() => {
-    if (!movieNum) return;
-
-    const loadMovie = async () => {
-      const data = await getMovie(movieNum);
-      setMovie(data);
-    };
-
-    loadMovie();
-  }, [movieNum]);
 
   useEffect(() => {
     const convertRoundToRoundTime = (roundNum) => {
       switch (roundNum) {
         case 1:
-          setRoundTime(movie.roundTime1);
+          setRoundTime(selectedMovie.roundTime1);
           break;
         case 2:
-          setRoundTime(movie.roundTime2);
+          setRoundTime(selectedMovie.roundTime2);
           break;
         case 3:
-          setRoundTime(movie.roundTime3);
+          setRoundTime(selectedMovie.roundTime3);
           break;
         case 4:
-          setRoundTime(movie.roundTime4);
+          setRoundTime(selectedMovie.roundTime4);
           break;
         case 5:
-          setRoundTime(movie.roundTime5);
+          setRoundTime(selectedMovie.roundTime5);
           break;
         default:
           console.error("잘못된 번호입니다.");
@@ -59,7 +47,7 @@ export default function ReservationResult({
     };
 
     convertRoundToRoundTime(roundNum);
-  }, [roundNum, movie]);
+  }, [selectedMovie, roundNum]);
 
   // 이전 화면으로 이동하는 핸들러
   const handleGoBack = () => {
@@ -142,15 +130,15 @@ export default function ReservationResult({
       {/* 영화 정보 안내 */}
       <div className="flex items-center justify-between">
         <div className="flex gap-3 text-white">
-          {movie.rating === "전체" ? (
+          {selectedMovie.rating === "전체" ? (
             <div className="flex h-7 w-7 items-center justify-center rounded bg-green-600 font-medium">
               All
             </div>
-          ) : movie.rating === "12" ? (
+          ) : selectedMovie.rating === "12" ? (
             <div className="flex h-7 w-7 items-center justify-center rounded bg-yellow-500 font-medium">
               12
             </div>
-          ) : movie.rating === "15" ? (
+          ) : selectedMovie.rating === "15" ? (
             <div className="flex h-7 w-7 items-center justify-center rounded bg-orange-600 font-medium">
               15
             </div>
@@ -160,10 +148,10 @@ export default function ReservationResult({
             </div>
           )}
           <span className="text-xl font-medium text-primary">
-            {movie.korTitle}
+            {selectedMovie.korTitle}
           </span>
         </div>
-        <div className="text-gray-600">{movie.genre}</div>
+        <div className="text-gray-600">{selectedMovie.genre}</div>
       </div>
 
       {/* 예매 정보 안내 */}
@@ -174,10 +162,10 @@ export default function ReservationResult({
           <div>{`${roundTime} (${roundNum}회차)`}</div>
         </div>
         <div className="h-full w-[70px]">
-          {movie.posterUrl && (
+          {selectedMovie.posterUrl && (
             <img
-              src={`http://localhost:8080/api/admin/movie/view/${movie.posterUrl}`}
-              alt={`${movie.korTitle} 포스터 이미지`}
+              src={`http://localhost:8080/api/admin/movie/view/${selectedMovie.posterUrl}`}
+              alt={`${selectedMovie.korTitle} 포스터 이미지`}
               className="h-full w-full"
             />
           )}

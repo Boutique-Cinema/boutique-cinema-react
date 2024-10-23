@@ -9,8 +9,6 @@ export default function SeatTable({
   onSeatSelect,
   selectedMovie,
 }) {
-  const ROWS = 6; // 행 수
-  const COLUMNS = 10; // 열 수
   const [hoveredSeat, setHoveredSeat] = useState(null);
   const [reservations, setReservations] = useState([]);
   const { movieNum, date, theaterNum, roundNum } = selectedMovie || {};
@@ -98,6 +96,8 @@ export default function SeatTable({
   // 좌석을 2차원 배열로 생성
   const renderSeats = () => {
     const seats = [];
+    const ROWS = 6; // 행 수
+    const COLUMNS = 10; // 열 수
 
     for (let row = 0; row < ROWS; row++) {
       const seatRow = [];

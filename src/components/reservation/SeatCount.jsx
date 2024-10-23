@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 export default function SeatCount({
+  selectedMovie,
   adultCount,
   teenCount,
   specialCount,
@@ -41,72 +42,80 @@ export default function SeatCount({
 
   return (
     <div className="mb-4 rounded bg-gray-100 px-4 py-6 text-center text-primary">
-      <div className="flex items-center gap-6">
-        {/* 성인 카운터 */}
-        <div className="flex items-center">
-          <span className="mr-2">성인</span>
-          <button
-            onClick={() => handleDecrease(setAdultCount, adultCount)}
-            className="rounded-l bg-gray-300 px-3 py-1 text-gray-700"
-          >
-            -
-          </button>
-          <span className="mx-3">{adultCount}</span>
-          <button
-            onClick={() => handleIncrease(setAdultCount, adultCount)}
-            className="rounded-r bg-tertiary px-3 py-1 text-white"
-          >
-            +
-          </button>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          {/* 성인 카운터 */}
+          <div className="flex items-center">
+            <span className="mr-2">성인</span>
+            <button
+              onClick={() => handleDecrease(setAdultCount, adultCount)}
+              className="rounded-l bg-gray-300 px-3 py-1 text-gray-700"
+            >
+              -
+            </button>
+            <span className="mx-3">{adultCount}</span>
+            <button
+              onClick={() => handleIncrease(setAdultCount, adultCount)}
+              className="rounded-r bg-tertiary px-3 py-1 text-white"
+            >
+              +
+            </button>
+          </div>
+
+          {/* 청소년 카운터 */}
+          {selectedMovie.rating !== "19" ? (
+            <div className="flex items-center">
+              <span className="mr-2">청소년</span>
+              <button
+                onClick={() => handleDecrease(setTeenCount, teenCount)}
+                className="rounded-l bg-gray-300 px-3 py-1 text-gray-700"
+              >
+                -
+              </button>
+              <span className="mx-3">{teenCount}</span>
+              <button
+                onClick={() => handleIncrease(setTeenCount, teenCount)}
+                className="rounded-r bg-tertiary px-3 py-1 text-white"
+              >
+                +
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {/* 우대 카운터 */}
+          <div className="flex items-center">
+            <span className="mr-2">우대</span>
+            <button
+              onClick={() => handleDecrease(setSpecialCount, specialCount)}
+              className="rounded-l bg-gray-300 px-3 py-1 text-gray-700"
+            >
+              -
+            </button>
+            <span className="mx-3">{specialCount}</span>
+            <button
+              onClick={() => handleIncrease(setSpecialCount, specialCount)}
+              className="rounded-r bg-tertiary px-3 py-1 text-white"
+            >
+              +
+            </button>
+          </div>
         </div>
 
-        {/* 청소년 카운터 */}
-        <div className="flex items-center">
-          <span className="mr-2">청소년</span>
+        <div className="flex items-center gap-6">
+          <div className="font-medium">
+            총 선택 인원: <span>{totalTickets}</span>
+          </div>
+
+          {/* 초기화 버튼 */}
           <button
-            onClick={() => handleDecrease(setTeenCount, teenCount)}
-            className="rounded-l bg-gray-300 px-3 py-1 text-gray-700"
+            onClick={handleReset}
+            className="rounded bg-secondary px-4 py-2 text-white hover:bg-secondary-hover"
           >
-            -
-          </button>
-          <span className="mx-3">{teenCount}</span>
-          <button
-            onClick={() => handleIncrease(setTeenCount, teenCount)}
-            className="rounded-r bg-tertiary px-3 py-1 text-white"
-          >
-            +
+            초기화
           </button>
         </div>
-
-        {/* 우대 카운터 */}
-        <div className="flex items-center">
-          <span className="mr-2">우대</span>
-          <button
-            onClick={() => handleDecrease(setSpecialCount, specialCount)}
-            className="rounded-l bg-gray-300 px-3 py-1 text-gray-700"
-          >
-            -
-          </button>
-          <span className="mx-3">{specialCount}</span>
-          <button
-            onClick={() => handleIncrease(setSpecialCount, specialCount)}
-            className="rounded-r bg-tertiary px-3 py-1 text-white"
-          >
-            +
-          </button>
-        </div>
-
-        <div className="font-medium">
-          총 선택 인원: <span>{totalTickets}</span>
-        </div>
-
-        {/* 초기화 버튼 */}
-        <button
-          onClick={handleReset}
-          className="rounded bg-secondary px-4 py-2 text-white hover:bg-secondary-hover"
-        >
-          초기화
-        </button>
       </div>
     </div>
   );
