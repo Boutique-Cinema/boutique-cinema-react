@@ -63,7 +63,7 @@ export default function MyCancelPage() {
   }
 
   return (
-    <div className="ml-10">
+    <div className="mb-10 ml-10">
       <h2 className="mb-5 text-2xl">취소/환불 내역</h2>
       <ul className="flex flex-col gap-4">
         {reservationsWithMovies

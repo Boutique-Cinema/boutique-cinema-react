@@ -48,3 +48,13 @@ export const cancelReservation = async (rnum) => {
     console.error("예매 취소에 실패했습니다.", error);
   }
 };
+
+export const updateReview = async (rnum, reviewData) => {
+  try {
+    const response = await axios.put(`${API_URL}/review/${rnum}`, reviewData);
+
+    return response.data;
+  } catch (error) {
+    console.error("리뷰 업데이트에 실패했습니다.", error);
+  }
+};

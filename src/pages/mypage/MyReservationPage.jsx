@@ -23,7 +23,7 @@ export default function MyReservationPage() {
         // 1. 예매 정보를 먼저 불러옴
         const reservationData = await getReservationsById(MEMBER_ID);
 
-        // 2. isCanceled가 1인 예매만 필터링
+        // 2. 취소 안된 예매만 필터링
         const filteredReservations = reservationData.filter(
           (reservation) => !reservation.isCanceled,
         );
@@ -84,16 +84,19 @@ export default function MyReservationPage() {
     }
   };
 
-  console.log(reservationsWithMovies);
-
   // 영화가 이미 시작했는지 확인하는 함수
   const isMovieStarted = (reserveDate, roundNum, movie) => {
     const reserveTime = convertRoundNumToRoundTime(roundNum, movie);
 
-    const movieStartTime = new Date(reserveDate + " " + reserveTime).getTime(); // 영화 시작 시간    console.log(movieStartTime);
+    const movieStartTime = new Date(reserveDate + " " + reserveTime).getTime(); // 영화 시작 시간
     const currentTime = new Date().getTime(); // 현재 시간
 
     return currentTime >= movieStartTime; // 영화가 이미 시작했는지 여부
+  };
+
+  // 리뷰 작성 페이지로 이동하는 함수
+  const handleGoToReviewWrite = (reservation) => {
+    navigate(`/mypage/review/write`, { state: { reservation } }); // 영화번호와 예매번호를 전달
   };
 
   if (!reservationsWithMovies[0]) {
@@ -106,8 +109,8 @@ export default function MyReservationPage() {
   }
 
   return (
-    <div className="ml-10">
-      <h2 className="mb-5 text-2xl">예매내역</h2>
+    <div className="mb-10 ml-10">
+      <h2 className="mb-5 text-2xl font-medium">예매내역</h2>
       <ul className="flex flex-col gap-4">
         {reservationsWithMovies
           .slice(0, visibleReservations)
@@ -231,8 +234,9 @@ export default function MyReservationPage() {
                       reservation.movie,
                     )
                   }
+                  onClick={() => handleGoToReviewWrite(reservation)}
                 >
-                  관람평 작성
+                  {reservation.reviewContent ? "관람평 수정" : "관람평 등록"}
                 </button>
                 <button
                   className={`rounded border p-3 text-white ${
@@ -242,7 +246,7 @@ export default function MyReservationPage() {
                       reservation.movie,
                     )
                       ? "bg-primary"
-                      : "hover:bg-tertiary-hover bg-tertiary"
+                      : "bg-tertiary hover:bg-tertiary-hover"
                   }`}
                   disabled={isMovieStarted(
                     reservation.reserveDate,

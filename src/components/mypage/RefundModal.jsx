@@ -10,16 +10,16 @@ export default function RefundModal({ onClose, onConfirm }) {
         <p>- 영화 시작 후에는 환급 요청 불가.</p>
         <div className="mt-4 flex justify-end gap-3">
           <button
+            onClick={onConfirm}
+            className="rounded bg-tertiary p-2 text-white hover:bg-tertiary-hover"
+          >
+            예매취소
+          </button>
+          <button
             onClick={onClose}
             className="rounded bg-secondary p-2 text-white hover:bg-secondary-hover"
           >
             돌아가기
-          </button>
-          <button
-            onClick={onConfirm}
-            className="hover:bg-tertiary-hover rounded bg-tertiary p-2 text-white"
-          >
-            예매취소
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"; // react에서 useEffect와 useState를 가져옴
+import { FaArrowUp } from "react-icons/fa";
 
 const ScrollTop = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -29,11 +30,9 @@ const ScrollTop = () => {
       {isVisible && (
         <button
           onClick={ScrollToTop}
-          className="fixed bottom-10 right-[320px] z-50 flex h-12 w-12 flex-col items-center justify-center rounded-full bg-secondary text-white transition"
-          style={{ fontSize: "12px" }}
+          className="fixed bottom-10 right-[16vw] z-50 flex h-12 w-12 flex-col items-center justify-center rounded-full bg-secondary text-white transition"
         >
-          <div>↑</div>
-          <div>TOP</div>
+          <FaArrowUp className="text-2xl" />
         </button>
       )}
     </>

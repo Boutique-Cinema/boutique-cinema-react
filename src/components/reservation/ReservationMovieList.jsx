@@ -10,8 +10,8 @@ export default function ReservationMovieList({ movies, handleMovieSelect }) {
   );
 
   return (
-    <div className="h-full w-full overflow-auto">
-      <ul className="min-h-full rounded bg-gray-500">
+    <div className="h-full w-full overflow-auto rounded">
+      <ul className="min-h-full bg-gray-500">
         {uniqueMovies.map((movie, index) => (
           <li
             key={movie.movieNum}
