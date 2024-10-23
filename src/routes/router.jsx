@@ -1,10 +1,11 @@
-import { Suspense, lazy } from "react";
+import { lazy } from "react";
 import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
 import reservationRouter from "./reservationRouter";
 import supportRouter from "./supportRouter";
 import greetingRouter from "./greetingRouter";
 import adminMovieRouter from "./adminMovieRouter";
 import movieRouter from "./movieRouter";
+import mypageRouter from "./mypageRouter";
 import adminSupport from "./adminSupportRouter";
 import adminMemberRouter from "./adminMemberRouter";
 import AdminReservationRouter from "./adminReservationRouter";
@@ -16,10 +17,6 @@ const InfoPage = lazy(() => import("../pages/info/InfoPage"));
 const JoinPage = lazy(() => import("../pages/member/JoinPage"));
 const LoginPage = lazy(() => import("../pages/member/LoginPage"));
 const FindInfoPage = lazy(() => import("../pages/member/FindInfoPage"));
-const Loading = <div>Loading....</div>;
-const MyReservationPage = lazy(
-  () => import("../pages/mypage/MyReservationPage"),
-);
 
 const root = createBrowserRouter([
   {
@@ -34,28 +31,26 @@ const root = createBrowserRouter([
     children: [
       { index: true, element: <MainPage /> },
       { path: "info", element: <InfoPage /> },
-      { path: "/mypage/reserve", element: <MyReservationPage /> },
+
       { path: "/member/find_info", element: <FindInfoPage /> },
       ...supportRouter,
       ...greetingRouter, // greetingRouter의 경로들을 병합
       ...reservationRouter,
       ...movieRouter,
+      ...mypageRouter,
     ],
   },
   {
-    path: "/member/join",
+    path: "/member/join", // 회원가입 페이지
     element: <JoinPage />,
   },
   {
     path: "/member/login", //  로그인 페이지
-    element: (
-      <Suspense fallback={Loading}>
-        <LoginPage />
-      </Suspense>
-    ),
+    element: <LoginPage />,
   },
   {
-    path: "/admin",
+    path: "/admin", // 관리자 페이지
+
     element: <AdminLayout />,
     children: [
       ...adminMovieRouter,

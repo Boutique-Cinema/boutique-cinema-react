@@ -24,3 +24,25 @@ export const generateReservationNumber = (movieNum, theaterNum, roundNum) => {
   const randomNum = Math.floor(Math.random() * 10000); // 0~9999 사이의 랜덤 숫자
   return `${formattedDate}${movieNum}${theaterNum}${roundNum}${randomNum}`; // 예: 202310171561234
 };
+
+export const convertRoundNumToRoundTime = (reserveRoundNum, movie) => {
+  switch (reserveRoundNum) {
+    case 1:
+      return movie.roundTime1;
+
+    case 2:
+      return movie.roundTime2;
+
+    case 3:
+      return movie.roundTime3;
+
+    case 4:
+      return movie.roundTime4;
+
+    case 5:
+      return movie.roundTime5;
+
+    default:
+      console.error("잘못된 번호입니다.");
+  }
+};

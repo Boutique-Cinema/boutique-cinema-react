@@ -8,12 +8,17 @@ const ReservationSeatPage = lazy(
   () => import("../pages/reservation/ReservationSeatPage"),
 );
 
+const ReservationSuccessPage = lazy(
+  () => import("../pages/reservation/ReservationSuccessPage"),
+);
+
 const reservationRouter = [
   {
     path: "reserve",
     children: [
       { path: "", element: <ReservationTimePage /> },
       { path: "seat", element: <ReservationSeatPage /> },
+      { path: "success", element: <ReservationSuccessPage /> },
     ],
   },
 ];

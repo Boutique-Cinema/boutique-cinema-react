@@ -8,6 +8,7 @@ module.exports = {
         secondary: "#ed6a5e",
         "secondary-hover": "#eb584a",
         tertiary: "#45566d",
+        "tertiary-hover": "#3B4C63",
         quaternary: "#f1faff",
         footer: "#4f545c",
       },
