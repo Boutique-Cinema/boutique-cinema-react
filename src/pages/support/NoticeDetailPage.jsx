@@ -8,7 +8,7 @@ const NoticeDetailPage = () => {
 
   // 공지사항 세부 정보 상태 설정
   const [notice, setNotice] = useState(null);
-  const { nnum } = useParams(); // URL 파라미터에서 영화 번호로 조회
+  const { nnum } = useParams(); // URL 파라미터에서 공지사항 번호로 조회
   const [loading, setLoading] = useState(true);
 
   // 날짜 포맷팅 함수
@@ -22,12 +22,11 @@ const NoticeDetailPage = () => {
     setLoading(true);
     try {
       const noticeData = await getNotice(nnum); // 서버에서 공지사항 불러옴
-      setNotice({
-        ...notice,
-        ...noticeData, // 기존 데이터로 상태 업데이트
-      });
+      setNotice(noticeData); // 상태 업데이트
     } catch (error) {
       console.error("공지사항 데이터 가져오기 실패:", error);
+    } finally {
+      setLoading(false); // 로딩 상태 해제
     }
   };
 
@@ -42,31 +41,26 @@ const NoticeDetailPage = () => {
     <>
       {notice ? (
         <>
-          {/* 제목 부분 */}
-          <h1 className="mb-4 ml-16 mt-20 border-gray-300 text-left text-3xl font-bold text-gray-200">
+          <h1 className="mb-6 ml-10 mt-8 border-gray-300 text-left text-3xl font-bold text-gray-200">
             {notice.ntitle}
           </h1>
-          <p className="mb-8 ml-16 border-gray-300 text-left text-sm text-gray-200">
-            {formatDate(notice.ndate)}
+
+          <p className="ml-10 mt-8 border-gray-300 text-left text-base text-gray-200">
+            작성일: {formatDate(notice.ndate)}
           </p>
 
-          {/* 내용 부분 */}
-          <div className="mx-auto mb-32 ml-16 mt-8 w-11/12 max-w-full rounded-lg border-2 bg-gray-100 px-10 shadow-lg">
-            <div className="mt-5 h-[500px] max-w-full overflow-y-auto px-8 py-6 text-lg leading-relaxed text-gray-700">
-              {/* 내용이 길어지면 스크롤 발생 */}
+          <div className="mx-auto mb-32 ml-10 mt-4 w-full max-w-[calc(100%-2.5rem)] rounded-lg border-2 bg-none px-10 shadow-lg">
+            <div className="mt-8 h-[530px] max-w-full overflow-y-auto px-8 py-6 text-lg leading-relaxed text-gray-100">
               {notice.ncontent}
             </div>
 
-            {/* 버튼 부분 */}
             <div className="flex w-full justify-center border-t-2 border-gray-300 pt-4">
-              <div className="w-full">
-                <button
-                  onClick={() => navigate("/support/notice")} // 목록 페이지로 이동
-                  className="mb-4 ml-72 rounded-lg bg-gray-500 px-6 py-2 text-white transition hover:bg-cyan-800"
-                >
-                  목록으로 돌아가기
-                </button>
-              </div>
+              <button
+                onClick={() => navigate("/support/notice")} // 목록 페이지로 이동
+                className="mb-4 rounded-lg bg-gray-500 px-6 py-2 text-white transition hover:bg-cyan-800"
+              >
+                목록으로 돌아가기
+              </button>
             </div>
           </div>
         </>
