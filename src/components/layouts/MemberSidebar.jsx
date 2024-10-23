@@ -5,7 +5,7 @@ const NAV_MENU = [
   { title: "예매 내역", url: "mypage/reserve" },
   { title: "취소/환불 내역", url: "mypage/cancel" },
   { title: "나의 관람평", url: "mypage/review" },
-  { title: "1:1 문의", url: "mypage/qna" },
+  { title: "1:1 문의", url: "support/qna" },
   { title: "회원정보 수정", url: "mypage/myinfo" },
 ];
 
