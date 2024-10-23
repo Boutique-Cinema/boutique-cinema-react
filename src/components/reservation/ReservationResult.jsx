@@ -8,50 +8,38 @@ import {
   teenPrice,
 } from "../../util/reservationUtil";
 import { createReservation } from "../../api/reservationApi";
-import { getMovie } from "../../api/movieApi";
 
 export default function ReservationResult({
   adultCount,
   teenCount,
   specialCount,
   selectedSeats,
+  selectedMovie,
 }) {
-  const navigate = useNavigate();
   const location = useLocation();
-  const [movie, setMovie] = useState({});
+  const navigate = useNavigate();
   const [roundTime, setRoundTime] = useState("");
-  const { movieNum, date, theaterNum, roundNum } = location.state || {};
+  const { movieNum, theaterNum, roundNum, date } = location.state || {};
 
   const totalCount = adultCount + teenCount + specialCount;
-
-  useEffect(() => {
-    if (!movieNum) return;
-
-    const loadMovie = async () => {
-      const data = await getMovie(movieNum);
-      setMovie(data);
-    };
-
-    loadMovie();
-  }, [movieNum]);
 
   useEffect(() => {
     const convertRoundToRoundTime = (roundNum) => {
       switch (roundNum) {
         case 1:
-          setRoundTime(movie.roundTime1);
+          setRoundTime(selectedMovie.roundTime1);
           break;
         case 2:
-          setRoundTime(movie.roundTime2);
+          setRoundTime(selectedMovie.roundTime2);
           break;
         case 3:
-          setRoundTime(movie.roundTime3);
+          setRoundTime(selectedMovie.roundTime3);
           break;
         case 4:
-          setRoundTime(movie.roundTime4);
+          setRoundTime(selectedMovie.roundTime4);
           break;
         case 5:
-          setRoundTime(movie.roundTime5);
+          setRoundTime(selectedMovie.roundTime5);
           break;
         default:
           console.error("잘못된 번호입니다.");
@@ -59,7 +47,7 @@ export default function ReservationResult({
     };
 
     convertRoundToRoundTime(roundNum);
-  }, [roundNum, movie]);
+  }, [selectedMovie, roundNum]);
 
   // 이전 화면으로 이동하는 핸들러
   const handleGoBack = () => {
@@ -69,6 +57,13 @@ export default function ReservationResult({
   // 결제 처리 핸들러
   const handlePayment = async (e) => {
     e.preventDefault();
+
+    // 결제 확인 창 띄우기
+    const isConfirmed = window.confirm("결제하시겠습니까?");
+
+    if (!isConfirmed) {
+      return;
+    }
 
     const rPersonTypes = [
       ...Array(adultCount).fill("성인"),
@@ -95,7 +90,7 @@ export default function ReservationResult({
         ),
         10,
       ),
-      mId: "qqq123123",
+      mId: "ttt123123",
       rPersonType1: rPersonTypes[0],
       rPersonType2: rPersonTypes[1] || null,
       rPersonType3: rPersonTypes[2] || null,
@@ -116,7 +111,18 @@ export default function ReservationResult({
       seatNum6: selectedSeats[5] || null,
     };
 
-    const result = await createReservation(reservationData);
+    try {
+      const result = await createReservation(reservationData);
+
+      alert("결제가 완료되었습니다.");
+
+      navigate("/reserve/success", {
+        state: result,
+        replace: true,
+      });
+    } catch (error) {
+      alert("결제 처리 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    }
   };
 
   return (
@@ -124,15 +130,15 @@ export default function ReservationResult({
       {/* 영화 정보 안내 */}
       <div className="flex items-center justify-between">
         <div className="flex gap-3 text-white">
-          {movie.rating === "전체" ? (
+          {selectedMovie.rating === "전체" ? (
             <div className="flex h-7 w-7 items-center justify-center rounded bg-green-600 font-medium">
               All
             </div>
-          ) : movie.rating === "12" ? (
+          ) : selectedMovie.rating === "12" ? (
             <div className="flex h-7 w-7 items-center justify-center rounded bg-yellow-500 font-medium">
               12
             </div>
-          ) : movie.rating === "15" ? (
+          ) : selectedMovie.rating === "15" ? (
             <div className="flex h-7 w-7 items-center justify-center rounded bg-orange-600 font-medium">
               15
             </div>
@@ -142,18 +148,30 @@ export default function ReservationResult({
             </div>
           )}
           <span className="text-xl font-medium text-primary">
-            {movie.korTitle}
+            {selectedMovie.korTitle}
           </span>
         </div>
-        <div className="text-gray-600">{movie.genre}</div>
+        <div className="text-gray-600">{selectedMovie.genre}</div>
       </div>
 
       {/* 예매 정보 안내 */}
-      <div className="mt-3 border-y border-gray-300 py-3">
-        <div>{theaterNum === 0 ? "일반관" : "커플관"}</div>
-        <div>{date}</div>
-        <div>{`${roundTime} (${roundNum}회차)`}</div>
+      <div className="mt-3 flex justify-between border-y border-gray-300 py-3">
+        <div>
+          <div>{theaterNum === 0 ? "일반관" : "커플관"}</div>
+          <div>{date}</div>
+          <div>{`${roundTime} (${roundNum}회차)`}</div>
+        </div>
+        <div className="h-full w-[70px]">
+          {selectedMovie.posterUrl && (
+            <img
+              src={`http://localhost:8080/api/admin/movie/view/${selectedMovie.posterUrl}`}
+              alt={`${selectedMovie.korTitle} 포스터 이미지`}
+              className="h-full w-full"
+            />
+          )}
+        </div>
       </div>
+
       <div className="flex justify-between border-b border-gray-300 py-3">
         <div className="flex flex-col justify-between">
           {/* 좌석 표시 안내 */}

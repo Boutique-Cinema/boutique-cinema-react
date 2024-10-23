@@ -34,7 +34,7 @@ export default function ReservationTimePage() {
   }, [date]);
 
   return (
-    <div className="mb-[100px] h-[70vh]">
+    <div className="mb-[100px]">
       <h2 className="mb-5 text-2xl">예매</h2>
       <div className="flex h-full">
         <div className="h-full w-1/3">
@@ -45,7 +45,7 @@ export default function ReservationTimePage() {
               handleDateChange={handleDateChange}
             />
           </div>
-          <div className="mt-4 h-1/2 pr-4">
+          <div className="mt-4 h-[332px] pr-4">
             {/* 영화 목록 컴포넌트 */}
             <ReservationMovieList
               date={date}

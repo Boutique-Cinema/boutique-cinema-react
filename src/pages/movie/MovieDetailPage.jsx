@@ -52,12 +52,11 @@ const MovieDetailPage = () => {
 
   return (
     <>
-      <section className="container mx-auto p-6">
+      <section className="container mx-auto mb-20">
         <div className="flex">
           <img
-            //src={movie.posterUrl} // API에서 가져온 포스터 URL 사용
             src={`http://localhost:8080/api/admin/movie/view/${movie.posterUrl}`}
-            className="mt-4 rounded-md"
+            className="mt-4 h-80 w-56"
             alt={`${movie.korTitle} 포스터`}
           />
           <div className="ml-10 mt-3 flex-1">
@@ -93,12 +92,13 @@ const MovieDetailPage = () => {
               </div>
             </div>
 
-            <p className="my-4 mb-28 max-h-48 overflow-y-auto text-2xl text-gray-200">
+            <p className="my-4 mb-12 max-h-48 overflow-y-auto text-2xl text-gray-200">
               {movie.movieDesc}
             </p>
+
             <Link
-              to={`/reservation/${movie.movieNum}`}
-              className="rounded-md bg-emerald-500 px-24 py-5 text-2xl text-white"
+              to={`/reserve`}
+              className="rounded-md bg-emerald-500 px-24 py-4 text-2xl text-white"
             >
               예매하기
             </Link>
@@ -160,10 +160,16 @@ const MovieDetailPage = () => {
 
           {activeTab === "trailer" && movie.trailerUrl && (
             <div className="mb-5 mt-20 text-3xl">
-              <video className="h-auto w-full" controls>
-                <source src={movie.trailerUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <iframe
+                width="100%"
+                height="auto"
+                src={movie.trailerUrl.replace("watch?v=", "embed/")}
+                title="트레일러"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ aspectRatio: "16/9" }} // 비율을 유지하기 위해 사용
+              ></iframe>
             </div>
           )}
         </div>

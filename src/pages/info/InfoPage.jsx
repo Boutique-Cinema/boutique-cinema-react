@@ -16,12 +16,12 @@ const InfoPage = () => {
     );
 
     sectionsRef.current.forEach((section) => {
-      observer.observe(section);
+      if (section) observer.observe(section); // null 확인
     });
 
     return () => {
       sectionsRef.current.forEach((section) => {
-        observer.unobserve(section);
+        if (section) observer.unobserve(section); // null 확인
       });
     };
   }, []);
@@ -81,7 +81,7 @@ const InfoPage = () => {
 
       <div className="section-container">
         <section
-          ref={(el) => (sectionsRef.current[0] = el)}
+          ref={(el) => el && (sectionsRef.current[0] = el)} // null 확인 추가
           className="section section-hidden left p-4"
         >
           <div className="mb-20 flex flex-col">
@@ -89,24 +89,18 @@ const InfoPage = () => {
               개성 있는 브랜드 이미지
             </div>
             <div className="max-w-5xl">
-              <div className="max-w-5xl">
-                <div>
-                  <div>
-                    <span className="text-violet-600">"Boutique"</span>라는
-                    용어는 독특하고 맞춤형 서비스를 제공하는 상점을 의미하며,
-                  </div>
-                  <div>
-                    이는 영화관이 제공하는 특별한 관람 경험, 즉 대형 체인과는
-                    다른, 개인화된 서비스와 고유한 분위기를 강조합니다.
-                  </div>
-                </div>
+              <div>
+                <span className="text-violet-600">"Boutique"</span>라는 용어는
+                독특하고 맞춤형 서비스를 제공하는 상점을 의미하며, 이는 영화관이
+                제공하는 특별한 관람 경험, 즉 대형 체인과는 다른, 개인화된
+                서비스와 고유한 분위기를 강조합니다.
               </div>
             </div>
           </div>
         </section>
 
         <section
-          ref={(el) => (sectionsRef.current[1] = el)}
+          ref={(el) => el && (sectionsRef.current[1] = el)} // null 확인 추가
           className="section section-hidden right p-4"
         >
           <div className="mb-20 flex flex-col">
@@ -132,7 +126,7 @@ const InfoPage = () => {
 
       <div className="horizontal-container mb-32 flex flex-wrap">
         <section
-          ref={(el) => (sectionsRef.current[2] = el)}
+          ref={(el) => el && (sectionsRef.current[2] = el)} // null 확인 추가
           className="section section-hidden left w-1/2 transform p-6 shadow-lg"
         >
           <div className="flex flex-col pb-6">
@@ -150,7 +144,7 @@ const InfoPage = () => {
         </section>
 
         <section
-          ref={(el) => (sectionsRef.current[3] = el)}
+          ref={(el) => el && (sectionsRef.current[3] = el)} // null 확인 추가
           className="section section-hidden right w-1/2 transform p-6 shadow-lg"
         >
           <div className="flex flex-col">

@@ -10,6 +10,19 @@ export const postAdd = async (form) => {
   return res.data;
 };
 
+// 회원 목록 가져오기
+export const getAllMembers = async (page = 1, size = 10) => {
+  try {
+    const response = await axios.get(
+      `${prefix}/list?page=${page}&size=${size}`,
+    );
+    return response.data; // 응답 데이터 반환
+  } catch (error) {
+    console.error("회원 목록 가져오기 오류:", error);
+    throw error; // 오류를 호출한 곳으로 전달
+  }
+};
+
 export const postLogin = async (form) => {
   try {
     console.log("로그인 요청 데이터:", form); // 서버로 보내는 데이터 로그
@@ -31,6 +44,7 @@ export const postLogin = async (form) => {
   }
 };
 
+//아이디 중복 체크
 export const checkId = async (id) => {
   try {
     const response = await axios.get(`${prefix}/check-id`, {

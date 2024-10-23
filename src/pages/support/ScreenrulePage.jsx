@@ -1,16 +1,14 @@
-import React, { useState } from "react";
-
 function ScreenrulePage() {
   return (
-    <div className="mx-auto flex items-center">
-      <div className="px-8 py-6 text-sm">
+    <div className="mx-auto ml-6 flex w-full max-w-7xl items-center">
+      <div className="w-full px-8 py-6 text-sm">
         <div className="border-gray-300 pb-2">
           <h1 className="mb-4 text-2xl font-semibold">
             스크린 수 배정에 관한 기준
           </h1>
         </div>
 
-        <nav className="mt-14">
+        <nav className="mt-5">
           <div className="mb-4 text-xl font-bold">
             <span className="mr-2 text-2xl font-normal italic text-teal-500">
               01.
@@ -102,7 +100,7 @@ function ScreenrulePage() {
               </ul>
             </div>
 
-            <div className="mb-64 w-1/2 pl-4">
+            <div className="mb-32 w-1/2 pl-4">
               <div className="mb-4 text-xl font-bold">
                 <span className="mr-2 text-2xl font-normal italic text-teal-500">
                   05.

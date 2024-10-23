@@ -26,7 +26,7 @@ export default function MainPage() {
     <>
       {/* Movie Posters Grid */}
       <div>
-        <div className="text-left text-2xl text-white">메인 영화</div>
+        <div className="mt-10 text-left text-2xl text-white">메인 영화</div>
         <Link to={"/movie/list"}>
           <div className="py-4 pb-4 pr-2 text-right text-lg text-white">
             더 많은 영화보기+
