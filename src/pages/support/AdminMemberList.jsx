@@ -5,12 +5,15 @@ const AdminMemberPage = () => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [treatedStatus, setTreatedStatus] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await getAllMembers();
+        const response = await getAllMembers(currentPage);
         setMembers(response.content || []);
+        setTotalPages(response.totalPages);
       } catch (error) {
         setError(error);
       } finally {
@@ -19,11 +22,22 @@ const AdminMemberPage = () => {
     };
 
     fetchMembers();
-  }, []);
+  }, [currentPage]);
 
-  const handleTreatedChange = (id, value) => {
-    setTreatedStatus((prev) => ({ ...prev, [id]: value }));
-    // 여기에 API 호출 로직 추가
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -57,6 +71,36 @@ const AdminMemberPage = () => {
           ))}
         </tbody>
       </table>
+      <div className="mt-4 flex items-center justify-between">
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className="bg-gray-500 px-4 py-2 text-white"
+        >
+          이전
+        </button>
+        <span>
+          페이지 {currentPage} / {totalPages}
+        </span>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="bg-gray-500 px-4 py-2 text-white"
+        >
+          다음
+        </button>
+      </div>
+      <div className="mt-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-4 py-2 ${currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-500 text-white"}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
