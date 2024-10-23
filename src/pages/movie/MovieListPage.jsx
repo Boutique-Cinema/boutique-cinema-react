@@ -55,10 +55,16 @@ const MovieListPage = () => {
     }
   }, [page]); // page가 변경될 때마다 실행
 
+  // 중복 제거 필터링
+  const uniqueMovies = movies.filter(
+    (movie, index, self) =>
+      index === self.findIndex((m) => m.korTitle === movie.korTitle),
+  );
+
   return (
     <div className="p-4">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {movies.map((movie, index) => {
+        {uniqueMovies.map((movie, index) => {
           const isLastMovie = index === movies.length - 1;
           return (
             <div
