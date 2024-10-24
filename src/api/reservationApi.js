@@ -21,7 +21,7 @@ export const createReservation = async (reservationData) => {
 export const getAllReservations = async () => {
   try {
     const response = await jwtAxios.get(`${API_URL}/list`);
-
+    console.log(response.data); // 데이터 구조 확인
     return response.data; // 응답 데이터 반환
   } catch (error) {
     console.error("예매 목록을 불러오는데 오류가 발생했습니다.", error);
