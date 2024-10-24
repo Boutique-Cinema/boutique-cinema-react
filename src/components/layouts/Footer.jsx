@@ -27,13 +27,13 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link to={"/support/terms"}>이용약관</Link>
+              <Link to={"/terms"}>이용약관</Link>
             </li>
             <li>
-              <Link to={"/support/privacy"}>개인정보처리방침</Link>
+              <Link to={"/privacy"}>개인정보처리방침</Link>
             </li>
             <li>
-              <Link to={"/support/screenrule"}>스크린 배정수에 관한 기준</Link>
+              <Link to={"/screenrule"}>스크린 배정수에 관한 기준</Link>
             </li>
           </ul>
         </div>

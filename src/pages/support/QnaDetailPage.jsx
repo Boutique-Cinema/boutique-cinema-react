@@ -95,7 +95,7 @@ const QnaDetailPage = () => {
 
   return (
     <>
-      <div className="mb-4 ml-10 text-3xl font-extrabold">1:1 문의</div>
+      <h2 className="ml-10 text-2xl font-medium">1:1 문의</h2>
       <div className="mx-auto ml-7 flex max-w-[100%]">
         <div className="w-full p-4 text-white">
           <div className="mt-2"></div>
