@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import Logo from "../../components/common/Logo";
 import { postLogin } from "../../api/membersApi";
 import { loginPostAsync } from "../../slice/loginSlice";
-import useCustomLogin from "../../hook/useCustomLogin";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -111,7 +110,8 @@ export default function LoginPage() {
           </button>
 
           <div className="mt-4 text-center text-sm text-gray-500">
-            <a href="/">아이디 찾기</a> | <a href="/"> 비밀번호 찾기</a> |
+            <a href="/member/find_info">아이디 찾기</a> |{" "}
+            <a href="/member/find_info"> 비밀번호 찾기</a> |
             <a href="/member/join"> 회원가입</a>
           </div>
         </form>
