@@ -249,7 +249,7 @@ export default function FindInfoPage() {
                 type="text"
                 value={form.password}
                 className="mb-4 w-full rounded-md bg-gray-100 p-2 text-black"
-                placeholder="새로운 비밀번호(영문,숫자조합(8~20글자))"
+                placeholder="새로운 비밀번호(영문,숫자조합(8~20글자)"
                 maxLength={20}
                 onChange={(e) => {
                   const newValue = e.target.value; // 원래 입력값 가져오기
@@ -261,7 +261,7 @@ export default function FindInfoPage() {
                 type="password"
                 value={form.passwordCheck}
                 className="w-full rounded-md bg-gray-100 p-2 text-black"
-                placeholder="비밀번호 확인(영문,숫자조합(8~20글자))"
+                placeholder="비밀번호 확인(영문,숫자조합(8~20글자)"
                 maxLength={20}
                 onChange={(e) => {
                   const newValue = e.target.value; // 원래 입력값 가져오기
