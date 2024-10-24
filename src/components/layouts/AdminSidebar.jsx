@@ -4,7 +4,7 @@ import { NavLink, useLocation } from "react-router-dom";
 const NAV_MENU = [
   { title: "영화관리", url: "admin/movie/list" },
   { title: "예매관리", url: "admin/reserve" },
-  { title: "매출관리", url: "admin/sales" },
+  // { title: "매출관리", url: "admin/sales" },
   { title: "회원관리", url: "admin/member" },
 ];
 

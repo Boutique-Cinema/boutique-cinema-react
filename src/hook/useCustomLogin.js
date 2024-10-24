@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { loginPostAsync, logout } from "../slice/loginSlice";
 import { createSearchParams, Navigate, useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 
 const useCustomLogin = () => {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const useCustomLogin = () => {
 
   const doLogin = async (loginParam) => {
     // 로그인 함수
-    const action = await dispatch(loginPostAsync(loginParam));
+    const action = dispatch(loginPostAsync(loginParam));
     return action.payload;
   };
 
@@ -34,22 +35,25 @@ const useCustomLogin = () => {
     return <Navigate replace to="/member/login"></Navigate>;
   };
 
-  const exceptionHandle = (ex) => {
-    console.log("Exception---------");
-    console.log(ex);
-    const errorMsg = ex.response.data.error;
-    const errorStr = createSearchParams({ error: errorMsg }).toString();
-    if (errorMsg === "REQUIRE_LOGIN") {
-      alert("로그인 해야만 합니다.");
-      navigate({ pathname: "/member/login", search: errorStr });
-      return;
-    }
-    if (ex.response.data.error === "ERROR_ACCESSDENIED") {
-      alert("해당 메뉴를 사용할 수 있는 권한이 없습니다.");
-      navigate({ pathname: "/member/login", search: errorStr });
-      return;
-    }
-  };
+  const exceptionHandle = useCallback(
+    (ex) => {
+      console.log("Exception---------");
+      console.log(ex);
+      const errorMsg = ex.response.data.error;
+      const errorStr = createSearchParams({ error: errorMsg }).toString();
+      if (errorMsg === "REQUIRE_LOGIN") {
+        alert("로그인을 먼저 해야 합니다.");
+        navigate({ pathname: "/member/login", search: errorStr });
+        return;
+      }
+      if (ex.response.data.error === "ERROR_ACCESSDENIED") {
+        alert("해당 메뉴를 사용할 수 있는 권한이 없습니다.");
+        navigate({ pathname: "/member/login", search: errorStr });
+        return;
+      }
+    },
+    [navigate],
+  );
 
   return {
     loginState,

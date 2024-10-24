@@ -1,17 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { RxExit, RxEnter } from "react-icons/rx";
 import { getAllReservations } from "../../api/reservationApi";
+import useCustomLogin from "./../../hook/useCustomLogin";
+import { useLocation } from "react-router-dom";
 
 export default function SeatTable({
   maxSeats,
   resetSeats,
   selectedSeats,
   onSeatSelect,
-  selectedMovie,
 }) {
+  const location = useLocation();
+  const { exceptionHandle } = useCustomLogin();
   const [hoveredSeat, setHoveredSeat] = useState(null);
   const [reservations, setReservations] = useState([]);
-  const { movieNum, date, theaterNum, roundNum } = selectedMovie || {};
+  const { movieNum, date, theaterNum, roundNum } = location.state || {};
 
   const reservedSeats = reservations
     .filter(
@@ -37,12 +40,16 @@ export default function SeatTable({
 
   useEffect(() => {
     const loadReservations = async () => {
-      const data = await getAllReservations();
-      setReservations(data);
+      try {
+        const data = await getAllReservations();
+        setReservations(data);
+      } catch (err) {
+        exceptionHandle(err);
+      }
     };
 
     loadReservations();
-  }, []);
+  }, [exceptionHandle]);
 
   // 인원수가 바뀌면 좌석 선택을 초기화
   useEffect(() => {
