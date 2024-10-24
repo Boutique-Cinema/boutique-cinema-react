@@ -66,7 +66,6 @@ export default function ReservationSeatPage() {
           maxSeats={totalTickets}
           resetSeats={resetSeats}
           selectedSeats={selectedSeats}
-          selectedMovie={selectedMovie}
           onSeatSelect={handleSeatSelect}
         />
       </div>
