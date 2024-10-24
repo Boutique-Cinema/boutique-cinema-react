@@ -21,8 +21,8 @@ const AdminReservationPage = () => {
     fetchReservations();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (loading) return <div>로딩 중...</div>;
+  if (error) return <div>오류: {error.message}</div>;
 
   return (
     <div className="container mx-auto p-6">
@@ -31,6 +31,7 @@ const AdminReservationPage = () => {
         <thead className="bg-gray-700 text-white">
           <tr>
             <th className="px-6 py-3 text-left">예매 번호</th>
+            <th className="px-6 py-3 text-left">회원 ID</th>
             <th className="px-6 py-3 text-left">상영관 번호</th>
             <th className="px-6 py-3 text-left">상영 회차</th>
             <th className="px-6 py-3 text-left">결제 금액</th>
@@ -45,6 +46,7 @@ const AdminReservationPage = () => {
               className="border-b border-gray-600 hover:bg-gray-600"
             >
               <td className="px-6 py-3">{reservation.rNum}</td>
+              <td className="px-6 py-3">{reservation.memberId}</td>
               <td className="px-6 py-3">{reservation.theaterNum}</td>
               <td className="px-6 py-3">{reservation.roundNum}</td>
               <td className="px-6 py-3">{reservation.paymentAmount}</td>

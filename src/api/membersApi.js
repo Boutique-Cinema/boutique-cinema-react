@@ -24,6 +24,23 @@ export const getAllMembers = async (page = 1, size = 10) => {
   }
 };
 
+//특정 회원 가져오기
+export const getMembersByCondition = async (condition, page = 1, size = 10) => {
+  try {
+    const response = await axios.get(`${prefix}/list`, {
+      params: {
+        page: page,
+        size: size,
+        searchCondition: condition,
+      },
+    });
+    return response.data; // 응답 데이터 반환
+  } catch (error) {
+    console.error("특정 검색 오류:", error);
+    throw error; // 오류를 호출한 곳으로 전달
+  }
+};
+
 export const postLogin = async (form) => {
   try {
     console.log("로그인 요청 데이터:", form); // 서버로 보내는 데이터 로그

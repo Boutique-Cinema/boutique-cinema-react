@@ -34,7 +34,7 @@ export default function Search() {
       <form className="relative" onSubmit={handleSearch}>
         <input
           type="text"
-          className="h-10 w-48 rounded-full border px-3 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="h-10 w-56 rounded-full border px-3 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="영화제목 검색"
           value={searchCondition}
           onChange={(e) => setSearchCondition(e.target.value)}

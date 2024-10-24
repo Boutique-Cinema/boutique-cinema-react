@@ -1,11 +1,11 @@
-import axios from "axios";
+import jwtAxios from "../util/jwtUtil";
 
 // API 기본 URL
 const API_URL = "http://localhost:8080/api/reservation";
 
 export const createReservation = async (reservationData) => {
   try {
-    const response = await axios.post(API_URL, reservationData, {
+    const response = await jwtAxios.post(API_URL, reservationData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -19,8 +19,8 @@ export const createReservation = async (reservationData) => {
 
 export const getAllReservations = async () => {
   try {
-    const response = await axios.get(`${API_URL}/list`);
-
+    const response = await jwtAxios.get(`${API_URL}/list`);
+    console.log(response.data); // 데이터 구조 확인
     return response.data; // 응답 데이터 반환
   } catch (error) {
     console.error("예매 목록을 불러오는데 오류가 발생했습니다.", error);
@@ -30,7 +30,7 @@ export const getAllReservations = async () => {
 
 export const getReservationsById = async (mid) => {
   try {
-    const response = await axios.get(`${API_URL}/member/${mid}`);
+    const response = await jwtAxios.get(`${API_URL}/member/${mid}`);
 
     return response.data; // 응답 데이터 반환
   } catch (error) {
@@ -41,7 +41,7 @@ export const getReservationsById = async (mid) => {
 
 export const cancelReservation = async (rnum) => {
   try {
-    const response = await axios.put(`${API_URL}/cancel/${rnum}`);
+    const response = await jwtAxios.put(`${API_URL}/cancel/${rnum}`);
 
     return response.data;
   } catch (error) {
@@ -51,7 +51,10 @@ export const cancelReservation = async (rnum) => {
 
 export const updateReview = async (rnum, reviewData) => {
   try {
-    const response = await axios.put(`${API_URL}/review/${rnum}`, reviewData);
+    const response = await jwtAxios.put(
+      `${API_URL}/review/${rnum}`,
+      reviewData,
+    );
 
     return response.data;
   } catch (error) {

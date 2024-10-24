@@ -12,21 +12,14 @@ const refreshJWT = async (accessToken, refreshToken) => {
     header,
   );
 
-  console.log("-------------");
-  console.log(res.data);
-
   return res.data;
 };
 
 // before request
 const beforeReq = (config) => {
-  console.log("before request.....");
-
   const memberInfo = getCookie("member");
 
   if (!memberInfo) {
-    console.log("Member NOT FOUND");
-
     return Promise.reject({
       response: {
         data: { error: "REQUIRE_LOGIN" },
@@ -42,14 +35,11 @@ const beforeReq = (config) => {
 
 // fail request
 const requestFail = (err) => {
-  console.log("request error.....");
   return Promise.reject(err);
 };
 
 // before return response
 const beforeRes = async (res) => {
-  console.log("before return response.....");
-
   const data = res.data;
 
   if (data && data.error === "ERROR_ACCESS_TOKEN") {
@@ -59,7 +49,6 @@ const beforeRes = async (res) => {
       memberCookieValue.accessToken,
       memberCookieValue.refreshToken,
     );
-    console.log("refreshJWT RESULT", result);
 
     memberCookieValue.accessToken = result.accessToken;
     memberCookieValue.refreshToken = result.refreshToken;
@@ -76,7 +65,6 @@ const beforeRes = async (res) => {
 
 // fail response
 const responseFail = (err) => {
-  console.log("response fail error.....");
   return Promise.reject(err);
 };
 
