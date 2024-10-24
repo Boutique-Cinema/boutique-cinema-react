@@ -68,7 +68,7 @@ const beforeRes = async (res) => {
 
     // 원래의 호출
     const originalRequest = res.config;
-    originalRequest.header.Authorization = `Bearer ${result.accessToken}`;
+    originalRequest.headers.Authorization = `Bearer ${result.accessToken}`;
     return await axios(originalRequest);
   }
   return res;
