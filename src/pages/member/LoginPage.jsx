@@ -32,8 +32,6 @@ export default function LoginPage() {
       console.log("서버 응답:", response); // 응답 로그 추가
 
       if (response && response.id) {
-        alert("로그인에 성공했습니다!");
-
         // 로그인 요청을 비동기적으로 처리
         const data = await dispatch(loginPostAsync(loginParam)).unwrap();
         console.log("after unwrap...");
