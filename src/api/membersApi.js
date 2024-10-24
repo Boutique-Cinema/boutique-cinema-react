@@ -44,6 +44,10 @@ export const postLogin = async (form) => {
   }
 };
 
+// export const selectId = async (form) => {
+
+// }
+
 //아이디 중복 체크
 export const checkId = async (id) => {
   try {
