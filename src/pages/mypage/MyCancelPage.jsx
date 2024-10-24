@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { getReservationsById } from "../../api/reservationApi";
 import { getMovie } from "../../api/movieApi";
 import { convertRoundNumToRoundTime } from "../../util/reservationUtil";
-
-const MEMBER_ID = "ttt123123";
+import { useSelector } from "react-redux";
 
 export default function MyCancelPage() {
+  const loginState = useSelector((state) => state.loginSlice);
   const [visibleReservations, setVisibleReservations] = useState(5);
   const [reservationsWithMovies, setReservationsWithMovies] = useState([]);
 
@@ -13,7 +13,7 @@ export default function MyCancelPage() {
     const loadReservations = async () => {
       try {
         // 1. 예매 정보를 먼저 불러옴
-        const reservationData = await getReservationsById(MEMBER_ID);
+        const reservationData = await getReservationsById(loginState.id);
 
         // 2. isCanceled가 1인 예매만 필터링
         const filteredReservations = reservationData.filter(
@@ -44,7 +44,7 @@ export default function MyCancelPage() {
     };
 
     loadReservations();
-  }, []);
+  }, [loginState.id]);
 
   // "더보기" 버튼 클릭 시 더 많은 항목을 표시
   const handleShowMore = () => {

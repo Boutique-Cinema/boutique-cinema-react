@@ -1,4 +1,3 @@
-import axios from "axios";
 import jwtAxios from "../util/jwtUtil";
 
 // API 기본 URL
