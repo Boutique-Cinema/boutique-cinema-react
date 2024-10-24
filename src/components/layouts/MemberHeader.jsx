@@ -15,7 +15,6 @@ export default function MemberHeader() {
     window.location.href = "/";
   };
 
-  console.log(loginState);
   return (
     <header className="relative w-full pt-3">
       <h1 className="sr-only">Boutique Cinema</h1>

@@ -8,6 +8,7 @@ import {
   teenPrice,
 } from "../../util/reservationUtil";
 import { createReservation } from "../../api/reservationApi";
+import { useSelector } from "react-redux";
 
 export default function ReservationResult({
   adultCount,
@@ -18,6 +19,7 @@ export default function ReservationResult({
 }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const loginState = useSelector((state) => state.loginSlice);
   const [roundTime, setRoundTime] = useState("");
   const { movieNum, theaterNum, roundNum, date } = location.state || {};
 
@@ -90,7 +92,7 @@ export default function ReservationResult({
         ),
         10,
       ),
-      mId: "ttt123123",
+      mId: loginState.id,
       rPersonType1: rPersonTypes[0],
       rPersonType2: rPersonTypes[1] || null,
       rPersonType3: rPersonTypes[2] || null,

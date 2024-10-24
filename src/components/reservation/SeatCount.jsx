@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function SeatCount({
   selectedMovie,
@@ -12,6 +12,8 @@ export default function SeatCount({
 }) {
   // 총인원
   const totalTickets = adultCount + teenCount + specialCount;
+  // 우대 카운터 최초 클릭 상태
+  const [specialAlertShown, setSpecialAlertShown] = useState(false);
 
   useEffect(() => {
     handlePeopleChange(totalTickets);
@@ -33,11 +35,21 @@ export default function SeatCount({
     }
   };
 
+  // 우대 카운터 클릭 시 안내 메시지 표시
+  const handleSpecialIncrease = () => {
+    if (!specialAlertShown) {
+      alert("우대 요금은 신분증이나 증명서를 지참해야 합니다.");
+      setSpecialAlertShown(true);
+    }
+    handleIncrease(setSpecialCount, specialCount);
+  };
+
   // 초기화 핸들러
   const handleReset = () => {
     setAdultCount(0);
     setTeenCount(0);
     setSpecialCount(0);
+    setSpecialAlertShown(false);
   };
 
   return (
@@ -95,7 +107,7 @@ export default function SeatCount({
             </button>
             <span className="mx-3">{specialCount}</span>
             <button
-              onClick={() => handleIncrease(setSpecialCount, specialCount)}
+              onClick={handleSpecialIncrease}
               className="rounded-r bg-tertiary px-3 py-1 text-white"
             >
               +
