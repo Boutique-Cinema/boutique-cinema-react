@@ -9,8 +9,8 @@ const AdminReservationPage = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [memberId, setMemberId] = useState(""); // 회원 ID 상태 추가
-  const [isSearching, setIsSearching] = useState(false); // 검색 상태 추가
+  const [memberId, setMemberId] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -49,12 +49,10 @@ const AdminReservationPage = () => {
     setIsSearching(true);
     setError(null);
 
-    console.log("Searching for member ID:", memberId); // 디버깅 로그 추가
-
     try {
       const response = await getReservationsById(memberId);
       setReservations(response);
-      setCurrentPage(1); // 검색 후 페이지 초기화
+      setCurrentPage(1);
     } catch (error) {
       setError(error);
     } finally {
@@ -101,7 +99,7 @@ const AdminReservationPage = () => {
           <tr>
             <th className="px-6 py-3 text-left">예매 번호</th>
             <th className="px-6 py-3 text-left">회원 ID</th>
-            <th className="px-6 py-3 text-left">상영관 번호</th>
+            <th className="px-6 py-3 text-left">상영관</th>
             <th className="px-6 py-3 text-left">상영 회차</th>
             <th className="px-6 py-3 text-left">결제 금액</th>
             <th className="px-6 py-3 text-left">예매 날짜</th>
@@ -117,7 +115,13 @@ const AdminReservationPage = () => {
             >
               <td className="px-6 py-3">{reservation.rnum}</td>
               <td className="px-6 py-3">{reservation.mid}</td>
-              <td className="px-6 py-3">{reservation.theaterNum}</td>
+              <td className="px-6 py-3">
+                {reservation.theaterNum === 0
+                  ? "일반관"
+                  : reservation.theaterNum === 1
+                    ? "커플관"
+                    : "알 수 없음"}
+              </td>
               <td className="px-6 py-3">{reservation.roundNum}</td>
               <td className="px-6 py-3">{reservation.paymentAmount}</td>
               <td className="px-6 py-3">{reservation.reserveDate}</td>
@@ -169,7 +173,7 @@ const AdminReservationPage = () => {
           onClick={() => {
             setMemberId("");
             setIsSearching(false);
-          }} // 검색 초기화
+          }}
           className="mt-4 text-blue-500"
         >
           검색 초기화

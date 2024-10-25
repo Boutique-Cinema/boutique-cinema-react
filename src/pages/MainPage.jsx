@@ -1,26 +1,59 @@
 import { Link } from "react-router-dom";
-import { getMovieList } from "../api/movieApi";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { getMovieList, fetchSortedMovies } from "../api/movieApi";
+import { getAllReservations } from "../api/reservationApi";
+import { useEffect, useState } from "react";
 
 export default function MainPage() {
   const [page, setPage] = useState(1);
   const size = 10;
   const [hasMore, setHasMore] = useState(true);
-  const [movies, setMovies] = useState([]); // 초기값을 빈 배열로 설정
+  const [movies, setMovies] = useState([]); // 모든 영화 목록 초기화
+  const [sortedMovies, setSortedMovies] = useState([]); // 최신순 영화 목록
+  const [reservations, setReservations] = useState([]); // 예약 목록
 
+  // 모든 영화 목록 로드
   useEffect(() => {
     const loadMovies = async () => {
-      try {
-        const data = await getMovieList(page, size);
-        setMovies((prevMovies) => [...prevMovies, ...data.content]); // 배열 업데이트
-        setHasMore(data.content.length === size);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-      }
+      const data = await getMovieList(page, size);
+      setMovies((prevMovies) => [...prevMovies, ...data.content]); // 배열 업데이트
+      setHasMore(data.content.length === size);
     };
 
     loadMovies();
   }, [page, size]);
+
+  // 최신순 영화 목록 로드
+  useEffect(() => {
+    const loadLatestMovies = async () => {
+      const data = await fetchSortedMovies(page, size, "최신 순");
+      setSortedMovies(data.content);
+      setHasMore(data.content.length === size);
+    };
+
+    loadLatestMovies();
+  }, [page]);
+
+  // 예약 목록 로드
+  useEffect(() => {
+    const loadReservations = async () => {
+      const data = await getAllReservations();
+      setReservations(data); // 예약 데이터 저장
+    };
+
+    loadReservations();
+  }, []);
+
+  // 예약 수에 따라 영화 정렬
+  const sortedByReservations = movies
+    .map((movie) => {
+      const reservationCount = reservations.filter(
+        (reservation) =>
+          reservation.movieNum === movie.movieNum &&
+          reservation.cancelDate !== "취소", // 예약 상태가 '취소'가 아닌 경우만 카운트
+      ).length;
+      return { ...movie, reservationCount };
+    })
+    .sort((a, b) => b.reservationCount - a.reservationCount);
 
   return (
     <>
@@ -98,7 +131,7 @@ export default function MainPage() {
           </div>
         </Link>
         <div className="container mx-auto grid grid-cols-2 gap-4 md:grid-cols-4">
-          {movies.slice(0, 4).map((movie, idx) => (
+          {sortedMovies.slice(0, 4).map((movie, idx) => (
             <div
               key={`${movie.movieNum}-${idx}`}
               className="relative cursor-pointer rounded-lg border border-gray-300 bg-gray-800 p-4 shadow-lg hover:bg-gray-700"
@@ -161,7 +194,7 @@ export default function MainPage() {
           </div>
         </Link>
         <div className="container mx-auto grid grid-cols-2 gap-4 md:grid-cols-4">
-          {movies.slice(0, 4).map((movie, idx) => (
+          {sortedByReservations.slice(0, 4).map((movie, idx) => (
             <div
               key={`${movie.movieNum}-${idx}`}
               className="relative cursor-pointer rounded-lg border border-gray-300 bg-gray-800 p-4 shadow-lg hover:bg-gray-700"
