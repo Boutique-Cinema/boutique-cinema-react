@@ -10,7 +10,6 @@ const NoticeListPage = () => {
   const [totalNotices, setTotalNotices] = useState(0);
   const maxPageButtons = 5;
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -20,7 +19,6 @@ const NoticeListPage = () => {
   const fetchNotices = async () => {
     setLoading(true);
     const data = await getNoticeList(page, size);
-    console.log("공지사항 목록 응답 데이터:", data);
     setNotices(data.content);
     setTotalPages(data.totalPages);
     setTotalNotices(data.totalElements);
