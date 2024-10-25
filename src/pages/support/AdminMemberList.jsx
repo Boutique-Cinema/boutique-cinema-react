@@ -58,7 +58,7 @@ const AdminMemberPage = () => {
 
       <input
         type="text"
-        placeholder="검색어를 입력하세요"
+        placeholder="Name or E-mail"
         value={searchCondition}
         onChange={handleSearch}
         className="mb-4 border bg-gray-800 p-2 text-white placeholder-gray-500"
