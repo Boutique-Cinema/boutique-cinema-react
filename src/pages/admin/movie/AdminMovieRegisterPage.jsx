@@ -92,7 +92,16 @@ const AdminMovieRegisterPage = () => {
       navigate("/admin/movie/list"); // 등록 완료 후 이동
     } catch (error) {
       console.error("영화 등록 실패:", error);
-      // 오류 처리 로직 추가
+
+      // 에러가 JWT 관련인지 확인
+      if (
+        error.response &&
+        error.response.data.error === "ERROR_ACCESS_TOKEN"
+      ) {
+        alert("세션이 만료되었습니다. 다시 로그인 해주세요.");
+      } else {
+        alert("영화 등록에 실패했습니다. 다시 시도해주세요."); // 일반 오류 메시지
+      }
     }
   };
 

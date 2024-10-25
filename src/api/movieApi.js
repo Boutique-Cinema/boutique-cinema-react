@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtAxios from "../util/jwtUtil";
 
 export const API_SERVER_HOST = "http://localhost:8080"; // 백엔드 주소, 서버 주소 설정
 
@@ -30,7 +31,7 @@ export const getMovieList = async (page, size, searchCondition) => {
 
 // 영화 등록
 export const registerMovie = async (movieData) => {
-  const res = await axios.post(`${MOVIE_API_PREFIX}`, movieData, {
+  const res = await jwtAxios.post(`${MOVIE_API_PREFIX}`, movieData, {
     headers: {
       "Content-Type": "multipart/form-data", // 파일 업로드를 위한 헤더 설정
     },
@@ -40,7 +41,7 @@ export const registerMovie = async (movieData) => {
 
 // 영화 수정
 export const modifyMovie = async (movieNum, movieData) => {
-  const res = await axios.put(`${MOVIE_API_PREFIX}/${movieNum}`, movieData, {
+  const res = await jwtAxios.put(`${MOVIE_API_PREFIX}/${movieNum}`, movieData, {
     headers: {
       "Content-Type": "multipart/form-data", // 파일 업로드를 위한 헤더 설정
     },
@@ -50,7 +51,7 @@ export const modifyMovie = async (movieNum, movieData) => {
 
 // 영화 삭제
 export const removeMovie = async (movieNum) => {
-  await axios.delete(`${MOVIE_API_PREFIX}/${movieNum}`);
+  await jwtAxios.delete(`${MOVIE_API_PREFIX}/${movieNum}`);
   return; // 삭제 후 특별한 반환값이 필요 없는 경우
 };
 
