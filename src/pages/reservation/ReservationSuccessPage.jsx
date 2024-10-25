@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { getMovie } from "../../api/movieApi";
+import { getReservationByRnum } from "../../api/reservationApi";
 
 export default function ReservationSuccessPage() {
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const [movie, setMovie] = useState({});
+  const [reservation, setReservation] = useState({});
   const [roundTime, setRoundTime] = useState("");
+
+  const orderId = searchParams.get("orderId");
 
   const {
     movieNum,
@@ -27,9 +31,15 @@ export default function ReservationSuccessPage() {
     seatNum5,
     seatNum6,
     theaterNum,
-  } = location.state || {};
+  } = reservation;
 
   useEffect(() => {
+    const loadReservation = async () => {
+      const reservation = await getReservationByRnum(orderId);
+      setReservation(reservation);
+    };
+    loadReservation();
+
     if (!movieNum) return;
 
     const loadMovie = async () => {
@@ -62,7 +72,7 @@ export default function ReservationSuccessPage() {
     };
 
     loadMovie();
-  }, [movieNum, roundNum]);
+  }, [movieNum, roundNum, orderId]);
 
   // 좌석 정보를 배열로 묶어서 필터링
   const seatNumbers = [
