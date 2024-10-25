@@ -11,6 +11,8 @@ const AdminReservationPage = () => {
   const [error, setError] = useState(null);
   const [memberId, setMemberId] = useState(""); // 회원 ID 상태 추가
   const [isSearching, setIsSearching] = useState(false); // 검색 상태 추가
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -52,11 +54,22 @@ const AdminReservationPage = () => {
     try {
       const response = await getReservationsById(memberId);
       setReservations(response);
+      setCurrentPage(1); // 검색 후 페이지 초기화
     } catch (error) {
       setError(error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const totalPages = Math.ceil(reservations.length / itemsPerPage);
+  const currentReservations = reservations.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   if (loading) return <div>로딩 중...</div>;
@@ -72,8 +85,8 @@ const AdminReservationPage = () => {
           placeholder="회원 ID 입력"
           value={memberId}
           onChange={(e) => setMemberId(e.target.value)}
-          className="mr-2 rounded border border-gray-300 p-2 text-black" // 텍스트 색상 추가
-          style={{ backgroundColor: "white" }} // 배경색 설정
+          className="mr-2 rounded border border-gray-300 p-2 text-black"
+          style={{ backgroundColor: "white" }}
         />
         <button
           onClick={handleSearch}
@@ -97,7 +110,7 @@ const AdminReservationPage = () => {
           </tr>
         </thead>
         <tbody className="text-sm font-light text-gray-300">
-          {reservations.map((reservation, index) => (
+          {currentReservations.map((reservation, index) => (
             <tr
               key={index}
               className="border-b border-gray-600 hover:bg-gray-600"
@@ -122,10 +135,39 @@ const AdminReservationPage = () => {
         </tbody>
       </table>
 
+      {/* 페이지네이션 */}
+      <div className="mt-4 text-center">
+        <button
+          onClick={() => handlePageClick(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="mx-1 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+        >
+          &lt;
+        </button>
+
+        {[...Array(totalPages).keys()].map((page) => (
+          <button
+            key={page + 1}
+            onClick={() => handlePageClick(page + 1)}
+            className={`mx-1 px-4 py-2 ${currentPage === page + 1 ? "bg-blue-700" : "bg-blue-500"} rounded text-white hover:bg-blue-700`}
+          >
+            {page + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() => handlePageClick(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="mx-1 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+        >
+          &gt;
+        </button>
+      </div>
+
       {isSearching && (
         <button
           onClick={() => {
-            setMemberId("mid");
+            setMemberId("");
             setIsSearching(false);
           }} // 검색 초기화
           className="mt-4 text-blue-500"
