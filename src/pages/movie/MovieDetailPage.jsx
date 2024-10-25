@@ -192,9 +192,9 @@ const MovieDetailPage = () => {
                   <p className="mx-4 ml-10 flex-1 text-lg">
                     {reservation.reviewContent}
                   </p>
-                  <span className="text-base text-gray-400">
+                  {/* <span className="text-base text-gray-400">
                     작성일: {new Date(reservation.regDate).toLocaleDateString()}
-                  </span>
+                  </span> */}
                 </div>
               ))}
               <div className="mt-4 flex justify-end">
