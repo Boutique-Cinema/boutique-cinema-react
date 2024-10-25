@@ -7,8 +7,9 @@ import {
   specialPrice,
   teenPrice,
 } from "../../util/reservationUtil";
-import { createReservation } from "../../api/reservationApi";
 import { useSelector } from "react-redux";
+import { TossPayModal } from "./TossPayModal";
+import { createReservation } from "../../api/reservationApi";
 
 export default function ReservationResult({
   adultCount,
@@ -21,9 +22,11 @@ export default function ReservationResult({
   const navigate = useNavigate();
   const loginState = useSelector((state) => state.loginSlice);
   const [roundTime, setRoundTime] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { movieNum, theaterNum, roundNum, date } = location.state || {};
 
   const totalCount = adultCount + teenCount + specialCount;
+  const rnum = generateReservationNumber(movieNum, theaterNum, roundNum);
 
   useEffect(() => {
     const convertRoundToRoundTime = (roundNum) => {
@@ -60,13 +63,11 @@ export default function ReservationResult({
   const handlePayment = async (e) => {
     e.preventDefault();
 
-    // 결제 확인 창 띄우기
-    const isConfirmed = window.confirm("결제하시겠습니까?");
+    // 결제 toss 페이먼츠 띄우기
+    setIsModalOpen(true);
+  };
 
-    if (!isConfirmed) {
-      return;
-    }
-
+  const formatReserveData = () => {
     const rPersonTypes = [
       ...Array(adultCount).fill("성인"),
       ...Array(teenCount).fill("청소년"),
@@ -80,7 +81,7 @@ export default function ReservationResult({
     ];
 
     const reservationData = {
-      rNum: generateReservationNumber(movieNum, theaterNum, roundNum),
+      rNum: rnum,
       reserveDate: date,
       movieNum,
       theaterNum,
@@ -113,19 +114,10 @@ export default function ReservationResult({
       seatNum6: selectedSeats[5] || null,
     };
 
-    try {
-      const result = await createReservation(reservationData);
-
-      alert("결제가 완료되었습니다.");
-
-      navigate("/reserve/success", {
-        state: result,
-        replace: true,
-      });
-    } catch (error) {
-      alert("결제 처리 중 오류가 발생했습니다. 다시 시도해 주세요.");
-    }
+    return reservationData;
   };
+
+  const reserveData = formatReserveData();
 
   return (
     <div className="h-full rounded bg-gray-100 p-4 text-primary">
@@ -259,6 +251,31 @@ export default function ReservationResult({
           결제
         </button>
       </div>
+      {/* 토스 페이먼츠 모달 */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="relative">
+            <div
+              className="absolute right-1 top-1 z-50 cursor-pointer rounded bg-primary px-2 py-0.5 text-white"
+              onClick={() => setIsModalOpen(false)}
+            >
+              X
+            </div>
+            <TossPayModal
+              reserveData={reserveData}
+              rnum={rnum}
+              amount={parseInt(
+                calculateTotalPrice(
+                  adultCount,
+                  teenCount,
+                  specialCount,
+                ).replace(/[^0-9]/g, ""),
+                10,
+              )}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
