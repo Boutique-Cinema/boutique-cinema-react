@@ -63,17 +63,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div>
-        <a href="/">
+    <div className="mx-auto mt-40 flex w-full max-w-md flex-col items-center justify-center rounded-md bg-white p-6 shadow-md">
+      <div className="w-full">
+        <a
+          href="/"
+          className="flex items-center justify-center rounded-lg bg-primary"
+        >
           <Logo />
         </a>
-        <form
-          onSubmit={handleSubmit}
-          className="w-[330px] rounded-lg bg-white p-5 shadow-md"
-        >
-          <h2 className="mb-2 text-lg font-medium text-black">로그인</h2>
-          <div className="overflow-hidden rounded border border-gray-300">
+        <form onSubmit={handleSubmit}>
+          <h2 className="mt-6 text-left text-lg font-medium text-black">
+            로그인
+          </h2>
+          <div className="mt-2 flex items-center rounded-md border p-2">
             <input
               type="text"
               name="id"
@@ -82,35 +84,33 @@ export default function LoginPage() {
               onKeyUp={onKeyUpHandler}
               placeholder="아이디"
               maxLength={20}
-              className="box-border h-full w-full p-2 text-sm text-black"
+              className="w-full bg-transparent text-black outline-none"
             />
           </div>
-          <div className="mb-4 mt-4 overflow-hidden rounded border border-gray-300">
+          <div className="mb-4 mt-4 flex items-center rounded-md border p-2">
             <input
-              type="password" // 비밀번호 필드는 password 타입으로
+              type="password"
               name="password"
               value={loginParam.password}
               onChange={handleChange}
               placeholder="비밀번호"
               maxLength={20}
-              className="box-border h-full w-full p-2 text-sm text-black"
+              className="w-full bg-transparent text-black outline-none"
             />
           </div>
-          {/* 에러 메시지 표시 */}
           {errorMessage && (
             <p className="mb-2 text-sm text-red-500">{errorMessage}</p>
           )}
           <button
             type="submit"
-            className="w-full cursor-pointer rounded border-none bg-gray-700 p-2 text-white"
+            className="w-full rounded-md bg-gray-700 py-2 text-white"
           >
             로그인
           </button>
-
           <div className="mt-4 text-center text-sm text-gray-500">
             <a href="/member/find_info">아이디 찾기</a> |{" "}
-            <a href="/member/find_info"> 비밀번호 찾기</a> |
-            <a href="/member/join"> 회원가입</a>
+            <a href="/member/find_info">비밀번호 찾기</a> |{" "}
+            <a href="/member/join">회원가입</a>
           </div>
         </form>
       </div>

@@ -12,6 +12,10 @@ const ReservationSuccessPage = lazy(
   () => import("../pages/reservation/ReservationSuccessPage"),
 );
 
+const ReservationFailPage = lazy(
+  () => import("../pages/reservation/ReservationFailPage"),
+);
+
 const reservationRouter = [
   {
     path: "reserve",
@@ -19,6 +23,7 @@ const reservationRouter = [
       { path: "", element: <ReservationTimePage /> },
       { path: "seat", element: <ReservationSeatPage /> },
       { path: "success", element: <ReservationSuccessPage /> },
+      { path: "fail", element: <ReservationFailPage /> },
     ],
   },
 ];

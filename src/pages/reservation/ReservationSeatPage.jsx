@@ -5,6 +5,7 @@ import ReservationResult from "../../components/reservation/ReservationResult";
 import { useLocation } from "react-router-dom";
 import { getMovie } from "../../api/movieApi";
 import MovieRatingModal from "../../components/reservation/MovieRatingModal";
+import CoupleModal from "../../components/reservation/CoupleModal";
 
 export default function ReservationSeatPage() {
   const location = useLocation();
@@ -15,7 +16,8 @@ export default function ReservationSeatPage() {
   const [adultCount, setAdultCount] = useState(0);
   const [teenCount, setTeenCount] = useState(0);
   const [specialCount, setSpecialCount] = useState(0);
-  const [showModal, setShowModal] = useState(false);
+  const [show19Modal, setShow19Modal] = useState(false);
+  const [showCoupleModal, setShowCoupleModal] = useState(false);
 
   useEffect(() => {
     const selectedMovie = location.state || {};
@@ -26,7 +28,11 @@ export default function ReservationSeatPage() {
       setSelectedMovie(data);
 
       if (data.rating === "19") {
-        setShowModal(true);
+        setShow19Modal(true);
+      }
+
+      if (data.theaterNum === 1) {
+        setShowCoupleModal(true);
       }
     };
 
@@ -43,8 +49,12 @@ export default function ReservationSeatPage() {
     setSelectedSeats(seats);
   }, []);
 
-  const closeModal = () => {
-    setShowModal(false);
+  const close19Modal = () => {
+    setShow19Modal(false);
+  };
+
+  const closeCoupleModal = () => {
+    setShowCoupleModal(false);
   };
 
   return (
@@ -81,7 +91,9 @@ export default function ReservationSeatPage() {
       </div>
 
       {/* 19금 안내 모달 */}
-      <MovieRatingModal show={showModal} onClose={closeModal} />
+      <MovieRatingModal show={show19Modal} onClose={close19Modal} />
+      {/* 커플관 안내 모달 */}
+      <CoupleModal show={showCoupleModal} onClose={closeCoupleModal} />
     </div>
   );
 }
