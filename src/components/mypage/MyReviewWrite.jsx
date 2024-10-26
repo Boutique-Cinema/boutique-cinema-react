@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../styles/review.css";
 import { updateReview } from "../../api/reservationApi";
+import ImageDetect from "../python/ImageDetect";
 
 export default function MyReviewWrite() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export default function MyReviewWrite() {
   const { reservation } = state;
   const [rating, setRating] = useState(5);
   const [reviewContent, setReviewContent] = useState("");
+  const [canSubmit, setCanSubmit] = useState(false);
   const maxLength = 100; // 리뷰 내용의 최대 글자 수 제한
 
   // 리뷰 수정시 들고 올 데이터
@@ -17,6 +19,7 @@ export default function MyReviewWrite() {
     if (reservation.reviewContent) {
       setRating(reservation.reviewRating / 2);
       setReviewContent(reservation.reviewContent);
+      setCanSubmit(true);
     }
   }, [reservation]);
 
@@ -46,6 +49,11 @@ export default function MyReviewWrite() {
       return;
     }
 
+    if (!canSubmit) {
+      alert("영화티켓 인증 후 관람평을 등록할 수 있습니다.");
+      return;
+    }
+
     if (reviewContent.trim() === "") {
       alert("관람평을 작성해야 합니다.");
       return;
@@ -63,6 +71,11 @@ export default function MyReviewWrite() {
 
     alert(`관람평이 ${reservation.reviewContent ? "수정" : "등록"}되었습니다.`);
     navigate("/mypage/review");
+  };
+
+  // 이미지 검증 결과를 상태에 반영
+  const handleDetectClass = (isValid) => {
+    setCanSubmit(isValid);
   };
 
   return (
@@ -137,6 +150,11 @@ export default function MyReviewWrite() {
             )}
           </div>
         </div>
+
+        {/* ImageDetect 컴포넌트 */}
+        {!reservation.reviewContent && (
+          <ImageDetect onDetectClass={handleDetectClass} />
+        )}
 
         {/* 내용 입력 */}
         <div className="relative mb-4">
