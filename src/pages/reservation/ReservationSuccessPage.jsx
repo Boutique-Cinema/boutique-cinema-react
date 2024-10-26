@@ -163,9 +163,9 @@ export default function ReservationSuccessPage() {
                 {reserveDate} {roundTime} ({roundNum}회차)
               </div>
               <div>{personDetails}</div>
-              <div>{seatNumbers.join(", ")}</div>
-              <div>{paymentAmount.toLocaleString()}원</div>
-              <div>{new Date(regDate).toLocaleString()}</div>
+              <div>{seatNumbers?.join(", ")}</div>
+              <div>{paymentAmount?.toLocaleString()}원</div>
+              <div>{new Date(regDate)?.toLocaleString()}</div>
             </div>
           </div>
         </div>
