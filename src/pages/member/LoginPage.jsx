@@ -29,13 +29,10 @@ export default function LoginPage() {
 
     try {
       const response = await postLogin(loginParam); // 비동기 요청으로 수정
-      console.log("서버 응답:", response); // 응답 로그 추가
 
       if (response && response.id) {
         // 로그인 요청을 비동기적으로 처리
-        const data = await dispatch(loginPostAsync(loginParam)).unwrap();
-        console.log("after unwrap...");
-        console.log(data);
+        await dispatch(loginPostAsync(loginParam)).unwrap();
 
         window.location.href = "/";
       } else {

@@ -37,8 +37,6 @@ const useCustomLogin = () => {
 
   const exceptionHandle = useCallback(
     (ex) => {
-      console.log("Exception---------");
-      console.log(ex);
       const errorMsg = ex.response.data.error;
       const errorStr = createSearchParams({ error: errorMsg }).toString();
       if (errorMsg === "REQUIRE_LOGIN") {

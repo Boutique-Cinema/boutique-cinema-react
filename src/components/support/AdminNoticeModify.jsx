@@ -39,11 +39,8 @@ const AdminNoticeModify = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("수정할 데이터:", formData); // 수정 데이터 확인
     try {
       const response = await updateNotice(nnum, formData); // 수정 API 호출
-      console.log(formData, "무슨값");
-      // console.log("수정 성공:", response); // 성공 시 로그
       navigate(`/admin/support/notice/${nnum}`); // 수정 후 상세 페이지로 이동
     } catch (err) {
       console.error("수정 실패:", err.message); // 에러 시 로그

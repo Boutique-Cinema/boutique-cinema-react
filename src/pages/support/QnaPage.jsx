@@ -32,8 +32,6 @@ const QnaPage = () => {
     questionList();
   }, [page]);
 
-  console.log(questions);
-
   return (
     <>
       <h2 className="ml-10 text-2xl font-medium">1:1 문의</h2>

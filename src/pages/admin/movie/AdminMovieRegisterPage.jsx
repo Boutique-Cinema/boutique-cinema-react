@@ -85,9 +85,7 @@ const AdminMovieRegisterPage = () => {
     }
 
     try {
-      console.log([...formData]);
-      const response = await registerMovie(formData); // 영화 등록 API 호출
-      console.log("영화 등록 성공:", response);
+      await registerMovie(formData); // 영화 등록 API 호출
       alert("등록이 완료되었습니다."); // 알림 추가
       navigate("/admin/movie/list"); // 등록 완료 후 이동
     } catch (error) {
