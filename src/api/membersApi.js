@@ -43,7 +43,6 @@ export const getMembersByCondition = async (condition, page = 1, size = 10) => {
 
 export const postLogin = async (form) => {
   try {
-    console.log("로그인 요청 데이터:", form); // 서버로 보내는 데이터 로그
     // FormData 객체 생성
     const formData = new FormData();
     for (const key in form) {
@@ -63,7 +62,6 @@ export const postLogin = async (form) => {
 
 export const findId = async (form) => {
   try {
-    console.log("아이디 찾기 요청 데이터 : ", form);
     const response = await axios.post(`${prefix}/findId`, form);
     return response.data; // 응답 데이터 반환
   } catch (error) {
@@ -73,7 +71,6 @@ export const findId = async (form) => {
 
 export const checkMember = async (form) => {
   try {
-    console.log("회원 확인 요청 데이터 : ", form);
     const response = await axios.post(`${prefix}/check-member`, form);
     return response.data; // 응답 데이터 반환
   } catch (error) {

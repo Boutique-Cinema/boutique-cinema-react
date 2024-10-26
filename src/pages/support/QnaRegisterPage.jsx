@@ -40,13 +40,10 @@ const QnaRegisterPage = () => {
     }
 
     try {
-      console.log([...formData]);
-      const response = await registerQuestion(formData); // 영화 등록 API 호출
-      console.log("질문 등록 성공:", response);
+      await registerQuestion(formData); // 영화 등록 API 호출
       alert("등록이 완료되었습니다."); // 알림 추가
       navigate("/support/qna"); // 등록 완료 후 이동
     } catch (error) {
-      console.log([...formData]);
       console.error("질문 등록 실패:", error);
     }
   };

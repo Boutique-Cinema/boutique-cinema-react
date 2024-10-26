@@ -26,7 +26,6 @@ const QnaDetailPage = () => {
     const fetchQuestion = async () => {
       try {
         const questionData = await getQuestion(qNum); // 영화 데이터 가져오기
-        console.log(questionData);
         setQuestions({
           ...questions,
           ...questionData, // 질문 데이터로 상태 업데이트
@@ -66,11 +65,8 @@ const QnaDetailPage = () => {
     formData.append("qDate", questions.qdate);
     formData.append("qNum", qNum);
 
-    console.log([...formData]);
-    console.log(questions);
     try {
-      const response = await modifyQuestion(qNum, formData); // 영화 등록 API 호출
-      console.log("질문 수정 성공:", response);
+      await modifyQuestion(qNum, formData); // 영화 등록 API 호출
       alert("수정이 완료되었습니다."); // 알림 추가
       navigate("/support/qna"); // 등록 완료 후 이동
     } catch (error) {

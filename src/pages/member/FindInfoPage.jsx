@@ -68,7 +68,6 @@ export default function FindInfoPage() {
           const id = await findId({ phone: form.phone, email: form.email }); // 비동기 호출
           setFoundId(id); // 찾은 아이디 저장
           setIsIdFound(true); // 아이디 찾기 성공 상태
-          console.log("Found ID:", id);
         } catch (error) {
           alert("아이디를 찾지 못했습니다.");
         }
@@ -106,8 +105,7 @@ export default function FindInfoPage() {
 
     try {
       // restPassword API 호출
-      const response = await resetPassword(form.id, form.password);
-      console.log("비밀번호 재설정 성공: ", response);
+      await resetPassword(form.id, form.password);
       alert("비밀번호 변경에 성공했습니다!");
       moveToLogin();
     } catch (error) {

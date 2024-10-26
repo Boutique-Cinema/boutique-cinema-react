@@ -270,7 +270,6 @@ export default function JoinPage() {
       const { passwordConfirm, allCheck, ...dataToSubmit } = form; // passwordConfirm과 allCheck 제외
       postAdd(dataToSubmit); // JSON 형식으로 서버에 보냄
 
-      console.log("Form submitted:", form);
       alert("회원가입이 완료됐습니다.");
       window.location.href = "/member/login";
     }

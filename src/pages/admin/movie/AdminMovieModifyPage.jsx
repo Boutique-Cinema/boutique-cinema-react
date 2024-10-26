@@ -105,9 +105,7 @@ const AdminMovieModifyPage = () => {
     }
 
     try {
-      console.log([...formData]);
-      const response = await modifyMovie(movieNum, formData); // 영화 수정 API 호출
-      console.log("영화 수정 성공:", response);
+      await modifyMovie(movieNum, formData); // 영화 수정 API 호출
       alert("수정이 완료되었습니다."); // 알림 추가
       navigate("/admin/movie/list"); // 등록 완료 후 이동
     } catch (error) {

@@ -11,6 +11,7 @@ import adminMemberRouter from "./adminMemberRouter";
 import AdminReservationRouter from "./adminReservationRouter";
 
 const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
+const ErrorPage = lazy(() => import("../pages/ErrorPage"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
 const MainPage = lazy(() => import("../pages/MainPage"));
 const InfoPage = lazy(() => import("../pages/info/InfoPage"));
@@ -31,13 +32,13 @@ const root = createBrowserRouter([
         {/* ScrollRestoration 추가(페이지 이동시 맨위 스크롤로 이동) */}
       </>
     ),
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <MainPage /> },
       { path: "info", element: <InfoPage /> },
       { path: "/terms", element: <TermsPage /> },
       { path: "/screenrule", element: <ScreenrulePage /> },
       { path: "/privacy", element: <PrivacyPage /> },
-
       { path: "/member/find_info", element: <FindInfoPage /> },
       ...supportRouter,
       ...greetingRouter, // greetingRouter의 경로들을 병합

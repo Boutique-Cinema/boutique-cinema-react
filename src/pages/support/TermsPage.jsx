@@ -15,7 +15,6 @@ function TermsPage() {
   const handleScroll = () => {
     const scrollY = window.scrollY;
     setIsVisible(scrollY > 300);
-    console.log(`Scroll Y: ${scrollY}`);
   };
 
   useEffect(() => {

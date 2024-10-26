@@ -7,7 +7,6 @@ const CouplePage = () => {
   const handleScroll = () => {
     const scrollY = window.scrollY;
     setIsVisible(scrollY > 300);
-    console.log(`Scroll Y: ${scrollY}`);
   };
 
   const ScrollToTop = () => {
@@ -15,7 +14,6 @@ const CouplePage = () => {
       top: 0,
       behavior: "smooth",
     });
-    console.log("Scrolling to top...");
   };
 
   // useEffect로 스크롤 이벤트를 설정합니다.
