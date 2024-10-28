@@ -3,13 +3,16 @@ import { useDispatch } from "react-redux";
 import Logo from "../../components/common/Logo";
 import { postLogin } from "../../api/membersApi";
 import { loginPostAsync } from "../../slice/loginSlice";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const initState = {
     id: "",
     password: "",
+    roleNames: "",
   };
 
   const [loginParam, setLoginParam] = useState(initState);
@@ -34,7 +37,14 @@ export default function LoginPage() {
         // 로그인 요청을 비동기적으로 처리
         await dispatch(loginPostAsync(loginParam)).unwrap();
 
-        window.location.href = "/";
+        // 역할에 따라 리다이렉트
+        if (response.roleNames.includes("ADMIN")) {
+          navigate("/admin");
+        } else if (response.roleNames.includes("USER")) {
+          navigate("/");
+        } else {
+          alert("알 수 없는 역할입니다.");
+        }
       } else {
         alert("아이디 비밀번호를 확인해주세요!");
       }
