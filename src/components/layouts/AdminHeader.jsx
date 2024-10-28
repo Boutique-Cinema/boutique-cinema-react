@@ -19,7 +19,7 @@ export default function AdminHeader() {
 
   const handleClickLogout = () => {
     dispatch(logout());
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
