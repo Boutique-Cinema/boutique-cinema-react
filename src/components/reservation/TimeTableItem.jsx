@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { addMinutesToTime } from "../../util/dateFormatUtil";
 import { getAllReservations } from "../../api/reservationApi";
 import useCustomLogin from "../../hook/useCustomLogin";
+import { useSelector } from "react-redux";
 
 export default function TimeTableItem({ date, selectedMovies, activeTab }) {
   const navigate = useNavigate();
   const { exceptionHandle } = useCustomLogin();
   const [reservations, setReservations] = useState([]);
+  const loginState = useSelector((state) => state.loginSlice);
 
   useEffect(() => {
     const loadReservations = async () => {
@@ -21,7 +23,7 @@ export default function TimeTableItem({ date, selectedMovies, activeTab }) {
     };
 
     loadReservations();
-  }, [exceptionHandle]);
+  }, [exceptionHandle, loginState]);
 
   // 상영관선택에 따른 영화 필터링
   const selectedMovie = selectedMovies.filter(
@@ -72,6 +74,12 @@ export default function TimeTableItem({ date, selectedMovies, activeTab }) {
 
   // 상영 시간 선택 핸들러
   const handleClickTime = (roundNum, roundTime) => {
+    if (loginState.id === "") {
+      alert("로그인을 먼저 해야합니다.");
+      navigate("/member/login");
+      return;
+    }
+
     if (
       getAvailableSeats(
         selectedMovie.movieNum,
