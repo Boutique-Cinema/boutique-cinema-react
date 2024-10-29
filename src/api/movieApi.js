@@ -14,7 +14,7 @@ export const getMovie = async (movieNum) => {
 
 export const getMovieList = async (page, size, searchCondition) => {
   try {
-    let url = `${MOVIE_API_PREFIX}/list`;
+    let url = `${MOVIE_API_PREFIX}/list?page=${page}&size=${size}`;
 
     //조건에 따라 URL 수정
     if (searchCondition) {
