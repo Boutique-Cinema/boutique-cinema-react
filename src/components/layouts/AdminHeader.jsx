@@ -19,13 +19,13 @@ export default function AdminHeader() {
 
   const handleClickLogout = () => {
     dispatch(logout());
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
     <header className="flex h-[11vh] items-end">
       <div className="w-1/3">
-        <a href="/admin/movie/list">
+        <a href="/">
           <Logo />
         </a>
       </div>
