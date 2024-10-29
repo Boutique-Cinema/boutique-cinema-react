@@ -262,6 +262,7 @@ export default function JoinPage() {
       default:
         return true;
     }
+    return false;
   };
 
   const handleSubmit = (e) => {
