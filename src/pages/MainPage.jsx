@@ -25,7 +25,7 @@ export default function MainPage() {
   // 최신순 영화 목록 로드
   useEffect(() => {
     const loadLatestMovies = async () => {
-      const data = await fetchSortedMovies(page, size, "최신 순");
+      const data = await fetchSortedMovies(page, size, "최신 순"); // 개봉일 순 추가
       setSortedMovies(data.content);
       setHasMore(data.content.length === size);
     };
