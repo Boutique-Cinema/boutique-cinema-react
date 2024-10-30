@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getNoticeList } from "../../api/noticeApi";
 
 const NoticeListPage = () => {
   const [notices, setNotices] = useState([]);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [size] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [totalNotices, setTotalNotices] = useState(0);
   const maxPageButtons = 5;
