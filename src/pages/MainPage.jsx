@@ -43,17 +43,21 @@ export default function MainPage() {
     loadReservations();
   }, []);
 
-  // 예약 수에 따라 영화 정렬
+  // 예약 수에 따라 영화 정렬 및 중복 영화 필터링
   const sortedByReservations = movies
     .map((movie) => {
       const reservationCount = reservations.filter(
         (reservation) =>
           reservation.movieNum === movie.movieNum &&
-          reservation.cancelDate !== "취소", // 예약 상태가 '취소'가 아닌 경우만 카운트
+          reservation.cancelDate !== "취소",
       ).length;
       return { ...movie, reservationCount };
     })
-    .sort((a, b) => b.reservationCount - a.reservationCount);
+    .sort((a, b) => b.reservationCount - a.reservationCount) // 예약 수 기준으로 정렬
+    .filter(
+      (movie, index, self) =>
+        index === self.findIndex((m) => m.korTitle === movie.korTitle),
+    ); // 제목으로 중복 필터링, 예약 수로 정렬된 상태에서 첫 번째 인스턴스만 남기
 
   return (
     <>

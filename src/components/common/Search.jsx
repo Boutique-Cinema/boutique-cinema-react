@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { IoMdSearch } from "react-icons/io";
-import { fetchSortedMovies, getMovieList } from "../../api/movieApi";
+import { fetchSortedMovies } from "../../api/movieApi";
 import { useNavigate } from "react-router-dom";
 
 export default function Search() {
   const [movies, setMovies] = useState([]); // 영화 목록 상태 관리
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
-  const [sortOrder, setSortOrder] = useState("최신 순");
+  const [sortOrder] = useState("최신 순");
   const [searchCondition, setSearchCondition] = useState("");
 
   useEffect(() => {
