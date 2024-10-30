@@ -43,6 +43,19 @@ const AdminMovieRegisterPage = () => {
   // 입력값 변경 처리 함수
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // 영화 종료일이 변경되는 경우
+    if (name === "movieEndDate") {
+      const startDate = new Date(movie.movieStartDate);
+      const endDate = new Date(value);
+
+      // 종료일이 개봉일보다 이전인 경우 경고
+      if (endDate < startDate) {
+        alert("상영 종료일은 개봉일보다 이전일 수 없습니다.");
+        return; // 상태 업데이트를 하지 않음
+      }
+    }
+
     setMovie({
       ...movie,
       [name]: value,
@@ -185,7 +198,7 @@ const AdminMovieRegisterPage = () => {
             {posterUrl && (
               <div className="mt-2">
                 <img
-                  src={posterUrl} // 여기에서 임시 URL 대신 백엔드 URL을 사용할 수 있습니다
+                  src={posterUrl}
                   alt="포스터 미리보기"
                   className="h-[200px] w-[160px] rounded object-cover"
                 />

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { registerQuestion } from "../../api/qnaApi";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const QnaRegisterPage = () => {
   const today = new Date();
@@ -9,9 +10,13 @@ const QnaRegisterPage = () => {
   const day = String(today.getDate()).padStart(2, "0");
   const formattedDate = `${year}-${month}-${day}`; // 날짜 형식
 
+  // Redux 상태에서 loginState 가져오기
+  const loginState = useSelector((state) => state.loginSlice);
+  const { id } = loginState; // mId를 loginState에서 가져오기
+
   // 질문 등록에 필요한 상태 초기화
   const [questions, setQuestions] = useState({
-    mId: "",
+    mId: id,
     qTitle: "",
     qContent: "",
     qStatus: "답변대기",
@@ -63,15 +68,9 @@ const QnaRegisterPage = () => {
               <div className="mb-1 w-[10%] text-xl font-bold text-gray-200">
                 아이디
               </div>
-              <input
-                className="block w-[100%] rounded-md border border-gray-600 bg-gray-200 px-3 py-2 text-black"
-                type="text"
-                placeholder="아이디를 입력해주세요"
-                name="mId"
-                value={questions.mId}
-                maxLength={20}
-                onChange={handleChange}
-              />
+              <div className="block w-[100%] rounded-md border border-gray-600 bg-gray-200 px-3 py-2 text-black">
+                {id} {/* mId 표시 */}
+              </div>
             </div>
           </div>
           <div className="mt-4 flex w-full items-center">
