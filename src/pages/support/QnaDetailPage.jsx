@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { modifyQuestion, removeQuestion, getQuestion } from "../../api/qnaApi";
+import { useSelector } from "react-redux";
 
 const QnaDetailPage = () => {
   const today = new Date();
@@ -14,12 +15,15 @@ const QnaDetailPage = () => {
 
   // 질문 수정에 필요한 상태 초기화
   const [questions, setQuestions] = useState({
-    mid: "",
     qtitle: "",
     qcontent: "",
     qstatus: "",
     qdate: formattedDate,
   });
+
+  // Redux 상태에서 loginState 가져오기
+  const loginState = useSelector((state) => state.loginSlice);
+  const { id } = loginState; // mId를 loginState에서 가져오기
 
   // 질문 데이터 가져오기
   useEffect(() => {
@@ -120,16 +124,9 @@ const QnaDetailPage = () => {
         <div className="mb-1 w-[10%] text-xl font-bold text-gray-200">
           아이디
         </div>
-        <input
-          className="block w-[34%] rounded-md border border-gray-600 bg-gray-200 px-3 py-2 text-black"
-          type="text"
-          placeholder="아이디를 입력해주세요"
-          name="mid"
-          value={questions.mid}
-          maxLength={20}
-          onChange={handleChange}
-          readOnly={questions.qstatus === "답변완료"}
-        />
+        <div className="block w-[34%] rounded-md border border-gray-600 bg-gray-200 px-3 py-2 text-black">
+          {id}
+        </div>
         <div className="mb-1 ml-4 w-[8%] text-xl font-bold text-gray-200">
           작성일
         </div>
