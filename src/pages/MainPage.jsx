@@ -25,9 +25,21 @@ export default function MainPage() {
   // 최신순 영화 목록 로드
   useEffect(() => {
     const loadLatestMovies = async () => {
-      const data = await fetchSortedMovies(page, size, "최신 순"); // 개봉일 순 추가
-      setSortedMovies(data.content);
-      setHasMore(data.content.length === size);
+      const data = await fetchSortedMovies(page, size, "개봉일 순"); // 개봉일 순 추가
+
+      // 중복 제거: korTitle 기준으로 필터링
+      const uniqueMovies = data.content.filter(
+        (movie, index, self) =>
+          index === self.findIndex((m) => m.korTitle === movie.korTitle),
+      );
+
+      // 개봉일 역순 정렬
+      const sortedMovies = uniqueMovies.sort((a, b) => {
+        return new Date(b.movieStartDate) - new Date(a.movieStartDate);
+      });
+
+      setSortedMovies(sortedMovies);
+      setHasMore(sortedMovies.length === size);
     };
 
     loadLatestMovies();
