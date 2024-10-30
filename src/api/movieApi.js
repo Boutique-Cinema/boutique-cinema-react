@@ -65,6 +65,8 @@ export const fetchSortedMovies = async (page, size, sortOrder) => {
       url = `${MOVIE_API_PREFIX}/list/latest?page=${page}&size=${size}`;
     } else if (sortOrder === "오래된 순") {
       url = `${MOVIE_API_PREFIX}/list/earliest?page=${page}&size=${size}`;
+    } else if (sortOrder === "개봉일 순") {
+      url = `${MOVIE_API_PREFIX}/list/movieStartDate?page=${page}&size=${size}`;
     }
     const response = await axios.get(url); // API 호출
 
