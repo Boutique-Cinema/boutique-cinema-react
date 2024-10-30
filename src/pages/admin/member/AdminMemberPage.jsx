@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllMembers, getMembersByCondition } from "../../api/membersApi";
+import { getAllMembers, getMembersByCondition } from "../../../api/membersApi";
 
 const AdminMemberPage = () => {
   const [members, setMembers] = useState([]);

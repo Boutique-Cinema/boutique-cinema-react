@@ -1,41 +1,41 @@
 import React from "react";
 import { lazy } from "react";
 
-const AdminNoticeList = lazy(
-  () => import("../components/support/AdminNoticeList"),
+const AdminNoticeListPage = lazy(
+  () => import("../pages/admin/support/AdminNoticeListPage"),
 );
-const AdminNoticeDetail = lazy(
-  () => import("../components/support/AdminNoticeDetail"),
+const AdminNoticeDetailPage = lazy(
+  () => import("../pages/admin/support/AdminNoticeDetailPage"),
 );
-const AdminNoticeRegister = lazy(
-  () => import("../components/support/AdminNoticeRegister"),
+const AdminNoticeRegisterPage = lazy(
+  () => import("../pages/admin/support/AdminNoticeRegisterPage"),
 );
-const AdminNoticeModify = lazy(
-  () => import("../components/support/AdminNoticeModify"), // 추가된 부분
+const AdminNoticeModifyPage = lazy(
+  () => import("../pages/admin/support/AdminNoticeModifyPage"), // 추가된 부분
 );
 
-const adminSupport = [
+const adminSupportRouter = [
   {
     path: "support/notice", // "/admin/support/notice" 경로
     children: [
       {
         path: "",
-        element: <AdminNoticeList />, // 공지사항 목록 페이지
+        element: <AdminNoticeListPage />, // 공지사항 목록 페이지
       },
       {
         path: ":nnum",
-        element: <AdminNoticeDetail />, // 공지사항 상세 페이지
+        element: <AdminNoticeDetailPage />, // 공지사항 상세 페이지
       },
       {
         path: "register",
-        element: <AdminNoticeRegister />, // 공지사항 등록 페이지
+        element: <AdminNoticeRegisterPage />, // 공지사항 등록 페이지
       },
       {
         path: ":nnum/modify", // 수정 페이지 경로 추가
-        element: <AdminNoticeModify />, // 공지사항 수정 페이지
+        element: <AdminNoticeModifyPage />, // 공지사항 수정 페이지
       },
     ],
   },
 ];
 
-export default adminSupport;
+export default adminSupportRouter;

@@ -1,7 +1,9 @@
 import React from "react";
 import { lazy } from "react";
 
-const AdminMemberPage = lazy(() => import("../pages/support/AdminMemberList"));
+const AdminMemberPage = lazy(
+  () => import("../pages/admin/member/AdminMemberPage"),
+);
 
 const adminMemberRouter = [
   {

@@ -3,7 +3,7 @@ import {
   getAllReservations,
   getReservationsById,
   cancelReservation,
-} from "../../api/reservationApi";
+} from "../../../api/reservationApi";
 
 const AdminReservationPage = () => {
   const [reservations, setReservations] = useState([]);

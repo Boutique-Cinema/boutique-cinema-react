@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { updateNotice, readNotice } from "../../api/noticeApi";
+import { updateNotice, readNotice } from "../../../api/noticeApi";
 
-const AdminNoticeModify = () => {
+const AdminNoticeModifyPage = () => {
   const { nnum } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -103,4 +103,4 @@ const AdminNoticeModify = () => {
   );
 };
 
-export default AdminNoticeModify;
+export default AdminNoticeModifyPage;

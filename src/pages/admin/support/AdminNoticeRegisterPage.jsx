@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createNotice } from "../../api/noticeApi"; // 공지사항 등록 API
+import { createNotice } from "../../../api/noticeApi"; // 공지사항 등록 API
 
 const AdminNoticeRegisterPage = () => {
   const navigate = useNavigate(); // 등록 후 페이지 이동
