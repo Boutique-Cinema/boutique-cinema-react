@@ -6,9 +6,9 @@ import greetingRouter from "./greetingRouter";
 import adminMovieRouter from "./adminMovieRouter";
 import movieRouter from "./movieRouter";
 import mypageRouter from "./mypageRouter";
-import adminSupport from "./adminSupportRouter";
+import adminSupportRouter from "./adminSupportRouter";
 import adminMemberRouter from "./adminMemberRouter";
-import AdminReservationRouter from "./adminReservationRouter";
+import adminReservationRouter from "./adminReservationRouter";
 
 const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
 const ErrorPage = lazy(() => import("../pages/ErrorPage"));
@@ -29,7 +29,6 @@ const root = createBrowserRouter([
       <>
         <BasicLayout />
         <ScrollRestoration />
-        {/* ScrollRestoration 추가(페이지 이동시 맨위 스크롤로 이동) */}
       </>
     ),
     errorElement: <ErrorPage />,
@@ -61,9 +60,9 @@ const root = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       ...adminMovieRouter,
-      ...adminSupport,
+      ...adminSupportRouter,
       ...adminMemberRouter,
-      ...AdminReservationRouter,
+      ...adminReservationRouter,
     ],
   },
 ]);

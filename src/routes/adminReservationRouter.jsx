@@ -2,14 +2,14 @@ import React from "react";
 import { lazy } from "react";
 
 const AdminReservationPage = lazy(
-  () => import("../pages/support/AdminReservationPage"),
+  () => import("../pages/admin/reservation/AdminReservationPage"),
 );
 
-const AdminReservationRouter = [
+const adminReservationRouter = [
   {
     path: "/admin/reserve",
     children: [{ path: "", element: <AdminReservationPage /> }],
   },
 ];
 
-export default AdminReservationRouter;
+export default adminReservationRouter;

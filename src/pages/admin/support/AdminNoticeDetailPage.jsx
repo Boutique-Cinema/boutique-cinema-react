@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { getNotice, deleteNotice } from "../../api/noticeApi";
+import { getNotice, deleteNotice } from "../../../api/noticeApi";
 
-const AdminNoticeDetail = () => {
+const AdminNoticeDetailPage = () => {
   const { nnum } = useParams();
   const navigate = useNavigate();
   const [notice, setNotice] = useState(null);
@@ -90,4 +90,4 @@ const AdminNoticeDetail = () => {
   );
 };
 
-export default AdminNoticeDetail;
+export default AdminNoticeDetailPage;
