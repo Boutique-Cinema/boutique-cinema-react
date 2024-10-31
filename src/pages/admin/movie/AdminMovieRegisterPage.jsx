@@ -44,6 +44,47 @@ const AdminMovieRegisterPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // 유효성 검사
+
+    // 제목의 경우 30글자 제한
+    if (name === "korTitle" && value.length > 30) {
+      alert("제목은 30글자를 초과할 수 없습니다.");
+      return; // 상태 업데이트를 하지 않음
+    }
+
+    // 영문 제목의 경우 50글자 제한
+    if (name === "enTitle" && value.length > 50) {
+      alert("영문 제목은 50글자를 초과할 수 없습니다.");
+      return; // 상태 업데이트를 하지 않음
+    }
+
+    // 영화 소개의 경우 4000글자 제한
+    if (name === "movieDesc" && value.length > 50) {
+      alert("영화 소개는 4000글자를 초과할 수 없습니다.");
+      return; // 상태 업데이트를 하지 않음
+    }
+
+    // 상영시간 유효성 검사 (숫자만 허용)
+    if (name === "runTime") {
+      if (!/^\d*$/.test(value)) {
+        // 숫자만 허용
+        alert("상영시간은 숫자만 입력 가능합니다.");
+        return;
+      }
+    }
+
+    // 감독의 경우 30글자 제한
+    if (name === "director" && value.length > 30) {
+      alert("감독은 30글자를 초과할 수 없습니다.");
+      return; // 상태 업데이트를 하지 않음
+    }
+
+    // 출연진의 경우 50글자 제한
+    if (name === "cast" && value.length > 50) {
+      alert("출연진은 50글자를 초과할 수 없습니다.");
+      return; // 상태 업데이트를 하지 않음
+    }
+
     // 영화 종료일이 변경되는 경우
     if (name === "movieEndDate") {
       const startDate = new Date(movie.movieStartDate);
@@ -55,7 +96,6 @@ const AdminMovieRegisterPage = () => {
         return; // 상태 업데이트를 하지 않음
       }
     }
-
     setMovie({
       ...movie,
       [name]: value,
@@ -150,8 +190,8 @@ const AdminMovieRegisterPage = () => {
               className="block w-full rounded-md border border-gray-600 bg-gray-200 px-3 py-2 text-black focus:outline-none focus:ring focus:ring-blue-500"
               name="movieDesc"
               value={movie.movieDesc}
-              placeholder="500자 이내로 작성해주세요"
-              maxLength={500}
+              placeholder="4000자 이내로 작성해주세요"
+              maxLength={4000}
               onChange={handleChange}
             />
           </div>

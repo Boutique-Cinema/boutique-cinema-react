@@ -28,6 +28,20 @@ const QnaRegisterPage = () => {
   // 입력값 변경 처리 함수
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // 유효성 검사
+    // 제목의 경우 50글자 제한
+    if (name === "qTitle" && value.length >= 50) {
+      alert("제목은 50글자를 초과할 수 없습니다.");
+      return; // 상태 업데이트를 하지 않음
+    }
+
+    // 내용의 경우 3000글자 제한
+    if (name === "qContent" && value.length >= 3000) {
+      alert("제목은 3000글자를 초과할 수 없습니다.");
+      return; // 상태 업데이트를 하지 않음
+    }
+
     setQuestions({
       ...questions,
       [name]: value,
