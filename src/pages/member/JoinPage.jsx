@@ -469,7 +469,7 @@ export default function JoinPage() {
                 <label className="text-xs text-red-500"> (필수)</label>
               </label>
               <a
-                href="/support/terms"
+                href="/terms"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ml-auto whitespace-nowrap text-xs text-gray-500 underline"
@@ -492,7 +492,7 @@ export default function JoinPage() {
                 <label className="text-xs text-red-500"> (필수)</label>
               </label>
               <a
-                href="/support/privacy"
+                href="/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ml-auto whitespace-nowrap text-xs text-gray-500 underline"
